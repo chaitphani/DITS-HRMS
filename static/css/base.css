@@ -1,0 +1,205 @@
+/* Style the tab */
+.tab {
+    overflow: hidden;
+    background-color: #fff;
+    margin-bottom: 30px;
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    margin-right: 5px;
+    padding: 14px 16px;
+
+    font-size: 17px;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+    border-bottom: 2px solid deepskyblue
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+    border-bottom: 2px solid deepskyblue
+}
+
+/* Style the tab content */
+.tabcontent {
+    display: none;
+    padding: 6px 12px;
+    /* border: 1px solid #ccc; */
+    border-top: none;
+    height: 100%;
+}
+
+.actionmodalpopup {
+    background-color: #fff;
+    padding-top: 10px;
+
+}
+
+.divider {
+    border-bottom: 1px solid #ccc
+}
+
+#closebtn {
+    font-size: 20px;
+    color: #000;
+    font-weight: 900
+}
+
+#closebtn:hover {
+    text-decoration: none;
+}
+
+.bodycol7 {
+    border-top: 1px solid #ccc;
+    min-height: 500px;
+    padding: 10px;
+}
+
+.bodycol7 #footer {
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    bottom: 0px;
+    color: #aaa;
+    padding: 5px;
+    background-color: #f1f1f1
+}
+
+.bodycol5 {
+    border-top: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    background-color: #f1f1f1;
+    min-height: 500px;
+}
+
+#headtaskmanagertab {
+    background-color: #fff;
+    border-bottom: 1px solid #ccc;
+    height: 50px;
+}
+
+#headtaskmanagertab a:hover {
+    text-decoration: none;
+    border-bottom: 1px solid deepskyblue;
+    padding-bottom: 10px;
+}
+
+#bodycontent {
+    min-height: 300px
+}
+
+#searchbox {
+    position: absolute;
+    bottom: 10px;
+    background-color: #fff;
+    width: 96%;
+}
+
+.chatstrip {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    background-color: #fff;
+}
+
+.taskmanagertab {
+    overflow: hidden;
+    background-color: #fff;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #ccc;
+    ;
+}
+
+/* Style the buttons inside the taskmanagertab */
+.taskmanagertab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    margin-right: 5px;
+    padding: 14px 16px;
+
+    font-size: 17px;
+}
+
+/* Change background color of buttons on hover */
+.taskmanagertab button:hover {
+    border-bottom: 2px solid deepskyblue
+}
+
+/* Create an active/current taskmanagertablink class */
+.taskmanagertab button.active {
+    border-bottom: 2px solid deepskyblue
+}
+
+/* Style the taskmanagertab content */
+.taskmanagertabcontent {
+    display: none;
+    /* padding: 6px 12px; */
+    /* border: 1px solid #ccc; */
+    border-top: none;
+    height: 100%;
+}
+
+* {
+    box-sizing: border-box
+}
+
+/* Style the tab */
+
+.settingtab {
+    float: left;
+    /* border: 1px solid #ccc;
+background-color: #fff; */
+    width: 30%;
+    min-height: 650px;
+}
+
+/* Style the buttons inside the tab */
+.settingtab button {
+    display: block;
+    background-color: inherit;
+    color: black;
+    padding: 20px 16px;
+    width: 100%;
+    border: none;
+    outline: none;
+    text-align: left;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 18px;
+}
+
+/* Change background color of buttons on hover */
+.settingtab button:hover {
+    background-color: #eee;
+}
+
+/* Create an active/current "tab button" class */
+.settingtab button.active {
+    background-color: #fff;
+    border-left: 3px solid #4e73df
+}
+
+/* Style the tab content */
+.settingtabcontent {
+    float: left;
+    padding: 0px 12px;
+    /* border: 1px solid #ccc; */
+    background-color: #fff;
+    width: 70%;
+    border-left: none;
+    min-height: 650px;
+    height: 100%;
+    overflow-y: auto;
+}

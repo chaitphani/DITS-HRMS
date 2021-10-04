@@ -1,0 +1,800 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<title>DITS Management</title>
+	<!-- Custom fonts for this project-->
+	<link href="/static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+	<link
+		href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+		rel="stylesheet">
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+	<!-- jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+	<!-- font awesome cdn -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<!-- Custom styles for this project-->
+	<link href="{% static 'css/dits_management_style.min.css' %}" rel="stylesheet">
+
+	<link rel="stylesheet" href="{%static 'css/style.css'%}">
+	<link rel="stylesheet" href="{% static 'css/base.css' %}">
+</head>
+
+<body id="page-top">
+	<!-- Page Wrapper -->
+	<div id="wrapper">
+		<!-- Sidebar -->
+		<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+			<!-- Sidebar - Brand -->
+			<a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
+				<div class="sidebar-brand-icon rotate-n-15">
+					<i class="fas fa-laugh-wink text-warning"></i>
+				</div>
+				<div class="sidebar-brand-text mx-3">DITS Management</div>
+			</a>
+			<!-- Divider -->
+			<hr class="sidebar-divider my-0">
+			<!-- Nav Item - Dashboard -->
+			<li class="nav-item active">
+				<a class="nav-link" href="/">
+					<i class="fas fa-fw fa-tachometer-alt"></i>
+					<span>Dashboard</span></a>
+			</li>
+			<!-- Nav Item - Workspace -->
+			<li class="nav-item active">
+				<a class="nav-link" href="#" data-toggle="modal" data-target="#createworkspace">
+					<i class="fas fa-fw fa-laptop-house"></i>
+					<span>+ Workspace</span></a>
+			</li>
+			<!-- Nav Item - Team -->
+			<li class="nav-item active">
+				<a class="nav-link" href="#" data-toggle="modal" data-target="#createteam">
+					<i class="fas fa-fw fa-user-friends"></i>
+					<span>+ Team</span></a>
+			</li>
+			<!-- Divider -->
+			<hr class="sidebar-divider">
+			<!-- Heading -->
+			<div class="sidebar-heading">
+				MEMBERS
+			</div>
+			{% for member in members %}
+				<li class="nav-item text-capitalize">
+					<a href="#" class="nav-link"><img class="img-profile rounded-circle"
+							src="/static/img/undraw_profile.svg">
+						{{member.name}}</a>
+				</li>
+			{% endfor %}
+			<!-- <li class="nav-item">
+				<a href="#" class="nav-link"><img class="img-profile rounded-circle"
+						src="/static/img/undraw_profile.svg">
+					Sandeep Yadav</a>
+			</li>
+			<li class="nav-item">
+				<a href="#" class="nav-link"><img class="img-profile rounded-circle"
+						src="/static/img/undraw_profile.svg">
+					Chaitanya</a>
+			</li> -->
+			<!-- Divider -->
+			<hr class="sidebar-divider">
+			<!-- Sidebar Toggler (Sidebar) -->
+			<div class="text-center d-none d-md-inline">
+				<button class="rounded-circle border-0" id="sidebarToggle"></button>
+			</div>
+		</ul>
+		<!-- End of Sidebar -->
+		<!-- Content Wrapper -->
+		<div id="content-wrapper" class="d-flex flex-column">
+			<!-- Main Content -->
+			<div id="content">
+				<!-- Topbar -->
+				<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+					<!-- Sidebar Toggle (Topbar) -->
+					<button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+						<i class="fa fa-bars"></i>
+					</button>
+					<!-- Topbar Search -->
+					<form
+						class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+						<div class="input-group">
+							<input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+								aria-label="Search" aria-describedby="basic-addon2">
+							<div class="input-group-append">
+								<button class="btn btn-primary" type="button">
+									<i class="fas fa-search fa-sm"></i>
+								</button>
+							</div>
+						</div>
+					</form>
+					<!-- Topbar Navbar -->
+					<ul class="navbar-nav ml-auto">
+						<!-- Nav Item - Search Dropdown (Visible Only XS) -->
+						<li class="nav-item dropdown no-arrow d-sm-none">
+							<a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
+								data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<i class="fas fa-search fa-fw"></i>
+							</a>
+							<!-- Dropdown - Messages -->
+							<div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+								aria-labelledby="searchDropdown">
+								<form class="form-inline mr-auto w-100 navbar-search">
+									<div class="input-group">
+										<input type="text" class="form-control bg-light border-0 small"
+											placeholder="Search for..." aria-label="Search"
+											aria-describedby="basic-addon2">
+										<div class="input-group-append">
+											<button class="btn btn-primary" type="button">
+												<i class="fas fa-search fa-sm"></i>
+											</button>
+										</div>
+									</div>
+								</form>
+							</div>
+						</li>
+						<div class="topbar-divider d-none d-sm-block"></div>
+						<!-- Add new button -->
+						<li class="nav-item dropdown no-arrow">
+							<a class="nav-link dropdown-toggle" href="#" id="newbuttonDropdown" role="button"
+								data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<div class="icon-circle bg-primary">
+									<i class="fas fa-receipt text-white"></i>
+								</div>&nbsp; Add New
+							</a>
+							<!-- Dropdown - User Information -->
+							<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+								aria-labelledby="userDropdown">
+								<a class="dropdown-item" href="#" data-toggle="modal" data-target="#createtask">
+									<i class="fas fa-tasks fa-sm fa-fw mr-2 text-gray-400"></i>
+									New Task
+								</a>
+								<a class="dropdown-item" href="#" data-toggle="modal" data-target="#createmeeting">
+									<i class="fas fa-calendar fa-sm fa-fw mr-2 text-gray-400"></i>
+									New Meeting
+								</a>
+
+								<a class="dropdown-item" href="#" data-toggle="modal" data-target="#createissue">
+									<i class="fas fa-receipt fa-sm fa-fw mr-2 text-gray-400"></i>
+									New Issue
+								</a>
+							</div>
+						</li>
+						<!-- Nav Item - Alerts -->
+						<li class="nav-item dropdown no-arrow mx-1">
+							<a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
+								data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<i class="fas fa-bell fa-fw"></i>
+								<!-- Counter - Alerts -->
+								<span class="badge badge-danger badge-counter">3+</span>
+							</a>
+							<!-- Dropdown - Alerts -->
+							<div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+								aria-labelledby="alertsDropdown">
+								<h6 class="dropdown-header">
+									Alerts Center
+								</h6>
+								<a class="dropdown-item d-flex align-items-center" href="#">
+									<div class="mr-3">
+										<div class="icon-circle bg-primary">
+											<i class="fas fa-file-alt text-white"></i>
+										</div>
+									</div>
+									<div>
+										<div class="small text-gray-500">December 12, 2019</div>
+										<span class="font-weight-bold">A new monthly report is ready to download!</span>
+									</div>
+								</a>
+								<a class="dropdown-item d-flex align-items-center" href="#">
+									<div class="mr-3">
+										<div class="icon-circle bg-success">
+											<i class="fas fa-donate text-white"></i>
+										</div>
+									</div>
+									<div>
+										<div class="small text-gray-500">December 7, 2019</div>
+										$290.29 has been deposited into your account!
+									</div>
+								</a>
+								<a class="dropdown-item d-flex align-items-center" href="#">
+									<div class="mr-3">
+										<div class="icon-circle bg-warning">
+											<i class="fas fa-exclamation-triangle text-white"></i>
+										</div>
+									</div>
+									<div>
+										<div class="small text-gray-500">December 2, 2019</div>
+										Spending Alert: We've noticed unusually high spending for your account.
+									</div>
+								</a>
+								<a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+							</div>
+						</li>
+
+						<!-- Nav Item - Messages -->
+						<li class="nav-item dropdown no-arrow mx-1">
+							<a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
+								data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<i class="fas fa-envelope fa-fw"></i>
+								<!-- Counter - Messages -->
+								<span class="badge badge-danger badge-counter">7</span>
+							</a>
+							<!-- Dropdown - Messages -->
+							<div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+								aria-labelledby="messagesDropdown">
+								<h6 class="dropdown-header">
+									Message Center
+								</h6>
+								<a class="dropdown-item d-flex align-items-center" href="#">
+									<div class="dropdown-list-image mr-3">
+										<img class="rounded-circle" src="/static/img/undraw_profile_1.svg" alt="...">
+										<div class="status-indicator bg-success"></div>
+									</div>
+									<div class="font-weight-bold">
+										<div class="text-truncate">Hi there! I am wondering if you can help me with a
+											problem I've been having.</div>
+										<div class="small text-gray-500">Emily Fowler · 58m</div>
+									</div>
+								</a>
+								<a class="dropdown-item d-flex align-items-center" href="#">
+									<div class="dropdown-list-image mr-3">
+										<img class="rounded-circle" src="/static/img/undraw_profile_2.svg" alt="...">
+										<div class="status-indicator"></div>
+									</div>
+									<div>
+										<div class="text-truncate">I have the photos that you ordered last month, how
+											would you like them sent to you?</div>
+										<div class="small text-gray-500">Jae Chun · 1d</div>
+									</div>
+								</a>
+								<a class="dropdown-item d-flex align-items-center" href="#">
+									<div class="dropdown-list-image mr-3">
+										<img class="rounded-circle" src="/static/img/undraw_profile_3.svg" alt="...">
+										<div class="status-indicator bg-warning"></div>
+									</div>
+									<div>
+										<div class="text-truncate">Last month's report looks great, I am very happy with
+											the progress so far, keep up the good work!</div>
+										<div class="small text-gray-500">Morgan Alvarez · 2d</div>
+									</div>
+								</a>
+								<a class="dropdown-item d-flex align-items-center" href="#">
+									<div class="dropdown-list-image mr-3">
+										<img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60"
+											alt="...">
+										<div class="status-indicator bg-success"></div>
+									</div>
+									<div>
+										<div class="text-truncate">Am I a good boy? The reason I ask is because someone
+											told me that people say this to all dogs, even if they aren't good...</div>
+										<div class="small text-gray-500">Chicken the Dog · 2w</div>
+									</div>
+								</a>
+								<a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
+							</div>
+						</li>
+						<div class="topbar-divider d-none d-sm-block"></div>
+						<!-- Nav Item - User Information -->
+						<li class="nav-item dropdown no-arrow">
+							<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+								data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<span
+									class="text-capitalize text-white font-weight-bold shadow-sm p-1 bg-info">{{obj.name}}
+									<img class="img-profile rounded-circle" src="/static/img/undraw_profile.svg">
+								</span>
+							</a>
+							<!-- Dropdown - User Information -->
+							<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+								aria-labelledby="userDropdown">
+								<a class="dropdown-item" href="#">
+									<i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+									Profile Settings
+								</a>
+								<a class="dropdown-item" href="#">
+									<i class="fas fa-envelope fa-sm fa-fw mr-2 text-gray-400"></i>
+									Invitations
+								</a>
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+									<i class="fas fa-power-off fa-sm fa-fw mr-2 text-gray-400"></i>
+									Logout
+								</a>
+							</div>
+						</li>
+					</ul>
+				</nav>
+				<!-- End of Topbar -->
+				{% block content %}
+				{% endblock %}
+			</div>
+		</div>
+	</div>
+
+	<!-- Footer -->
+	<footer class="sticky-footer bg-white">
+		<div class="container my-auto">
+			<div class="copyright text-center my-auto">
+				<span>Copyright &copy; DITS Management 2021</span>
+			</div>
+		</div>
+	</footer>
+	<!-- End of Footer -->
+
+	<!-- Scroll to Top Button-->
+	<a class="scroll-to-top rounded" href="#page-top">
+		<i class="fas fa-angle-up"></i>
+	</a>
+
+	<!-- Logout Modal-->
+	<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+					<button class="close" type="button" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<div class="modal-body">Are you sure to end your current session? Please click on Logout button.</div>
+				<div class="modal-footer">
+					<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+					<a class="btn btn-primary" href="{% url 'logout' %}">Logout</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-------------------------------------The Modal to create workspace---------------------------------- -->
+	<div class="modal" id="createworkspace">
+		<div class="modal-dialog">
+			<div class="modal-content">
+
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title">Create Workspace</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+
+				<!-- Modal body -->
+				<div class="modal-body">
+					<form action="{% url 'work-space-add' %}" method="POST">
+						{% csrf_token %}
+						<small>Workspace Name*</small>
+						<input type="text" placeholder="Enter your workspace name" name="name" class="form-control"
+							required>
+						<br>
+						<input type="submit" class="btn btn-default bg-gradient-success text-white text-right"
+							value="Create Workspace">
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-------------------------------------The Modal to create Team --------------------------------------->
+	<div class="modal" id="createteam">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title">Create Team</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<!-- Modal body -->
+				<div class="modal-body">
+					<form action="{% url 'team-add' %}" method="POST">
+						{% csrf_token %}
+						<small>Team Name*</small>
+						<input type="text" placeholder="Team Name" name="name" class="form-control" required>
+						<br>
+						<small>Team Description</small>
+						<input type="text" placeholder="Description" name="description" class="form-control">
+						<br>
+						<input type="submit" class="btn btn-default bg-gradient-success text-white pull-right"
+							value="Create New Team">
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-------------------------------------The Modal to create New Task---------------------------------- -->
+	<div class="modal" id="createtask">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title">Create Task</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+
+				<!-- Modal body -->
+				<div class="modal-body">
+					<form action="{% url 'task-add' %}" method="POST">
+						{% csrf_token %}
+						<div class="row">
+							<div class="col-lg-12">
+								<small>Title*</small>
+								<input type="text" placeholder="Title" name="title" class="form-control" required><br>
+							</div>
+							<div class="col-lg-12">
+								<small>Assign To</small>
+								<select name="assigned_to" id="" class="form-control">
+									<option value="">Please select</option>
+									{% for employee in employees %}
+										<option value="{{employee.id}}">{{employee.name}}</option>
+									{% endfor %}
+								</select>
+								<br>
+							</div>
+							<div class="col-md-6">
+								<small>Priority*</small>
+								<select name="priority" id="" class="form-control">
+									<option value="">Please select</option>
+									<option value="3">Low</option>
+									<option value="2">Medium</option>
+									<option value="1">High</option>
+									<option value="4">Critical</option>
+								</select>
+								<br>
+							</div>
+							<div class="col-md-6">
+								<small>Workspace*</small>
+								<select name="workspace" id="" class="form-control">
+									<option value="">Please select</option>
+									{% for space in workspace %}
+									<option value="{{space.id}}">{{space.name}}</option>
+									{% endfor %}
+								</select>
+								<br>
+							</div>
+							<div class="col-md-4">
+								<small>Status</small>
+								<select name="task_status" id="" class="form-control">
+									<option value="1" selected>Not Started</option>
+									<option value="2">In Progress</option>
+									<option value="3">In Review</option>
+									<option value="4">Completed</option>
+									<option value="5">Cancelled</option>
+								</select><br>
+							</div>
+
+							<div class="col-md-4">
+								<small>Start Date*</small>
+								<div class="input-group mb-3">
+									<div class="input-group-prepend">
+										<span class="input-group-text" id="calender_icon"><i class="fa fa-calendar"
+												aria-hidden="true"></i></span>
+									</div>
+									<input type="datetime-local" name="planned_start_date" class="form-control"
+										aria-label="date" aria-describedby="calender_icon">
+								</div>
+								<br>
+							</div>
+							<div class="col-md-4">
+								<small>End Date*</small>
+								<div class="input-group mb-3">
+									<div class="input-group-prepend">
+										<span class="input-group-text" id="calender_icon"><i class="fa fa-calendar"
+												aria-hidden="true"></i></span>
+									</div>
+									<input type="datetime-local" name="planned_end_date" class="form-control"
+										aria-label="date" aria-describedby="calender_icon">
+								</div>
+								<br>
+							</div>
+							<div class="col-md-12">
+								<small>Description</small>
+								<textarea name="" id="" placeholder="Type Something" cols="30" class="form-control"
+									rows="2"></textarea><br>
+							</div>
+						</div>
+						<input type="submit" class="btn btn-primary w-100" value="Add/Assign">
+					</form>
+				</div>
+				<!-- modal footer -->
+			</div>
+		</div>
+	</div>
+
+	<!-------------------------------------The Modal to create New Meeting---------------------------------- -->
+	<div class="modal" id="createmeeting">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title">Create Meeting</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+
+				<!-- Modal body -->
+				<div class="modal-body">
+					<div class="row">
+
+						<div class="col-lg-12">
+							<small>Meeting Title <i class="fa fa-info-circle" data-toggle="tooltip"
+									title="Give your Meeting a name. It's mandatory field."></i></small>
+							<input type="text" placeholder="Add Meeting Title" class="form-control"><br>
+						</div>
+
+
+						<div class="col-lg-6">
+							<small>Date <i class="fa fa-info-circle" data-toggle="tooltip"
+									title="Set your meeting date."></i></small>
+							<div class="input-group mb-3">
+								<div class="input-group-prepend">
+									<span class="input-group-text" id="calender_icon"><i class="fa fa-calendar"
+											aria-hidden="true"></i></span>
+								</div>
+								<input type="text" name="meetingdatetimes" class="form-control" aria-label="date"
+									aria-describedby="calender_icon">
+							</div>
+						</div>
+						<!-- <script>
+							$(function () {
+								$('input[name="meetingdatetimes"]').daterangepicker({
+									timePicker: true,
+									startDate: moment().startOf('hour'),
+									endDate: moment().startOf('hour').add(32, 'hour'),
+									locale: {
+										format: 'M/DD hh:mm A'
+									}
+								});
+							});
+						</script> -->
+						<div class="col-lg-6">
+							<small>Start Time</small>
+							<div class="input-group mb-3">
+								<div class="input-group-prepend">
+									<span class="input-group-text" id="am_pm">
+										<select name="" id="" style="background-color: transparent;border: none;">
+											<option value="AM">AM</option>
+											<option value="PM">PM</option>
+										</select>
+									</span>
+								</div>
+								<input type="time" class="form-control" aria-describedby="am_pm" id="appt" name="appt">
+							</div>
+						</div>
+						<div class="col-md-6">
+							<small>Task (Optional)</small>
+							<select name="" id="" class="form-control">
+								<option value="">0000001-demo</option>
+								<option value="">02022-test</option>
+							</select><br>
+						</div>
+
+						<div class="col-md-6">
+							<small>Duration (Hrs/Mins)</small>
+							<input type="time" class="form-control" aria-describedby="am_pm" id="appt" name="appt">
+						</div>
+						<div class="col-md-12">
+							<small>Location</small>
+							<select name="" id="" class="form-control">
+								<option value="">Add Location</option>
+
+							</select><br>
+						</div>
+
+						<div class="col-md-12">
+							<small>Participant (Optional)</small>
+							<select name="" id="" class="form-control">
+								<option value="Sandeep Yadav">Sandeep Yadav</option>
+								<option value="Neeta">Neeta</option>
+							</select><br>
+						</div>
+						<div class="col-md-12">
+							<small>Agenda (Optional) <i class="fa fa-info-circle" data-toggle="tooltip"
+									title="Set key agenda points for your meetings to share with your team members."></i></small>
+							<textarea name="" id="" placeholder="Type and press enter to add agenda" cols="30"
+								class="form-control" rows="2"></textarea><br>
+						</div>
+					</div>
+				</div>
+				<!-- modal footer -->
+				<div class="modal-footer">
+					<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+					<a class="btn btn-primary" href="#">Create Meeting</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-------------------------------------The Modal to create Issue---------------------------------- -->
+	<div class="modal" id="createissue">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title">Create Issue</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<!-- Modal body -->
+				<div class="modal-body">
+					<form action="{% url 'issue-add' %}" method="POST">
+						{% csrf_token %}
+						<div class="row">
+							<div class="col-lg-12">
+								<small>Issue Title </small>
+								<input type="text" name="title" placeholder="Add Issue Title" class="form-control" required><br>
+							</div>
+							<div class="col-lg-12">
+								<small>Assigned To (Optional) </small>
+								<select name="assigned_to" id="" class="form-control">
+									{% for employee in employees %}
+										<option value="{{employee.id}}">{{employee.name}}</option>
+									{% endfor %}
+								</select>
+								<br>
+							</div>
+							<div class="col-md-6">
+								<small>Issue Type</small>
+								<select name="issue_type" id="" class="form-control" required='required'>
+									<option value="Bug">Bug</option>
+									<option value="Feature">Feature</option>
+									<option value="Improvement">Improvement</option>
+								</select><br>
+							</div>
+							<div class="col-md-6">
+								<small>Priority</small>
+								<select name="priority" id="" class="form-control">
+									<option value="1">Critical</option>
+									<option value="2">High</option>
+									<option value="3">Medium</option>
+									<option value="4">Low</option>
+								</select><br>
+							</div>
+							<div class="col-md-4">
+								<small>Start Date*</small>
+								<div class="input-group mb-3">
+									<div class="input-group-prepend">
+										<span class="input-group-text" id="calender_icon"><i class="fa fa-calendar"
+												aria-hidden="true"></i></span>
+									</div>
+									<input type="datetime-local" name="planned_start_date" class="form-control"
+										aria-label="date" aria-describedby="calender_icon">
+								</div>
+								<br>
+							</div>
+							<div class="col-md-4">
+								<small>End Date*</small>
+								<div class="input-group mb-3">
+									<div class="input-group-prepend">
+										<span class="input-group-text" id="calender_icon"><i class="fa fa-calendar"
+												aria-hidden="true"></i></span>
+									</div>
+									<input type="datetime-local" name="planned_end_date" class="form-control"
+										aria-label="date" aria-describedby="calender_icon">
+								</div>
+								<br>
+							</div>
+							<!-- <script>
+								$(function () {
+									$('input[name="issuedatetime"]').daterangepicker({
+										timePicker: true,
+										startDate: moment().startOf('hour'),
+										endDate: moment().startOf('hour').add(32, 'hour'),
+										locale: {
+											format: 'M/DD hh:mm A'
+										}
+									});
+								});
+							</script> -->
+							<div class="col-md-4">
+								<small>Status</small>
+								<select name="issue_status" id="" class="form-control">
+									<option value="1">Not Started</option>
+									<option value="2">In Progress</option>
+									<option value="3">In Review</option>
+									<option value="4">Completed</option>
+									<option value="5">Cancelled</option>
+								</select><br>
+							</div>
+							<div class="col-md-12">
+								<small>Description</small>
+								<textarea name="description" placeholder="Type Something" cols="30" class="form-control" rows="2"></textarea>
+								<br>
+							</div>
+						</div>
+						<input type="submit" class="btn btn-primary w-100" value="Create Issue">
+					</form>
+				</div>
+				<!-- modal footer -->
+			</div>
+		</div>
+	</div>
+
+	<!------------------------------------modal popup to edit workspace name ------------------------------------->
+	<div class="modal" id="editworkspace">
+		<div class="modal-dialog">
+			<div class="modal-content">
+
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title">Edit Workspacce</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+
+				<!-- Modal body -->
+				<div class="modal-body">
+					<small>Workspacce Name</small>
+					<input type="text" class="form-control">
+					<br>
+					<small>Workspacce URL</small>
+					<input type="text" class="form-control">
+					<br>
+					<button type="button" class="btn btn-default bg-gradient-success text-white pull-right">Save Changes</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end change prority status -->
+
+	<!------------------------script/style for header tab & panel data--------------------------------- -->
+	<script>
+		function opennavbartabs(evt, navtabName) {
+			var i, tabcontent, tablinks;
+			tabcontent = document.getElementsByClassName("tabcontent");
+			for (i = 0; i < tabcontent.length; i++) {
+				tabcontent[i].style.display = "none";
+			}
+			tablinks = document.getElementsByClassName("tablinks");
+			for (i = 0; i < tablinks.length; i++) {
+				tablinks[i].className = tablinks[i].className.replace(" active", "");
+			}
+			document.getElementById(navtabName).style.display = "block";
+			evt.currentTarget.className += " active";
+		}
+
+		// Get the element with id="defaultOpen" and click on it
+		document.getElementById("defaultOpen").click();
+	</script>
+
+	<!--------------------------------------settings tab section style/script---------------------------------- -->
+	<script>
+		function opensettingtab_section(evt, setting_contentName) {
+			var i, settingtabcontent, settingtablinks;
+			settingtabcontent = document.getElementsByClassName("settingtabcontent");
+			for (i = 0; i < settingtabcontent.length; i++) {
+				settingtabcontent[i].style.display = "none";
+			}
+			settingtablinks = document.getElementsByClassName("settingtablinks");
+			for (i = 0; i < settingtablinks.length; i++) {
+				settingtablinks[i].className = settingtablinks[i].className.replace(" active", "");
+			}
+			document.getElementById(setting_contentName).style.display = "block";
+			evt.currentTarget.className += " active";
+		}
+
+		// Get the element with id="defaultOpen" and click on it
+		document.getElementById("defaultOpen").click();
+	</script>
+	
+	<!-- Bootstrap core JavaScript-->
+	<script src="{% static 'vendor/jquery/jquery.min.js'%}"></script>
+	<script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+	<!-- Core plugin JavaScript-->
+	<script src="{% static 'vendor/jquery-easing/jquery.easing.min.js'%}"></script>
+
+	<!-- Custom scripts for all pages-->
+	<script src="{% static 'js/dits_management.min.js '%}"></script>
+
+	<script src="{% static 'js/priority_status_change.js'%}"></script>
+	<script src="{% static 'js/priority_status_modify.js'%}"></script>
+	<!-- <script src="{% static 'js/task_status_change.js'%}"></script> -->
+	<!-- <script src="{% static 'js/task_info.js'%}"></script> -->
+	<script src="{% static 'js/base.js' %}"></script>
+</body>
+
+</html>
