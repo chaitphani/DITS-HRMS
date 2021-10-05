@@ -1,8 +1,6 @@
 from dashboard.models import StaffUser
-from dashboard.decorator import is_authenticated
 
 
-@is_authenticated
 def get_members(request):
 
     try:

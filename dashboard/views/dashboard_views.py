@@ -6,7 +6,10 @@ from datetime import datetime
 from dashboard.models import *
 from dashboard.forms import *
 from dashboard.serializers import *
-from django.db.models import Sum, Count
+from django.db.models import Sum, Count, F
+
+from django.core.mail import send_mail
+from django.conf import settings
 
 
 def is_authenticated(f):
@@ -22,7 +25,7 @@ def is_authenticated(f):
         request.session.clear()
         return redirect("login")
     wrap.__doc__ = f.__doc__
-    wrap.__name__ = f.__name__
+    # wrap.__name__ = f.__name__
     return wrap
 
 
@@ -36,8 +39,12 @@ def home(request):
         workspace = WorkSpace.objects.filter(status=True)
         issues = Issue.objects.filter(status=True).order_by('-id')
     
-        tasks_in_workspace = Task.objects.filter(status=True)
+        tasks_in_workspace = workspace.prefetch_related('task_set', 'issue_set').filter(status=True).annotate(task_count=Count('task__id'), task_assignees=F('task__assigned_to__name'), issue_count=Count('issue__id')).values()
+
+        # tasks_in_workspace = WorkSpace.objects.prefetch_related('issue_set').filter(status=True).annotate(task_count=Count('issue__id'))
         # .annotate(number_of_answers=Count('workspace'))
+
+        # print('----tasksi nworkspace-----', tasks_in_workspace)
 
         if request.GET.get('id'):
             if request.method == "GET" and request.is_ajax():
@@ -62,7 +69,7 @@ def home(request):
         issues = ''
     return render(request,'dashboard/home.html', {
                         'obj': user_obj, 'employees':employees, 'tasks':tasks, 'workspace': workspace, 
-                        'len_work':len(workspace), 'issues':issues
+                        'len_work':len(workspace), 'issues':issues, 'workspace_data':tasks_in_workspace,
     })
 
 

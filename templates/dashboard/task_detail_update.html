@@ -139,10 +139,11 @@
                     <!-- <div class="col-12"><br>
                             <input type="text" class="form-control" placeholder="Add a to-do list item">
                         </div>  -->
-                         <div class="row text-center" id="footer">
-                            <div class="col-12">Created on - {{obj.created_on|date:'d-m-Y H:i'}}</div>
-                    </div>
+                <div class="row text-center" id="footer">
+                    <div class="col-12">Created on - {{obj.created_on|date:'d-m-Y H:i'}}</div>
+                </div>
             </div>
+
             <div class="col-5 bodycol5">
                 <!------------------------ multiple taskmanagertabs with their multiple panels to manage all the data in a single page  -->
                 <div class="row taskmanagertab">
@@ -155,6 +156,7 @@
                     <button class="taskmanagertablinks" style="width: 24%;"
                         onclick="opentaskmanagertabs(event, 'taskmanager_issues')">Issues</button>
                 </div>
+
                 <div id="taskmanager_comments" class="taskmanagertabcontent" style="display: block;">
                     <!-- comment section -->
                     <div class="container-fluid">
@@ -244,6 +246,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div id="taskmanager_meetings" class="taskmanagertabcontent">
                     <!-- dashboard section -->
                     <div class="container-fluid">

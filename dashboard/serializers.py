@@ -21,10 +21,10 @@ class TeamSerializer(serializers.ModelSerializer):
         fields = ['name', 'description']
 
 
-class StaffUserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = StaffUser
-        fields = ['user_id', 'name', 'email', 'password', 'team']
+# class StaffUserSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = StaffUser
+#         fields = ['user_id', 'name', 'email', 'password', 'team']
 
 
 class IssueSerializer(serializers.ModelSerializer):

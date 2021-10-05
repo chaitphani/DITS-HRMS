@@ -1,10 +1,14 @@
 from django.contrib import messages
+from django.core import exceptions
 from django.http.response import HttpResponse
 from django.shortcuts import render, redirect
 
 from dashboard.models import *
 from dashboard.forms import *
-from dashboard.decorator import is_authenticated
+from dashboard.views.dashboard_views import is_authenticated
+
+from django.core.mail import send_mail
+from django.conf import settings
 
 
 def login(request):
@@ -57,3 +61,44 @@ def logout(request):
         pass
 
     return redirect('login')
+
+
+def signup(request):
+
+    if request.method == 'POST':
+        try:
+            if len(User.objects.filter(username=request.POST['name'])) > 0:
+                messages.error(request, 'provided User Name already taken..')
+            elif len(User.objects.filter(email=request.POST['email'])) > 0:
+                messages.error(request, 'Provided Email already taken..')
+            else:
+                form = StaffUserForm(request.POST)
+                if form.is_valid():
+                    form_save = form.save(commit = False)
+                    user = User.objects.create_user(username=request.POST['name'], email=request.POST['email'], password=request.POST['password'])
+                    form_save.user_id = user
+                    form_save.save()
+
+                    from_mail = settings.EMAIL_HOST_USER
+                    to_email = form_save.email
+                    body = "DITS staff acccount has been created: \n\n"\
+                            "User Name : {} ".format(form_save.name)+'\n'+\
+                            "Email: {} ".format(form_save.email)+'\n'+\
+                            "Password: {} ".format(form_save.password)
+
+                    send_mail(
+                        'Welcome to DITS Task Management App',
+                        body,
+                        from_mail,
+                        [to_email],
+                        fail_silently=False,
+                    )
+                    messages.success(request, 'Member ' + form_save.name + ' add success...!')
+                    return redirect('login')
+        except Exception as e:
+            print('----error as e----', e)
+            messages.error(request, 'Provided user already exists..')
+    else:
+        form = StaffUserForm()
+    return render(request, 'dashboard/login.html')
+    

@@ -53,31 +53,31 @@
                         </div>
                         <!-- box 2 -->
                         {% for space in workspace %}
-                        <div class="wrapper">
-                            <a class="box">
-                                <div class="box_insidediv">
-                                    <div class="col-lg-12">
-                                        <span class="user_txticon text-capitalize">{{space.name|make_list|first}}</span><br>
-                                        <p class="text-capitalize">{{space.name}}</p>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <span>Tasks</span><br><b>01</b>
+                            <div class="wrapper">
+                                <a class="box" href="#">
+                                    <div class="box_insidediv">
+                                        <div class="col-lg-12">
+                                            <span class="user_txticon text-capitalize">{{space.name|make_list|first}}</span><br>
+                                            <p class="text-capitalize">{{space.name}}</p>
                                         </div>
-                                        <div class="col-6">
-                                            <span>Issues</span><br><b>41</b>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <span>Tasks</span><br><b>{{workspace_data.task_count}}</b>
+                                            </div>
+                                            <div class="col-6">
+                                                <span>Issues</span><br><b>{{workspace_data.issue_count}}</b>
+                                            </div>
+                                        </div>
+                                        <br><br>
+                                        <div class="row boxinside_div_footer">
+                                            <small>Members:</small> &nbsp;
+                                            <span class="member_circle text-danger">C</span>
+                                            <span class="member_circle text-dark">N</span>
+                                            <span class="member_circle">M</span>
                                         </div>
                                     </div>
-                                    <br><br>
-                                    <div class="row boxinside_div_footer">
-                                        <small>Members:</small> &nbsp;
-                                        <span class="member_circle">S</span>
-                                        <span class="member_circle">N</span>
-                                        <span class="member_circle">V</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
+                                </a>
+                            </div>
                         {% endfor %}
                     </div>
                 </div>

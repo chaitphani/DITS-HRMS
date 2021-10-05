@@ -1,14 +1,38 @@
-from dashboard.models import *
 from django.contrib import messages
 from django.http.response import HttpResponse
+from django.core.mail import send_mail
+from django.conf import settings
+
+from dashboard.models import *
 
 
 def tasK_status_change(request):
 
     if request.method == "GET" and request.is_ajax():
         task_obj = Task.objects.get(id=request.GET.get('id'),)
+        prev_status = task_obj.task_status
         task_obj.task_status = request.GET.get('task_status',)
+        aftr_status = task_obj.task_status
         task_obj.save()
+
+        from_mail = settings.EMAIL_HOST_USER
+        to_email = task_obj.assigned_to.email
+        subject = "Task Status Changed - " + task_obj.assigned_to.name
+        body = "Status change for Ticket - " + task_obj.id + " : \n\n"\
+                "User Name : {} ".format(task_obj.assigned_to.name)+'\n'+\
+                "Workspace: {} ".format(task_obj.workspace.name)+'\n'+\
+                "Task Name: {} ".format(task_obj.title)+'\n'+\
+                "Previous Status: {} ".format(prev_status)+'\n'+\
+                "Present Status: {} ".format(aftr_status)
+
+        send_mail(
+            subject,
+            body,
+            from_mail,
+            [to_email],
+            fail_silently=False,
+        )
+
         messages.success(request, task_obj.title + ' task-status change success...')
     return HttpResponse('success')
 
@@ -16,8 +40,29 @@ def tasK_status_change(request):
 def issue_status_change(request):
 
     if request.method == "GET" and request.is_ajax():
-        task_obj = Task.objects.get(id=request.GET.get('id'),)
-        task_obj.task_status = request.GET.get('issue_status',)
-        task_obj.save()
-        messages.success(request, task_obj.title + ' issue-status change success...')
+        issue_obj = Issue.objects.get(id=request.GET.get('id'),)
+        prev_status = issue_obj.issue_status
+        issue_obj.issue_status = request.GET.get('issue_status',)
+        aftr_status = issue_obj.issue_status
+        issue_obj.save()
+
+        from_mail = settings.EMAIL_HOST_USER
+        to_email = issue_obj.assigned_to.email
+        subject = "Issue Status Changed - " + issue_obj.assigned_to.name
+        body = "Status change for Issue raised - " + issue_obj.title + " : \n\n"\
+                "User Name : {} ".format(issue_obj.assigned_to.name)+'\n'+\
+                "Workspace: {} ".format(issue_obj.workspace.name)+'\n'+\
+                "Task Name: {} ".format(issue_obj.title)+'\n'+\
+                "Previous Status: {} ".format(prev_status)+'\n'+\
+                "Present Status: {} ".format(aftr_status)
+
+        send_mail(
+            subject,
+            body,
+            from_mail,
+            [to_email],
+            fail_silently=False,
+        )
+
+        messages.success(request, issue_obj.title + ' issue-status change success...')
     return HttpResponse('success')
