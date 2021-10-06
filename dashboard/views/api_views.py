@@ -57,7 +57,10 @@ class WorkSpaceView(APIView):
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            serialize = serializer.save()
+            slug_name = serialize.name.lower()
+            serialize.slug = re.sub("[$₹%\‘@’+;()/:&!?.'|*^–,`~#]", "", slug_name).replace(" ", "-")
+            serialize.save()
             messages.success(request, 'Work space add success...')
             return redirect('home')
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

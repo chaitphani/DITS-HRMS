@@ -47,7 +47,7 @@ def home(request):
         # tasks_in_workspace = WorkSpace.objects.prefetch_related('issue_set').filter(status=True).annotate(task_count=Count('issue__id'))
         # .annotate(number_of_answers=Count('workspace'))
 
-        print('----tasks in workspace-----', tasks_in_workspace)
+        # print('----tasks in workspace-----', tasks_in_workspace)
 
         if request.GET.get('id'):
             if request.method == "GET" and request.is_ajax():

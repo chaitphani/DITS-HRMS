@@ -53,10 +53,10 @@ class WorkSpace(models.Model):
     def __str__(self):
         return '{}'.format(self.name)
 
-    def save(self, *args, **kwargs):
-        self.slug = self.name.lower()
-        self.slug = re.sub("[$₹%\‘@’+;()/:&!?.'|*^–,`~#]", "", self.slug).replace(" ", "-")
-        super(WorkSpace, self).save(*args, *kwargs)
+    # def save(self, *args, **kwargs):
+    #     self.slug = self.name.lower()
+    #     self.slug = re.sub("[$₹%\‘@’+;()/:&!?.'|*^–,`~#]", "", self.slug).replace(" ", "-")
+    #     super(WorkSpace, self).save(*args, *kwargs)
 
 
 class Task(models.Model):
