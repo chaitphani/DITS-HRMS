@@ -18,7 +18,7 @@ def tasK_status_change(request):
         from_mail = settings.EMAIL_HOST_USER
         to_email = task_obj.assigned_to.email
         subject = "Task Status Changed - " + task_obj.assigned_to.name
-        body = "Status change for Ticket - " + task_obj.id + " : \n\n"\
+        body = "Status change for Issue raised - " + task_obj.title + " : \n\n"\
                 "User Name : {} ".format(task_obj.assigned_to.name)+'\n'+\
                 "Workspace: {} ".format(task_obj.workspace.name)+'\n'+\
                 "Task Name: {} ".format(task_obj.title)+'\n'+\

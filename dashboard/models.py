@@ -2,6 +2,8 @@ from django.db import models
 from django.db.models.base import ModelStateFieldsCacheDescriptor
 from django.contrib.auth.models import User
 
+import re
+
 priority_choices = (('1', 'High'),('2', 'Medium'),('3', 'Low'), ('4', 'Critical'), )
 task_status_choices = (('1', 'Not Started'),('2', 'In Progress'),('3', 'In Review'),('4', 'Completed'),('5', 'Cancelled'),)
 issue_type = (('1','Bug'), ('2', 'Feature'), ('3', 'Improvement'))
@@ -42,13 +44,19 @@ class StaffUser(models.Model):
 class WorkSpace(models.Model):
 
     name = models.CharField(max_length=120)
-    
+    slug = models.CharField(max_length=120)
+
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
     status = models.BooleanField(default=True)
 
     def __str__(self):
         return '{}'.format(self.name)
+
+    def save(self, *args, **kwargs):
+        self.slug = self.name.lower()
+        self.slug = re.sub("[$₹%\‘@’+;()/:&!?.'|*^–,`~#]", "", self.slug).replace(" ", "-")
+        super(WorkSpace, self).save(*args, *kwargs)
 
 
 class Task(models.Model):

@@ -22,9 +22,7 @@ class TaskView(APIView):
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
             if len(WorkSpace.objects.filter(status=True)) > 0:
-                serialize = serializer.save()
-                serialize.id = 'DITASK01 -' + serialize.id
-                serialize.save()
+                serializer.save()
                 if serializer.data['assigned_to'] != '' or serializer.data['assigned_to'] != None\
                         and serializer.data['priority'] != '' or serializer.data['priority'] != None:
                     staff_mem = StaffUser.objects.get(id=serializer.data['assigned_to'])
@@ -44,7 +42,7 @@ class TaskView(APIView):
                         fail_silently=False,
                     )
                 messages.success(request, 'Task add success...!')
-                return redirect('home')
+                return redirect('home') 
             else:
                 messages.error(request, 'No workspace to assign task...!')
                 return redirect('home')

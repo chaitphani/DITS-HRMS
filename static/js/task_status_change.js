@@ -13,7 +13,6 @@ function task_status_change(id) {
                 location.reload();
             },
             error: function (response) {
-                alert('Error')
                 location.reload();
             }
         });

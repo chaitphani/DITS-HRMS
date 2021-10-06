@@ -10,7 +10,7 @@ function priority_status_modify(id) {
                 location.reload();
             },
             error: function (response) {
-                alert('Error')
+               
                 location.reload();
             }
         });
