@@ -39,15 +39,10 @@ def home(request):
         workspace = WorkSpace.objects.filter(status=True)
         issues = Issue.objects.filter(status=True).order_by('-id')
 
-        # for work in workspace:
-        #     pass
-
-        tasks_in_workspace = workspace.prefetch_related('task_set', 'issue_set').filter(status=True).annotate(task_count=Count('task__id'), task_assignees=F('task__assigned_to__name'), issue_count=Count('issue__id')).values()
+        # tasks_in_workspace = workspace.prefetch_related('task_set', 'issue_set').filter(status=True).annotate(task_count=Count('task__id'), task_assignees=F('task__assigned_to__name'), issue_count=Count('issue__id')).values()
 
         # tasks_in_workspace = WorkSpace.objects.prefetch_related('issue_set').filter(status=True).annotate(task_count=Count('issue__id'))
         # .annotate(number_of_answers=Count('workspace'))
-
-        # print('----tasks in workspace-----', tasks_in_workspace)
 
         if request.GET.get('id'):
             if request.method == "GET" and request.is_ajax():
@@ -64,16 +59,45 @@ def home(request):
                 messages.success(request, issue_obj.title + ' prority change success...')
 
     except Exception as e:
-        # print('---exception as error------', e)
+        print('---exception as error------', e)
         user_obj = ''
         employees = ''
-        tasks = ''
         workspace = ''
-        issues = ''
     return render(request,'dashboard/home.html', {
                         'obj': user_obj, 'employees':employees, 'workspace': workspace, 
-                        'len_work':len(workspace), 'workspace_data':tasks_in_workspace,
+                        'len_work':len(workspace),
     })
+
+
+@is_authenticated
+def team_select(request, slug):
+
+    teams_obj = Team.objects.filter(slug=slug)
+    return render(request, 'dashboard/team.html', {'teams':teams_obj, })
+
+
+@is_authenticated
+def invite_member(request):
+
+    if request.method == "POST":
+        mem_email = request.POST.get('email')
+        # try:
+        #     staff_check = StaffUser.objects.get(email = mem_email)
+        #     try:
+        #         team_obj = Team.objects.get(slug=request.GET.get('team'))
+        #         staff_check.team = team_obj
+        #         staff_check.save()
+        #         messages.success(request, 'Member invite success...!') 
+        #         return redirect('/')
+        #     except Exception as err:
+        #         print('----error in team check of invite----', err)
+        #         messages.error(request, 'No team found with the name...')
+        #         return redirect('team')
+        # except Exception as e:
+        #     print('---error in invite member----', e)
+        #     messages.error(request, 'No user found with the email...')
+        #     return redirect('team')
+        # re
 
 
 # @is_authenticated

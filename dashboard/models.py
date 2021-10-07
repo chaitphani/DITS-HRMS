@@ -12,6 +12,8 @@ issue_type = (('1','Bug'), ('2', 'Feature'), ('3', 'Improvement'))
 class Team(models.Model):
 
     name = models.CharField(max_length=50)
+    slug = models.CharField(max_length=50)
+    
     description = models.CharField(max_length=50, null=True,blank=True)
 
     status = models.BooleanField(default=True)
@@ -46,6 +48,8 @@ class WorkSpace(models.Model):
     name = models.CharField(max_length=120)
     slug = models.CharField(max_length=120)
 
+    team = models.ForeignKey(Team, on_delete=models.SET_NULL, null=True)
+    
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
     status = models.BooleanField(default=True)
@@ -82,7 +86,7 @@ class Task(models.Model):
     def __str__(self):
         return '{}'.format(self.title)
 
-    
+
 class Issue(models.Model):
 
     title = models.CharField(max_length=120)

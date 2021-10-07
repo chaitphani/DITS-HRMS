@@ -5,7 +5,7 @@ from .models import *
 class StaffUserForm(forms.ModelForm):
     class Meta:
         model = StaffUser
-        fields = ['name', 'email', 'password', 'team']
+        fields = ['name', 'email', 'password']
 
 
 class TaskUpdateForm(forms.ModelForm):

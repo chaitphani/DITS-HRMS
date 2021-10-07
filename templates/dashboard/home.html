@@ -67,8 +67,7 @@
                                         <div class="row boxinside_div_footer">
                                             <small>Members:</small> &nbsp;
                                             {% for name in space.task_set.all %}
-                                                    <span class="member_circle text-dark">V</span>
-                                                    <!-- <span class="member_circle">M</span> -->
+                                                <span class="member_circle text-white text-capitalize">{{name.assigned_to.name|first}}</span>
                                             {% endfor %}
                                         </div>
                                     </div>

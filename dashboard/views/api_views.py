@@ -12,6 +12,8 @@ from dashboard.views.dashboard_views import is_authenticated
 from django.core.mail import send_mail
 from django.conf import settings
 
+from django.template.loader import render_to_string
+from django.core.mail import EmailMultiAlternatives
 
 class TaskView(APIView):
 
@@ -26,21 +28,25 @@ class TaskView(APIView):
                 if serializer.data['assigned_to'] != '' or serializer.data['assigned_to'] != None\
                         and serializer.data['priority'] != '' or serializer.data['priority'] != None:
                     staff_mem = StaffUser.objects.get(id=serializer.data['assigned_to'])
+                    workspace_obj = WorkSpace.objects.get(id=serializer.data.get('workspace'))
+                    statuss = serializer.data.get('task_status')
+                    priority = serializer.data.get('priority')
 
                     from_mail = settings.EMAIL_HOST_USER
                     to_email = staff_mem.email
-                    body = "New task assigned :: details as below: \n\n"\
-                            "Task: {} ".format(serializer.data['title'])+'\n'+\
-                            "Description: {} ".format(serializer.data['description'])+'\n'+\
-                            "Priority level: {} ".format(serializer.data['priority'])
+                    subject = 'A new task has been added for you..'
 
-                    send_mail(
-                        'A New Task has been added to your dashboard...',
-                        body,
-                        from_mail,
-                        [to_email],
-                        fail_silently=False,
-                    )
+                    # body = "New task assigned :: details as below: \n\n"\
+                    #         "Task: {} ".format(serializer.data['title'])+'\n'+\
+                    #         "Description: {} ".format(serializer.data['description'])+'\n'+\
+                    #         "Priority level: {} ".format(serializer.data['priority'])
+                    # send_mail('A New Task has been added to your dashboard...',body,from_mail,[to_email],fail_silently=False,)
+
+                    message = render_to_string('{0}/templates/mail_templates/task_assigned.html'.format(settings.BASE_DIR),{'name':staff_mem.name, 'workspace':workspace_obj.name, 'team':workspace_obj.team.name, 'task':serializer.data.get('title'), 'status':statuss, 'priority':priority})
+                    msg = EmailMultiAlternatives(subject, message, from_mail, [to_email])
+
+                    msg.attach_alternative(message, 'text/html')
+                    msg.send(fail_silently=False)
                 messages.success(request, 'Task add success...!')
                 return redirect('home') 
             else:
@@ -74,7 +80,10 @@ class TeamView(APIView):
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            serialize = serializer.save()
+            slug_name = serialize.name.lower()
+            serialize.slug = re.sub("[$₹%\‘@’+;()/:&!?.'|*^–,`~#]", "", slug_name).replace(" ", "-")
+            serialize.save()
             messages.success(request, 'Team add success...')
             return redirect('home')
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -93,24 +102,27 @@ class IssueView(APIView):
                 if serializer.data['assigned_to'] != '' or serializer.data['assigned_to'] != None\
                         and serializer.data['priority'] != '' or serializer.data['priority'] != None:
                     staff_mem = StaffUser.objects.get(id=serializer.data['assigned_to'])
+                    workspace_obj = WorkSpace.objects.get(id=serializer.data.get('workspace'))
+
                     from_mail = settings.EMAIL_HOST_USER
                     to_email = staff_mem.email
-                    body = "New task assigned :: details as below: \n\n"\
-                            "Task: {} ".format(serializer.data['title'])+'\n'+\
-                            "Description: {} ".format(serializer.data['description'])+'\n'+\
-                            "Priority level: {} ".format(serializer.data['priority'])
+                    subject = 'A new issue raised for you...'
 
-                    send_mail(
-                        'A New Task has been added to your dashboard...',
-                        body,
-                        from_mail,
-                        [to_email],
-                        fail_silently=False,
-                    )                
+                    # body = "New Issue raised for you :: details as below: \n\n"\
+                    #         "Task: {} ".format(serializer.data['title'])+'\n'+\
+                    #         "Description: {} ".format(serializer.data['description'])+'\n'+\
+                    #         "Priority level: {} ".format(serializer.data['priority'])
+                    # send_mail('A New issue has been added to your dashboard...',body,from_mail,[to_email], fail_silently=False,)       
+                      
+                    message = render_to_string('{0}/templates/mail_templates/task_assigned.html'.format(settings.BASE_DIR),{'name':staff_mem.name, 'workspace':workspace_obj.name, 'team':workspace_obj.team.name, 'task':serializer.data.get('title'), 'status':serializer.data.get('issue_status'), 'priority':serializer.data.get('priority')})
+                    msg = EmailMultiAlternatives(subject, message, from_mail, [to_email])
+
+                    msg.attach_alternative(message, 'text/html')
+                    msg.send(fail_silently=False)
                 messages.success(request, 'Issue add success...')
                 return redirect('home')
             else:
-                messages.error(request, 'No workspace to assign task...!')
+                messages.error(request, 'No workspace to assign issue...!')
                 return redirect('home')
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
