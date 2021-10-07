@@ -14,7 +14,6 @@
     cursor: pointer;
     margin-right: 5px;
     padding: 14px 16px;
-
     font-size: 17px;
 }
 
@@ -59,7 +58,7 @@
 
 .bodycol7 {
     border-top: 1px solid #ccc;
-    min-height: 500px;
+    min-height: 300px;
     padding: 10px;
 }
 
@@ -77,7 +76,7 @@
     border-top: 1px solid #ccc;
     border-left: 1px solid #ccc;
     background-color: #f1f1f1;
-    min-height: 500px;
+    min-height: 300px;
 }
 
 #headtaskmanagertab {
