@@ -35,12 +35,11 @@ def home(request):
     try:
         user_obj = StaffUser.objects.get(id=request.session.get('id'))
         employees = StaffUser.objects.filter(active_status=True, is_employee=True)
-        tasks = Task.objects.filter(status=True).order_by('-id')
         workspace = WorkSpace.objects.filter(status=True)
-        issues = Issue.objects.filter(status=True).order_by('-id')
 
+        # tasks = Task.objects.filter(status=True).order_by('-id')
+        # issues = Issue.objects.filter(status=True).order_by('-id')
         # tasks_in_workspace = workspace.prefetch_related('task_set', 'issue_set').filter(status=True).annotate(task_count=Count('task__id'), task_assignees=F('task__assigned_to__name'), issue_count=Count('issue__id')).values()
-
         # tasks_in_workspace = WorkSpace.objects.prefetch_related('issue_set').filter(status=True).annotate(task_count=Count('issue__id'))
         # .annotate(number_of_answers=Count('workspace'))
 

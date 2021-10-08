@@ -19,16 +19,16 @@
                 <span>
                     <button class="btn btn-outline-warning btn-sm ml-5" onclick="history.back()">Back</button>
                 </span>
-                <h5 class="font-weight-bold text-info">Issue - {{obj.title}}</h5>
+                <h5 class="font-weight-bold text-info">Issue - {{object.title}}</h5>
             </div>
             <div class="col-5 text-right">
-                | <select name="issue_status" id="issue_status_{{obj.id}}" class="btn btn-success mb-2 rounded"
-                    onchange="issue_status_change({{obj.id}})">
-                    <option value="1" {% if obj.issue_status == '1' %}selected{% endif %}>Not Started</option>
-                    <option value="2" {% if obj.issue_status == '2' %}selected{% endif %}>In Progress</option>
-                    <option value="3" {% if obj.issue_status == '3' %}selected{% endif %}>In Review</option>
-                    <option value="4" {% if obj.issue_status == '4' %}selected{% endif %}>Completed</option>
-                    <option value="5" {% if obj.issue_status == '5' %}selected{% endif %}>Cancelled</option>
+                | <select name="issue_status" id="issue_status_{{object.id}}" class="btn btn-success mb-2 rounded"
+                    onchange="issue_status_change({{object.id}})">
+                    <option value="1" {% if object.issue_status == '1' %}selected{% endif %}>Not Started</option>
+                    <option value="2" {% if object.issue_status == '2' %}selected{% endif %}>In Progress</option>
+                    <option value="3" {% if object.issue_status == '3' %}selected{% endif %}>In Review</option>
+                    <option value="4" {% if object.issue_status == '4' %}selected{% endif %}>Completed</option>
+                    <option value="5" {% if object.issue_status == '5' %}selected{% endif %}>Cancelled</option>
                 </select>
 
                 <!-- <span class="dropdown" style="margin-top: 10px;">
@@ -51,7 +51,7 @@
                     <div class="row">
                         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
                             <label for="planned_start_end_date">Planned Start</label>
-                            <small class="ml-3 font-weight-bold text-danger">{% if obj.planned_start_date %}{{obj.planned_start_date|date:'d-m-Y H:i'}}{% endif %}</small>
+                            <small class="ml-3 font-weight-bold text-danger">{% if object.planned_start_date %}{{object.planned_start_date|date:'d-m-Y H:i'}}{% endif %}</small>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="planned_start_end_date">
@@ -65,7 +65,7 @@
 
                         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
                             <label for="planned_start_end_date">Planned End</label>
-                            <small class="ml-3 font-weight-bold text-danger">{% if obj.planned_end_date %}{{obj.planned_end_date|date:'d-m-Y H:i'}}{% endif %}</small>
+                            <small class="ml-3 font-weight-bold text-danger">{% if object.planned_end_date %}{{object.planned_end_date|date:'d-m-Y H:i'}}{% endif %}</small>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="planned_start_end_date"><i
@@ -77,7 +77,7 @@
                         </div>
                         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
                             <label for="actual_start_end_date">Actual Start</label>
-                            <small class="ml-3 font-weight-bold text-danger">{% if obj.actual_start_date %}{{obj.actual_start_date|date:'d-m-Y H:i'}}{% endif %}</small>
+                            <small class="ml-3 font-weight-bold text-danger">{% if object.actual_start_date %}{{object.actual_start_date|date:'d-m-Y H:i'}}{% endif %}</small>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="actual_start_end_date"><i
@@ -89,7 +89,7 @@
                         </div>
                         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
                             <label for="actual_start_end_date">Actual End</label>
-                            <small class="ml-3 font-weight-bold text-danger">{% if obj.actual_end_date %}{{obj.actual_end_date|date:'d-m-Y H:i'}}{% endif %}</small>
+                            <small class="ml-3 font-weight-bold text-danger">{% if object.actual_end_date %}{{object.actual_end_date|date:'d-m-Y H:i'}}{% endif %}</small>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="actual_start_end_date"><i
@@ -106,10 +106,10 @@
                                     <span class="input-group-text" id="priority"><i class="fa fa-calendar"></i></span>
                                 </div>
                                 <select class="form-control" name="priority">
-                                    <option value="4" {% if obj.priority == '4' %}selected{% endif %}>Critical</option>
-                                    <option value="1" {% if obj.priority == '1' %}selected{% endif %}>High</option>
-                                    <option value="2" {% if obj.priority == '2' %}selected{% endif %}>Medium</option>
-                                    <option value="3" {% if obj.priority == '3' %}selected{% endif %}>Low</option>
+                                    <option value="4" {% if object.priority == '4' %}selected{% endif %}>Critical</option>
+                                    <option value="1" {% if object.priority == '1' %}selected{% endif %}>High</option>
+                                    <option value="2" {% if object.priority == '2' %}selected{% endif %}>Medium</option>
+                                    <option value="3" {% if object.priority == '3' %}selected{% endif %}>Low</option>
                                 </select>
                             </div>
                         </div>
@@ -121,7 +121,7 @@
                                 </div>
                                 <select class="form-control" name="assigned_to">
                                     {% for employee in employees %}
-                                        <option value="{{employee.id}}" {% if obj.assigned_to.id == employee.id %} selected {% endif %}>{{employee.name}}</option>
+                                        <option value="{{employee.id}}" {% if object.assigned_to.id == employee.id %} selected {% endif %}>{{employee.name}}</option>
                                     {% endfor %}
                                 </select>
                             </div>
@@ -129,7 +129,7 @@
                         <div class="col-12">
                             <label for="Description">Description</label>
                             <textarea name="description" id="description" placeholder="Type something.." rows="2"
-                                class="form-control">{% if obj.description %}{{obj.description}}{% endif %}</textarea>
+                                class="form-control">{% if object.description %}{{object.description}}{% endif %}</textarea>
                         </div>
                     </div>
                     <br>
@@ -140,7 +140,7 @@
                             <input type="text" class="form-control" placeholder="Add a to-do list item">
                         </div>  -->
                          <div class="row text-center" id="footer">
-                            <div class="col-12">Created on - {{obj.created_on|date:'d-m-Y H:i'}}</div>
+                            <div class="col-12">Created on - {{object.created_on|date:'d-m-Y H:i'}}</div>
                     </div>
             </div>
             <div class="col-5 bodycol5">

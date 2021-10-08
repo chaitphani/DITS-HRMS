@@ -74,7 +74,7 @@ def task_detail_update_view(request, id):
         return redirect('/task/'+str(task_obj.id)+'/edit')
         
     employees = StaffUser.objects.filter(active_status=True, is_employee=True)
-    return render(request, 'dashboard/task_detail_update.html', {'obj':task_obj, 'employees':employees})
+    return render(request, 'dashboard/task_detail_update.html', {'object':task_obj, 'employees':employees})
 
 
 @is_authenticated
@@ -109,4 +109,4 @@ def issue_detail_update_view(request, id):
         return redirect('/issue/'+str(issue_obj.id)+'/edit')
 
     employees = StaffUser.objects.filter(active_status=True, is_employee=True)
-    return render(request, 'dashboard/issue_detail_update.html', {'obj':issue_obj, 'employees':employees})
+    return render(request, 'dashboard/issue_detail_update.html', {'object':issue_obj, 'employees':employees})
