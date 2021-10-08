@@ -56,7 +56,7 @@ def logout(request):
     try:
         del request.session['id']
         del request.session['user_name']
-        messages.success(request, 'Logout Success...!')
+        messages.success(request, 'Logout Successfully...!')
     except Exception as e:
         print('-exception error in logout---', e)
         pass
@@ -69,7 +69,7 @@ def signup(request):
     if request.method == 'POST':
         try:
             if len(User.objects.filter(username=request.POST['name'])) > 0:
-                messages.error(request, 'provided User Name already taken..')
+                messages.error(request, 'provided user name already taken..')
             elif len(User.objects.filter(email=request.POST['email'])) > 0:
                 messages.error(request, 'Provided Email already taken..')
             else:
@@ -94,7 +94,7 @@ def signup(request):
                         [to_email],
                         fail_silently=False,
                     )
-                    messages.success(request, 'Member ' + form_save.name + ' add success...!')
+                    messages.success(request, 'Member ' + form_save.name + ' added successfully...!')
                     return redirect('login')
         except Exception as e:
             print('----error as e----', e)
