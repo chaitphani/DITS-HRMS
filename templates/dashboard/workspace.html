@@ -13,7 +13,6 @@
                 </a>
                 <!-- Topbar Navbar -->
                 <ul class="navbar-nav ml-auto">
-              
                     <div class="topbar-divider d-none d-sm-block"></div>
                     <!-- Add new button -->
                     <li class="nav-item dropdown no-arrow">
@@ -44,7 +43,6 @@
                 </ul>
             </nav>
             <!-- End of Topbar -->
-
         </div>
 </div>
 
@@ -171,12 +169,12 @@
             </thead>
             <tbody>
                 {% for issue in issues %}
-                <tr class="h6 text-capitalize text-center">
+                <tr class="text-capitalize text-center">
                     <td class="">{{issue.id}}</td>
                     <td>{{issue.title}}</td>
                     <td>
-                        <input type='button' value="{{issue.get_issue_status_display}}"
-                            class="btn btn-sm w-75 font-weight-bold {% if issue.issue_status == '1' %} btn-danger {% elif issue.issue_status == '2' %} btn-warning text-dark {% else %} btn-info {% endif %}">
+                        <input type='button' style="height:30px;font-size:12px" value="{{issue.get_issue_status_display}}"
+                            class="btn w-75 font-weight-bold {% if issue.issue_status == '1' %} btn-danger {% elif issue.issue_status == '2' %} btn-warning text-dark {% else %} btn-info {% endif %}">
                     </td>
                     <td>{% if issue.planned_start_date %} {{issue.planned_start_date|date:'d-m-Y'}}
                         {% else %} Start {% endif %} - {% if issue.planned_end_date %}
@@ -184,7 +182,7 @@
                     </td>
                     <!-- <td></td> -->
                     <td>
-                        <select name="priority" id="modify_{{issue.id}}" class="form-control"
+                        <select style="height:30px;font-size:12px" name="priority" id="modify_{{issue.id}}" class="form-control"
                             onchange="priority_status_modify({{issue.id}})">
                             <option value="4" {% if issue.priority == '4' %}selected{% endif %}>Critical</option>
                             <option value="1" {% if issue.priority == '1' %}selected{% endif %}>High</option>
@@ -198,8 +196,8 @@
                         <!-- <button type="button" id="{{ issue.id }}" class="btn btn-primary btn-sm detail_task"
 											data-toggle="modal" data-target="#taskaction_modalbox">Detail
 										</button> -->
-                        <a href="{% url 'issue-edit' issue.id %}"
-                            class="btn btn-primary btn-sm detail_task w-50">Detail</a>
+                        <a href="{% url 'issue-edit' issue.id %}" style="height:30px;font-size:12px"
+                            class="btn btn-primary  detail_task">Detail</a>
                     </td>
                 </tr>
                 {% endfor %}
