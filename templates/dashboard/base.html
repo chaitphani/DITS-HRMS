@@ -614,7 +614,8 @@
 							</div>
 							<div class="col-lg-12">
 								<small>Assigned To (Optional) </small>
-								<select name="assigned_to" id="" class="form-control">
+								<select name="assigned_to" id="" class="form-control" required='required'>
+									<option value="">Please select</option>
 									{% for employee in employees %}
 										<option value="{{employee.id}}">{{employee.name}}</option>
 									{% endfor %}
@@ -623,9 +624,9 @@
 							</div>
 							<div class="col-md-6">
 								<small>Issue Type</small>
-								<select name="issue_type" id="" class="form-control" required='required'>
+								<select name="issue_type" id="" class="form-control">
 									<option value="Bug">Bug</option>
-									<option value="Feature">Feature</option>
+									<option value="Feature" selected>Feature</option>
 									<option value="Improvement">Improvement</option>
 								</select><br>
 							</div>
@@ -634,7 +635,7 @@
 								<select name="priority" id="" class="form-control">
 									<option value="1">Critical</option>
 									<option value="2">High</option>
-									<option value="3">Medium</option>
+									<option value="3" selected>Medium</option>
 									<option value="4">Low</option>
 								</select><br>
 							</div>
@@ -646,7 +647,7 @@
 												aria-hidden="true"></i></span>
 									</div>
 									<input type="datetime-local" name="planned_start_date" class="form-control"
-										aria-label="date" aria-describedby="calender_icon">
+										aria-label="date" aria-describedby="calender_icon" required>
 								</div>
 								<br>
 							</div>
@@ -658,7 +659,7 @@
 												aria-hidden="true"></i></span>
 									</div>
 									<input type="datetime-local" name="planned_end_date" class="form-control"
-										aria-label="date" aria-describedby="calender_icon">
+										aria-label="date" aria-describedby="calender_icon" required>
 								</div>
 								<br>
 							</div>
@@ -677,7 +678,7 @@
 							<div class="col-md-4">
 								<small>Status</small>
 								<select name="issue_status" id="" class="form-control">
-									<option value="1">Not Started</option>
+									<option value="1" selected>Not Started</option>
 									<option value="2">In Progress</option>
 									<option value="3">In Review</option>
 									<option value="4">Completed</option>
