@@ -11,7 +11,7 @@
     <div id="Dashboard" class="tabcontent">
         <!-- dashboard section -->
         <div class="container-fluid">
-            <br>
+            
             {% if messages %}
             <ul class="messages list-unstyled">
                 {% for message in messages %}
@@ -22,30 +22,32 @@
                     {% endfor %}
             </ul>
             {% endif %}
+
             <div class="row">
                 <!-- title -->
-                <div class="col-md-9">
+                <div class="col-lg-9 col-md-6">
                     <b>Workspaces</b> <span>({{len_work}})</span>
                 </div>
                 <!-- searchbox -->
-                <div class="col-md-3">
+                <div class="col-lg-3 col-md-6">
                     <input type="text" placeholder="Search Workspaces" class="form-control">
                 </div>
             </div>
             <!-- content section -->
-            <div class="row">
-                <div class="col-lg-12" style="padding-top: 20px;">
-                    <div class="row">
+
+                <div class="row" style="padding-top: 20px;">
+                    <div class="col-lg-12">
+                       <div class="row">
                         <!-- add workspace box 1 -->
                         <div class="wrapper">
                             <a class="box" href="#" data-toggle="modal" data-target="#createworkspace">
                                 <div class="box_insidediv">
-                                    <i class="fa fa-plus-circle fa-lg"></i><br>
-                                    <b>Create New Workspace</b>
+                                    <i class="fa fa-plus-circle fa-lg" style="font-size:50px"></i><br>
+                                    <div class="pt-3"><b>Create New Workspace</b></div>
                                 </div>
                             </a>
                         </div>
-                        <!-- box 2 -->
+                        <!-- box n -->
                         {% for space in workspace %}
                             <div class="wrapper">
                                 <a class="box" href="/workspace/{{space.slug}}">
@@ -67,16 +69,18 @@
                                         <div class="row boxinside_div_footer">
                                             <small>Members:</small> &nbsp;
                                             {% for name in space.task_set.all %}
-                                                <span class="member_circle text-white text-capitalize">{{name.assigned_to.name|first}}</span>
+                                                <span class="member_circle text-capitalize">{{name.assigned_to.name|first}}</span>
                                             {% endfor %}
                                         </div>
                                     </div>
                                 </a>
                             </div>
                         {% endfor %}
+                       </div>
                     </div>
                 </div>
-            </div>
+          
+
         </div>
     </div>
 
