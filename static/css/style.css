@@ -10,21 +10,22 @@ a:hover{text-decoration: none;color: forestgreen;}
 .tracking_navlink{border-bottom: 1px solid #ccc;border-top: 1px solid #ccc;}
 
 .wrapper{
-  min-width: 275px;
+  min-width: 299px;
   width:25%;
-  padding:10px;
   display: flex;
-  flex-wrap: wrap;padding:10px;
+  flex-wrap: wrap;
+  padding:10px;
   align-content: center;
 }
 .box{
   width: 100%;
   display: flex;
-  flex-wrap: wrap;padding:10px;
+  flex-wrap: wrap;
+  padding:10px;
   align-content: center;
   margin: 0px;
   background-color: white;
-  height: 250px;
+  height: 316px;
   border: 1px dashed #ccc;
   border-radius:5px;
   text-align:center;
@@ -47,14 +48,14 @@ a:hover{text-decoration: none;color: forestgreen;}
 
 }
 .user_txticon{
-  font-size: 22px;
-  font-weight: 600;
-  height: 50px;
-  width: 50px;
-  padding-top: 7px;;
-  border-radius: 50%;
+  font-size: 27px;
+  font-weight: 500;
+  height: 49px;
+  width: 52px;
+  padding-top: 5px;
+  border-radius: 34%;
   display: inline-block;
-  background-color: burlywood;
+  background-color: #be9c71;
 }
 .team_txticon{
   padding-top: 2px;

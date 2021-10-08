@@ -52,17 +52,22 @@
                                     <div class="box_insidediv">
                                         <div class="col-lg-12">
                                             <span class="user_txticon text-capitalize">{{space.name|make_list|first}}</span><br>
-                                            <p class="text-capitalize">{{space.name}}</p>
+                                            <p class="text-capitalize font-weight-bold">{{space.name}}</p>
                                         </div>
                                         <div class="row">
                                             <div class="col-6">
-                                                <span>Tasks</span><br><b>{{space.task_set.count}}</b>
+                                                <span>Tasks</span><br><span class="text-warning font-weight-bold">{{space.task_set.count}}</span>
                                             </div>
                                             <div class="col-6">
-                                                <span>Issues</span><br><b>{{space.issue_set.count}}</b>
+                                                <span>Issues</span><br><span class="text-danger font-weight-bold">{{space.issue_set.count}}</span>
                                             </div>
                                         </div>
-                                        <br><br>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <span class="text-capitalize">Team</span><br><b>{% if space.team %}{{space.team.name}}{% else %}NP{% endif %}</b>
+                                            </div>
+                                        </div>
+                                        <br>
                                         <!-- <p>{{space.task_set.all}}</p> -->
                                         <div class="row boxinside_div_footer">
                                             <small>Members:</small> &nbsp;
