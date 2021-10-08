@@ -609,11 +609,11 @@
 						{% csrf_token %}
 						<div class="row">
 							<div class="col-lg-12">
-								<small>Issue Title </small>
+								<small>Issue Title*</small>
 								<input type="text" name="title" placeholder="Add Issue Title" class="form-control" required><br>
 							</div>
 							<div class="col-lg-12">
-								<small>Assigned To (Optional) </small>
+								<small>Assigned To*</small>
 								<select name="assigned_to" id="" class="form-control" required='required'>
 									<option value="">Please select</option>
 									{% for employee in employees %}
@@ -637,6 +637,26 @@
 									<option value="2">High</option>
 									<option value="3" selected>Medium</option>
 									<option value="4">Low</option>
+								</select><br>
+							</div>
+							<div class="col-md-6">
+								<small>Workspace</small>
+								<select name="workspace" id="" class="form-control">
+									<!-- <option value="">Please select</option> -->
+									{% for space in workspace %}
+									<option value="{{space.id}}" selected>{{space.name}}</option>
+									{% endfor %}
+								</select>
+								<br>
+							</div>
+							<div class="col-md-6">
+								<small>Status</small>
+								<select name="issue_status" id="" class="form-control">
+									<option value="1" selected>Not Started</option>
+									<option value="2">In Progress</option>
+									<option value="3">In Review</option>
+									<option value="4">Completed</option>
+									<option value="5">Cancelled</option>
 								</select><br>
 							</div>
 							<div class="col-md-4">
@@ -675,16 +695,6 @@
 									});
 								});
 							</script> -->
-							<div class="col-md-4">
-								<small>Status</small>
-								<select name="issue_status" id="" class="form-control">
-									<option value="1" selected>Not Started</option>
-									<option value="2">In Progress</option>
-									<option value="3">In Review</option>
-									<option value="4">Completed</option>
-									<option value="5">Cancelled</option>
-								</select><br>
-							</div>
 							<div class="col-md-12">
 								<small>Description</small>
 								<textarea name="description" placeholder="Type Something" cols="30" class="form-control" rows="2"></textarea>
