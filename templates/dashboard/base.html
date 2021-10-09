@@ -68,7 +68,7 @@
 			</div>
 			<!-- Nav Item - Team -->
 			<li class="nav-item active">
-				<a class="nav-link" href="#" data-toggle="modal" data-target="#createteam">
+				<a class="nav-link" href="#" data-toggle="modal" {% if request.session.is_admin == True %}data-target="#createteam"{% endif %}>
 					<i class="fas fa-fw fa-user-friends"></i>
 					<span>+ Team</span></a>
 			</li>
@@ -76,9 +76,10 @@
 			<div class="sidebar-heading">
 				Workspace
 			</div>
+			<p>
 			<!-- Nav Item - workspace -->
 			<li class="nav-item active">
-				<a class="nav-link" href="#" data-toggle="modal" data-target="#createworkspace">
+				<a class="nav-link" href="#" data-toggle="modal" {% if request.session.is_admin == True %}data-target="#createworkspace"{% endif %}>
 					<i class="fas fa-fw fa-user-friends"></i>
 					<span>+ Workspace</span></a>
 			</li>
