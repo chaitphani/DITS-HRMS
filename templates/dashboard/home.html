@@ -40,6 +40,7 @@
                     <div class="col-lg-12">
                        <div class="row">
                         <!-- add workspace box 1 -->
+            			{% if request.session.is_admin == True %}
                         <div class="wrapper">
                             <a class="box" href="#" data-toggle="modal" data-target="#createworkspace">
                                 <div class="box_insidediv" id="addworkspace">
@@ -48,6 +49,7 @@
                                 </div>
                             </a>
                         </div>
+			            {% endif %}
                         <!-- box n -->
                         {% for space in workspace %}
                             <div class="wrapper">

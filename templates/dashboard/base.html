@@ -65,6 +65,7 @@
 			</li> {% endcomment %}
 
 			<!-- Divider -->
+			{% if request.session.is_admin == True %}
 			<hr class="sidebar-divider">
 			<!-- Heading -->
 			<div class="sidebar-heading">
@@ -72,7 +73,7 @@
 			</div>
 			<!-- Nav Item - Team -->
 			<li class="nav-item active">
-				<a class="nav-link" href="#" data-toggle="modal" {% if request.session.is_admin == True %}data-target="#createteam"{% endif %}>
+				<a class="nav-link" href="#" data-toggle="modal" data-target="#createteam">
 					<i class="fas fa-fw fa-user-friends"></i>
 					<span>+ Team</span></a>
 			</li>
@@ -83,10 +84,11 @@
 			<p>
 			<!-- Nav Item - workspace -->
 			<li class="nav-item active">
-				<a class="nav-link" href="#" data-toggle="modal" {% if request.session.is_admin == True %}data-target="#createworkspace"{% endif %}>
+				<a class="nav-link" href="#" data-toggle="modal" data-target="#createworkspace">
 					<i class="fas fa-fw fa-user-friends"></i>
 					<span>+ Workspace</span></a>
 			</li>
+			{% endif %}
 			<!-- <li class="nav-item dropdown">
 				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
 					aria-haspopup="true" aria-expanded="false">
