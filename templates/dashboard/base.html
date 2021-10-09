@@ -102,15 +102,15 @@
 				}
 			</style>
 			<hr>
-			<div class="sidebar-heading">
+			<div class="sidebar-heading pb-3">
 				All Members
 			</div>
 
 			{% for member in members %}
-			<li class="nav-item text-capitalize">
-				<a href="#" class="nav-link"><img class="img-profile rounded-circle"
+			<li class="nav-item text-capitalize pb-0">
+				<span class="nav-link pb-1 pt-1"><img class="img-profile rounded-circle"
 						src="/static/img/undraw_profile.svg">
-					{{member.name}}</a>
+					{{member.name}}</span>
 			</li>
 			{% endfor %}
 
@@ -125,7 +125,7 @@
 					Chaitanya</a>
 			</li> -->
 			<!-- Divider -->
-			<hr class="sidebar-divider">
+			<hr class="sidebar-divider mt-3">
 			<!-- Sidebar Toggler (Sidebar) -->
 			<div class="text-center d-none d-md-inline">
 				<button class="rounded-circle border-0" id="sidebarToggle"></button>

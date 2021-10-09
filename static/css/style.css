@@ -9,6 +9,36 @@ a:hover{text-decoration: none;color: forestgreen;}
 
 .tracking_navlink{border-bottom: 1px solid #ccc;border-top: 1px solid #ccc;}
 
+/* -----------------------
+scrollbar start
+--------------------------- */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey; 
+  border-radius: 10px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background-color: #4e73df;
+  background-image: linear-gradient(
+180deg,#4e73df 10%,#224abe 100%);
+  background-size: cover;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(34, 74, 190, 0.3);
+ 
+}
+/* -----------------------
+scrollbar end
+--------------------------- */
 .wrapper{
   min-width: 299px;
   width:25%;
@@ -37,6 +67,8 @@ a:hover{text-decoration: none;color: forestgreen;}
     border:1px solid #ccc;
 }
 
+#addworkspace{color:#aaa}
+#addworkspace:hover{color:#000}
 .box_insidediv{margin: 0px auto;}
 /* .box_insidediv i{font-size: 40px;margin-bottom: 15px;} */
 
@@ -53,9 +85,12 @@ a:hover{text-decoration: none;color: forestgreen;}
   height: 49px;
   width: 52px;
   padding-top: 5px;
-  border-radius: 34%;
+  border-radius: 50%;
+  color:#ccc;
+  font-weight:800;
+  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
   display: inline-block;
-  background-color: #be9c71;
+  background-color: #d2f4e8;;
 }
 .team_txticon{
   padding-top: 2px;
