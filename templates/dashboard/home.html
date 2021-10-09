@@ -72,11 +72,11 @@
                                             </div>
                                         </div>
                                         <br>
-                                        <!-- <p>{{space.task_set.all}}</p> -->
+                                        <!-- <p>{{space.staff.all}}</p> -->
                                         <div class="row boxinside_div_footer">
                                             <small>Members:</small> &nbsp;
-                                            {% for name in space.task_set.all %}
-                                                <span class="member_circle text-capitalize">{{name.assigned_to.name|first}}</span>
+                                            {% for name in space.staff.all %}
+                                                <span class="member_circle text-capitalize">{{name.name|first}}</span>
                                             {% endfor %}
                                         </div>
                                     </div>

@@ -62,28 +62,54 @@
 
 			<!-- Divider -->
 			{% if request.session.is_admin == True %}
-			<hr class="sidebar-divider">
-			<!-- Heading -->
-			<div class="sidebar-heading">
-				Team
-			</div>
-			<!-- Nav Item - Team -->
-			<li class="nav-item active">
-				<a class="nav-link" href="#" data-toggle="modal" data-target="#createteam">
-					<i class="fas fa-fw fa-user-friends"></i>
-					<span>+ Team</span></a>
-			</li>
-			<hr>
-			<div class="sidebar-heading">
-				Workspace
-			</div>
-			<p>
-			<!-- Nav Item - workspace -->
-			<li class="nav-item active">
-				<a class="nav-link" href="#" data-toggle="modal" data-target="#createworkspace">
-					<i class="fas fa-fw fa-user-friends"></i>
-					<span>+ Workspace</span></a>
-			</li>
+				<hr class="sidebar-divider">
+				<!-- Heading -->
+				<div class="sidebar-heading">
+					Team
+				</div>
+				<!-- Nav Item - Team -->
+				<li class="nav-item active">
+					<a class="nav-link" href="#" data-toggle="modal" data-target="#createteam">
+						<i class="fas fa-fw fa-user-friends"></i>
+						<span>+ Team</span></a>
+				</li>
+				<div class="sidebar-heading pb-3">
+					All Teams
+				</div>
+				{% for team in teams %}
+					<li class="nav-item text-capitalize pb-0">
+						<span class="nav-link pb-1 pt-1">
+							<i class="fas fa-users"></i>&nbsp;&nbsp;&nbsp;
+							<!-- <img class="img-profile rounded-circle"
+								src="/static/img/undraw_profile.svg"> -->
+							{{team.name}}</span>
+					</li>
+				{% endfor %}
+				<hr>
+				<div class="sidebar-heading">
+					Workspace
+				</div>
+				<!-- Nav Item - workspace -->
+				<li class="nav-item active">
+					<a class="nav-link" href="#" data-toggle="modal" data-target="#createworkspace">
+						<i class="fas fa-fw fa-user-friends"></i>
+						<span>+ Workspace</span></a>
+				</li>
+				<div class="sidebar-heading pb-3">
+					All Workspaces
+				</div>
+				{% for work in workspaces %}
+					<li class="nav-item text-capitalize pb-0">
+						<span class="nav-link pb-1 pt-1">
+							<i class="fas fa-users"></i>&nbsp;&nbsp;&nbsp;
+							<!-- <img class="img-profile rounded-circle"
+								src="/static/img/undraw_profile.svg"> -->
+							<a href="/workspace/{{work.id}}/update">
+								{{work.name}}
+							</a>
+						</span>
+						</li>
+				{% endfor %}
 			{% endif %}
 			<!-- <li class="nav-item dropdown">
 				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
@@ -149,8 +175,6 @@
 
 					<!-- Topbar Navbar -->
 					<ul class="navbar-nav ml-auto">
-
-
 						<!-- Nav Item - Search Dropdown (Visible Only XS) -->
 						<li class="nav-item dropdown no-arrow d-sm-none">
 							<a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
@@ -381,6 +405,12 @@
 							<option value="">Please select</option>
 							{% for team in teams %}
 								<option value="{{team.id}}">{{team}}</option>
+							{% endfor %}
+						</select>
+						<small class="mt-2">Member*</small>
+						<select name="staff" id="" class="form-control" multiple>
+							{% for staff in all_staff %}
+								<option value="{{staff.id}}" class="text-capitalize">{{staff.name}}</option>
 							{% endfor %}
 						</select>
 						<br>
@@ -765,6 +795,9 @@
 			</div>
 		</div>
 	</div>
+
+	<!-------------------------------------The Modal to Update workspace---------------------------------- -->
+
 	<!-- end change prority status -->
 
 	<!------------------------script/style for header tab & panel data--------------------------------- -->

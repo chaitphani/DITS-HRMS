@@ -89,8 +89,8 @@
                     <th>| Planned Start/End |</th>
                     <!-- <th>| Planned End</th> -->
                     <th>| Priority |</th>
-                    <th>| Work space |</th>
-                    <!-- <th>| Progress</th> -->
+                    <!-- <th>| Work space |</th> -->
+                    <th>| User</th>
                     <th>| Action |</th>
                 </tr>
             </thead>
@@ -117,8 +117,8 @@
                             <option value="3" {% if task.priority == '3' %}selected{% endif %}>Low</option>
                         </select>
                     </td>
-                    <td>{{task.workspace.name}}</td>
-                    <!-- <td>In Progress</td> -->
+                    <!-- <td>{{task.workspace.name}}</td> -->
+                    <td>{{task.assigned_to.name}}</td>
                     <td>
                         <!-- <button type="button" id="{{ task.id }}" class="btn btn-primary btn-sm detail_task"
 											data-toggle="modal" data-target="#taskaction_modalbox">Detail
@@ -167,8 +167,8 @@
                     <th>| Planned Start/End |</th>
                     <!-- <th>| Planned End</th> -->
                     <th>| Priority |</th>
-                    <th>| Work space |</th>
-                    <!-- <th>| Progress</th> -->
+                    <!-- <th>| Work space |</th> -->
+                    <th>| User</th>
                     <th>| Action |</th>
                 </tr>
             </thead>
@@ -195,8 +195,8 @@
                             <option value="3" {% if issue.priority == '3' %}selected{% endif %}>Low</option>
                         </select>
                     </td>
-                    <td>{{issue.workspace.name}}</td>
-                    <!-- <td>In Progress</td> -->
+                    <!-- <td>{{issue.workspace.name}}</td> -->
+                    <td>{{issue.assigned_to.name}}</td>
                     <td>
                         <!-- <button type="button" id="{{ issue.id }}" class="btn btn-primary btn-sm detail_task"
 											data-toggle="modal" data-target="#taskaction_modalbox">Detail

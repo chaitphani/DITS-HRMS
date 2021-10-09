@@ -12,7 +12,7 @@ class TaskSerializer(serializers.ModelSerializer):
 class WorkSpaceSerializer(serializers.ModelSerializer):
     class Meta:
         model = WorkSpace
-        fields = ['name', 'team']
+        fields = ['name', 'team', 'staff']
 
 
 class TeamSerializer(serializers.ModelSerializer):

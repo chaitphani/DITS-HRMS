@@ -49,7 +49,8 @@ class WorkSpace(models.Model):
     slug = models.CharField(max_length=120)
 
     team = models.ForeignKey(Team, on_delete=models.SET_NULL, null=True)
-    
+    staff = models.ManyToManyField(StaffUser)
+
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
     status = models.BooleanField(default=True)

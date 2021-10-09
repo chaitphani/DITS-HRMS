@@ -1,7 +1,10 @@
+from django.db.models.query import InstanceCheckMeta
 from django.shortcuts import render, redirect
 from django.contrib import messages
 
 from datetime import datetime
+
+from rest_framework import RemovedInDRF313Warning
 
 from dashboard.models import *
 from dashboard.forms import *
@@ -10,6 +13,8 @@ from django.db.models import Sum, Count, F
 
 from django.core.mail import send_mail
 from django.conf import settings
+
+from dashboard.views.workspace_views import workspace_view
 
 
 def is_authenticated(f):
@@ -35,7 +40,10 @@ def home(request):
     try:
         user_obj = StaffUser.objects.get(id=request.session.get('id'))
         employees = StaffUser.objects.filter(active_status=True, is_employee=True)
-        workspace = WorkSpace.objects.filter(status=True)
+        if request.session.get('is_admin') == False:
+            workspace = WorkSpace.objects.filter(status=True, staff=user_obj)
+        else:
+            workspace = WorkSpace.objects.filter(status=True)
 
         # tasks = Task.objects.filter(status=True).order_by('-id')
         # issues = Issue.objects.filter(status=True).order_by('-id')
@@ -76,10 +84,23 @@ def team_select(request, slug):
 
 
 @is_authenticated
-def invite_member(request):
+def workspace_edit(request, id):
+    
+    workspace_obj = WorkSpace.objects.get(id=id)
+    if request.method == 'POST':
+        form = WorkspaceUpdateForm(request.POST, instance=workspace_obj)
+        if form.is_valid():
+            form.save()
+            return redirect('/')
+    else:
+        form = WorkspaceUpdateForm(instance=workspace_obj)
+    return render(request, 'dashboard/workspace_update.html', {'object':workspace_obj})
 
-    if request.method == "POST":
-        mem_email = request.POST.get('email')
+# @is_authenticated
+# def invite_member(request):
+
+#     if request.method == "POST":
+#         mem_email = request.POST.get('email')
         # try:
         #     staff_check = StaffUser.objects.get(email = mem_email)
         #     try:
