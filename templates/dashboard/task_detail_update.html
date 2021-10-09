@@ -16,14 +16,20 @@
         {% endif %}
         <div class="row">
             <div class="col-7">
-                <span>
+                <div>
                     <button class="btn btn-outline-warning btn-sm ml-0" onclick="history.back()">Back</button>&nbsp;
                     Task - <span class="font-weight-bold text-info">{{object.title}}</span>
-                </span>
-                
+                </div>
             </div>
             <div class="col-5 text-right">
-                <select name="task_status" id="task_status_{{object.id}}" class="btn btn-success mb-2 rounded"
+                <small>Assign To-</small>
+                      <select  name="assigned_to" class="btn btn-default btn-sm">
+                      {% for employee in employees %}
+                      <option value="{{employee.id}}" {% if object.assigned_to.id == employee.id %} selected {% endif %}>{{employee.name}}</option>
+                      {% endfor %}
+                      </select>
+
+                <select name="task_status" id="task_status_{{object.id}}" class="btn btn-success btn-sm mb-2 rounded"
                     onchange="task_status_change({{object.id}})">
                     <option value="1" {% if object.task_status == '1' %}selected{% endif %}>Not Started</option>
                     <option value="2" {% if object.task_status == '2' %}selected{% endif %}>In Progress</option>
@@ -45,8 +51,8 @@
                 </span> -->
             </div>
         </div>
-        <div class="row">
-            <div class="col-lg-12 bodycol7">
+        <div class="row p-0">
+            <div class="col-lg-7 bodycol7">
                 <form method="POST">
                     {% csrf_token %}
                         <div class="row">
@@ -133,12 +139,12 @@
                         </div>                        
                         <div class="col-12">
                             <label for="Description">Description</label>
-                            <textarea name="description" id="description" placeholder="Type something.." rows="4"
+                            <textarea name="description" id="description" placeholder="Type something.." rows="3"
                                 class="form-control">{% if object.description %}{{object.description}}{% endif %}</textarea>
                         </div>
                     </div>
                    
-                   <div class="pull-right mt-2  mb-5"> <input type="submit" class="btn btn-default bg-gradient-success text-white text-right"
+                   <div class="pull-right mt-2  mb-5"> <input type="submit" class="btn btn-default btn-sm bg-gradient-success text-white text-right"
                         value="Update"></div>
                 </form>
                     <!-- <div class="col-12"><br>
@@ -149,16 +155,16 @@
                 </div>
             </div>
 
-            <div class="col-lg-5 bodycol5" style="display:none">
+            <div class="col-lg-5 bodycol5">
                 <!------------------------ multiple taskmanagertabs with their multiple panels to manage all the data in a single page  -->
                 <div class="row taskmanagertab">
                     <button class="taskmanagertablinks" style="width: 24%;padding:5px 5px; margin:0;text-align:center"
                         onclick="opentaskmanagertabs(event, 'taskmanager_comments')" id="defaultOpen"><small>Comments</small></button>
-                    <button class="taskmanagertablinks" style="width: 24%;padding:5px 5px;margin:0;text-align:center"
+                    <button class="taskmanagertablinks" style="width: 24%;padding:5px 5px;margin:0;text-align:center;display:none"
                         onclick="opentaskmanagertabs(event, 'taskmanager_documents')"><small>Documents</small></button>
-                    <button class="taskmanagertablinks" style="width: 24%;padding:5px 5px;margin:0;text-align:center"
+                    <button class="taskmanagertablinks" style="width: 24%;padding:5px 5px;margin:0;text-align:center;display:none"
                         onclick="opentaskmanagertabs(event, 'taskmanager_meetings')"><small>Meetings</small></button>
-                    <button class="taskmanagertablinks" style="width: 24%;padding:5px 5px;margin:0;text-align:center"
+                    <button class="taskmanagertablinks" style="width: 24%;padding:5px 5px;margin:0;text-align:center;display:none"
                         onclick="opentaskmanagertabs(event, 'taskmanager_issues')"><small>Issues</small></button>
                 </div>
 
@@ -169,9 +175,9 @@
                         <div class="row">
                             <div class="col-8 pl-0" >
                                 <span class="btn-group" role="group" aria-label="toggle_button">
-                                    <button type="button" id="allmessages" class="btn btn-primary text-white"><small>All
+                                    <button type="button" id="allmessages" class="btn btn-primary btn-sm text-white"><small>All
                                         Messages</small></button>
-                                    <button type="button" id="replylater" class="btn btn-secondary text-white"><small>Reply Later</small></button>
+                                    <button type="button" id="replylater" class="btn btn-secondary btn-sm text-white"><small>Reply Later</small></button>
                                 </span>
                             </div>
                             <div class="col-4 text-right pr-0">
