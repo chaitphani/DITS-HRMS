@@ -212,3 +212,4 @@ def workspace_edit(request, id):
 #         print('---exception error in product info api---', e)
 #         messages.error(request, 'data is missing for the product..')
 #     return JsonResponse({'task_info': task_info})
+
