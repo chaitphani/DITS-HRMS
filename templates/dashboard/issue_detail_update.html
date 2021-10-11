@@ -171,6 +171,7 @@
                         
                         {% endfor %}
                         <!-- chatcontent -->
+                      
                         <!-- <div class="row chatstrip">
                             <div class="col-12">
                                 <small>aug 21, 2021</small>
@@ -189,13 +190,28 @@
                             <form action="{% url 'issue-comment-add' id %}" method="post">
                                 {% csrf_token %}
                                 <div class="input-group">
-                                    <input type="text" placeholder="Type your comment here..." class="form-control"
+                                    <input type="text" id="issuechattxt" onkeyup="EnableDisable(this)" placeholder="Type your comment here..." class="form-control"
                                     aria-label="Large" aria-describedby="inputGroup-sizing-sm" name="comment">
                                     <div class="input-group-append">
-                                        <input type="submit" value="Send" class="btn btn-secondary btn-sm">
+                                        <input id="issuechatbtnSubmit" disabled="disabled" type="submit" value="Send" class="btn btn-secondary btn-sm">
                                     </div>
                                 </div>
                             </form>
+                              <script type="text/javascript">
+                        function EnableDisable(issuechattxt) {
+                            //Reference the Button.
+                            var issuechatbtnSubmit = document.getElementById("issuechatbtnSubmit");
+                    
+                            //Verify the TextBox value.
+                            if (issuechattxt.value.trim() != "") {
+                                //Enable the TextBox when TextBox has value.
+                                issuechatbtnSubmit.disabled = false;
+                            } else {
+                                //Disable the TextBox when TextBox is empty.
+                                issuechatbtnSubmit.disabled = true;
+                            }
+                        };
+                    </script>
                         </div>
                         </div>
                     </div>
