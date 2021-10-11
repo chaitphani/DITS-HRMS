@@ -72,7 +72,7 @@
 					Team
 				</div>
 				<!-- Nav Item - Team -->
-				<li class="nav-item active">
+				<li class="nav-item active sidebar-heading">
 					<a class="nav-link" href="#" data-toggle="modal" data-target="#createteam">
 						<i class="fas fa-fw fa-user-friends"></i>
 						<span>+ Team</span></a>
@@ -81,7 +81,7 @@
 					All Teams
 				</div>
 				{% for team in teams %}
-					<li class="nav-item text-capitalize pb-0">
+					<li class="sidebar-heading nav-item text-capitalize pb-0">
 						<span class="nav-link pb-1 pt-1">
 							<i class="fas fa-users"></i>&nbsp;&nbsp;&nbsp;
 							<!-- <img class="img-profile rounded-circle"
@@ -94,18 +94,18 @@
 					Workspace
 				</div>
 				<!-- Nav Item - workspace -->
-				<li class="nav-item active">
+				<li class="nav-item active sidebar-heading">
 					<a class="nav-link" href="#" data-toggle="modal" data-target="#createworkspace">
-						<i class="fas fa-fw fa-user-friends"></i>
+						<i class="fas fa-fw fa-warehouse"></i>
 						<span>+ Workspace</span></a>
 				</li>
 				<div class="sidebar-heading pb-3">
 					All Workspaces
 				</div>
 				{% for work in workspaces %}
-					<li class="nav-item text-capitalize pb-0">
+					<li class="sidebar-heading nav-item text-capitalize pb-0">
 						<span class="nav-link pb-1 pt-1">
-							<i class="fas fa-users"></i>&nbsp;&nbsp;&nbsp;
+							<i class="fas fa-warehouse"></i>&nbsp;&nbsp;&nbsp;
 							<!-- <img class="img-profile rounded-circle"
 								src="/static/img/undraw_profile.svg"> -->
 							<a href="/workspace/{{work.id}}/update" class="{% if work.status == True %}text-white{% else %}text-secondary{% endif %}">
@@ -140,7 +140,7 @@
 			</div>
 
 			{% for member in members %}
-			<li class="nav-item text-capitalize pb-0">
+			<li class="sidebar-heading nav-item text-capitalize pb-0">
 				<span class="nav-link pb-1 pt-1"><img class="img-profile rounded-circle"
 						src="/static/img/undraw_profile.svg">
 					{{member.name}}</span>
@@ -223,8 +223,8 @@
 										</div>
 									</div>
 									<div>
-										<div class="small text-gray-500">December 12, 2019</div>
-										<span class="font-weight-bold">A new monthly report is ready to download!</span>
+										<div class="small text-gray-500">September 12, 2021</div>
+										<span class="font-weight-bold">alert notification text here</span>
 									</div>
 								</a>
 								<a class="dropdown-item d-flex align-items-center" href="#">
@@ -234,8 +234,8 @@
 										</div>
 									</div>
 									<div>
-										<div class="small text-gray-500">December 7, 2019</div>
-										$290.29 has been deposited into your account!
+										<div class="small text-gray-500">September 7, 2021</div>
+										alert notification text here
 									</div>
 								</a>
 								<a class="dropdown-item d-flex align-items-center" href="#">
@@ -245,8 +245,8 @@
 										</div>
 									</div>
 									<div>
-										<div class="small text-gray-500">December 2, 2019</div>
-										Spending Alert: We've noticed unusually high spending for your account.
+										<div class="small text-gray-500">September 2, 2021</div>
+										alert notification text here
 									</div>
 								</a>
 								<a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
@@ -379,8 +379,8 @@
 				</div>
 				<div class="modal-body">Are you sure to end your current session? Please click on Logout button.</div>
 				<div class="modal-footer">
-					<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-					<a class="btn btn-primary" href="{% url 'logout' %}">Logout</a>
+					<button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">Cancel</button>
+					<a class="btn btn-primary btn-sm" href="{% url 'logout' %}">Logout</a>
 				</div>
 			</div>
 		</div>
@@ -783,16 +783,16 @@
 
 				<!-- Modal Header -->
 				<div class="modal-header">
-					<h4 class="modal-title">Edit Workspacce</h4>
+					<h4 class="modal-title">Edit Workspace</h4>
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 				</div>
 
 				<!-- Modal body -->
 				<div class="modal-body">
-					<small>Workspacce Name</small>
+					<small>Workspace Name</small>
 					<input type="text" class="form-control">
 					<br>
-					<small>Workspacce URL</small>
+					<small>Workspace URL</small>
 					<input type="text" class="form-control">
 					<br>
 					<button type="button" class="btn btn-default bg-gradient-success text-white pull-right">Save
