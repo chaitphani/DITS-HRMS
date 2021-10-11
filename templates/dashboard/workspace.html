@@ -1,7 +1,7 @@
 {% extends 'dashboard/base.html' %}
 {% block content %}
 <style>
-    #task_table_length select, #task_table_filter input{
+    .dataTables_length select, .dataTables_filter input{
         display: block;
         width: 100%;
         height: calc(1.5em + .75rem + 2px);
@@ -730,7 +730,10 @@
         "aLengthMenu": [[5, 10, 15, -1], [5, 10, 15, "All"]],
         "iDisplayLength": 5
     });
-    $("#issue_table").dataTable();
+    $("#issue_table").dataTable({
+        "aLengthMenu": [[5, 10, 15, -1], [5, 10, 15, "All"]],
+        "iDisplayLength": 5
+    });
   })
   </script>
 {% endblock %}

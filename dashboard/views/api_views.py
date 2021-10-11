@@ -42,6 +42,7 @@ class TaskView(APIView):
                     # send_mail('A New Task has been added to your dashboard...',body,from_mail,[to_email],fail_silently=False,)
 
                     message = render_to_string('{0}/templates/mail_templates/task_assigned.html'.format(settings.BASE_DIR),{'name':staff_mem.name, 'workspace':workspace_obj.name, 'team':workspace_obj.team.name, 'task':serializer.data.get('title'), 'status':serializer.data.get('task_status'), 'priority':serializer.data.get('priority'), 'end_date':end_date})
+                    
                     msg = EmailMultiAlternatives(subject, message, from_mail, [to_email])
 
                     msg.attach_alternative(message, 'text/html')
@@ -146,9 +147,9 @@ class IssueCommentView(APIView):
 
     def post(self, request, issue_id):
         try:
-            issue_obj = Task.objects.get(id=issue_id)
+            issue_obj = Issue.objects.get(id=issue_id)
             user_obj = StaffUser.objects.get(id=request.session.get('id'))
-
+            
             comment_obj = IssueComment.objects.create(user=user_obj, issue=issue_obj, comment=request.data.get('comment'), status=True)
             comment_obj.save()
             return redirect('/issue/'+ str(issue_id) +'/edit')
