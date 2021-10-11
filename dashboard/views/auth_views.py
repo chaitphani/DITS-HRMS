@@ -37,7 +37,7 @@ def login(request):
 
                 if login_check:
                     request.session['id'] = login_check.id
-                    # request.session['user_name'] = login_check.name
+                    request.session['user_name'] = login_check.name
                     request.session['is_admin'] = login_check.is_admin
                     messages.success(request, 'Login Success...!')
                     return redirect('home')

@@ -129,12 +129,12 @@
                 <div class="row taskmanagertab">
                     <button class="taskmanagertablinks" style="width: 24%;padding:5px 5px; margin:0;text-align:center"
                         onclick="opentaskmanagertabs(event, 'taskmanager_comments')" id="defaultOpen"><small>Comments</small></button>
-                    <button class="taskmanagertablinks" style="width: 24%;padding:5px 5px;margin:0;text-align:center;display:none"
+                    <!-- <button class="taskmanagertablinks" style="width: 24%;padding:5px 5px;margin:0;text-align:center;display:none"
                         onclick="opentaskmanagertabs(event, 'taskmanager_documents')"><small>Documents</small></button>
                     <button class="taskmanagertablinks" style="width: 24%;padding:5px 5px;margin:0;text-align:center;display:none"
                         onclick="opentaskmanagertabs(event, 'taskmanager_meetings')"><small>Meetings</small></button>
                     <button class="taskmanagertablinks" style="width: 24%;padding:5px 5px;margin:0;text-align:center;display:none"
-                        onclick="opentaskmanagertabs(event, 'taskmanager_issues')"><small>Issues</small></button>
+                        onclick="opentaskmanagertabs(event, 'taskmanager_issues')"><small>Issues</small></button> -->
                 </div>
 
                 <div id="taskmanager_comments" class="taskmanagertabcontent" style="max-height:280px;overflow:auto;overflow-x:hidden">
@@ -159,43 +159,35 @@
                         <!-- chatcontent -->
                         {% for comment in comments %}
                             <div class="chatstrip">
-                               <div class="row pl-1 pr-1 pb-0">
-                                <div class="col-12">
-                                    <small>{{comment.created_on|date:'d-m-Y'}}  |  {{comment.created_on|date:'H:i'}}</small>
-                                </div>
-                                <div class="col-12 text-capitalize"><b>{{comment.user}}</b></div>
-                                <div class="col-12 text-capitalize">
-                                    <small>{{comment.comment}}</small>
-                                </div>
-                               </div>
-                            </div>
-                        {% endfor %}
-                        <!-- chatcontent -->
-                        <!-- <div class="row chatstrip">
-                            <div class="col-12">
-                                <small>aug 21, 2021</small>
-                            </div>
-                            <div class="col-6"><b>Vishal Yadav</b></div>
-                            <div class="col-6 text-right"><small>10:37 am</small></div>
-                            <div class="col-8">
-                                <p>Hello Sandeep this is just test message.</p>
-                            </div>
-                            <div class="col-4 text-right"><a href="#"><i class="fa fa-reply"></i>
-                                    Reply</a></div>
-                        </div> -->
-                        <!-- searchbox -->
-                        <div class="row searchrow" id="searchbox">
-                        <div class="col-12 mt-3">
-                            <form action="{% url 'task-comment-add' id %}" method="post">
-                                <div class="input-group">
-                                    <input type="text" placeholder="Type your comment here..." class="form-control"
-                                        aria-label="Large" aria-describedby="inputGroup-sizing-sm" name="comment">
-                                    <div class="input-group-append">
-                                        <input type="submit" value="Send" class="btn btn-secondary btn-sm">
+                                <div class="row pl-1 pr-1 pb-0 p-3">
+                                    <div class="col-12">
+                                        <small>{{comment.created_on|date:'d-m-Y'}}  |  {{comment.created_on|date:'H:i'}}</small>
+                                        <div class="float-right">by&nbsp;
+                                            {% if request.session.user_name == comment.user.name %}
+                                                 <b class="text-capitalize">me</b> <!-- sender -->
+                                            {% else %}
+                                                <b class="text-capitalize">{{comment.user}}</b> <!--reciver -->
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="col-12 text-capitalize">
+                                        <small>{{comment.comment}}</small>
                                     </div>
                                 </div>
-                            </form>
-                        </div>
+                            </div>
+                        {% endfor %}
+                        <div class="row searchrow" id="searchbox">
+                            <div class="col-12 mt-3">
+                                <form action="{% url 'task-comment-add' id %}" method="post">
+                                    <div class="input-group">
+                                        <input type="text" placeholder="Type your comment here..." class="form-control"
+                                            aria-label="Large" aria-describedby="inputGroup-sizing-sm" name="comment" required>
+                                        <div class="input-group-append">
+                                            <input type="submit" value="Send" class="btn btn-secondary btn-sm">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                     <!-- default for reply later message -->
@@ -209,6 +201,7 @@
                     </div> -->
                     <!-- default for reply later message -->
                 </div>
+
                 <div id="taskmanager_documents" class="taskmanagertabcontent">
                     <!-- dashboard section -->
                     <div class="container-fluid p-0">
