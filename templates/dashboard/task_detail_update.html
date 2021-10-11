@@ -188,16 +188,33 @@
                         <div class="col-12 mt-3">
                             <form action="{% url 'task-comment-add' id %}" method="post">
                                 <div class="input-group">
-                                    <input type="text" placeholder="Type your comment here..." class="form-control"
-                                        aria-label="Large" aria-describedby="inputGroup-sizing-sm" name="comment">
+                                    <input type="text" id="taskchattxt" placeholder="Type your comment here..." class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm" name="comment" onkeyup="EnableDisable(this)">
                                     <div class="input-group-append">
-                                        <input type="submit" value="Send" class="btn btn-secondary btn-sm">
+                                        <input type="submit" id="taskchatbtnSubmit" value="Send"  class="btn btn-secondary btn-sm" disabled="disabled">
                                     </div>
                                 </div>
                             </form>
                         </div>
+                      
                         </div>
                     </div>
+                    <script type="text/javascript">
+                        function EnableDisable(taskchattxt) {
+                            //Reference the Button.
+                            var taskchatbtnSubmit = document.getElementById("taskchatbtnSubmit");
+                    
+                            //Verify the TextBox value.
+                            if (taskchattxt.value.trim() != "") {
+                                //Enable the TextBox when TextBox has value.
+                                taskchatbtnSubmit.disabled = false;
+                            } else {
+                                //Disable the TextBox when TextBox is empty.
+                                taskchatbtnSubmit.disabled = true;
+                            }
+                        };
+                    </script>
+
+
                     <!-- default for reply later message -->
                     <!-- <div class="container-fluid" id="defaultmessage" style="display: none;">
                         <div class="text-center" style="margin: 50px auto;">
