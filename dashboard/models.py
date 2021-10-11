@@ -111,3 +111,17 @@ class Issue(models.Model):
 
     def __str__(self):
         return '{}'.format(self.title)
+
+
+class TaskComment(models.Model):
+
+    user = models.ForeignKey(StaffUser, on_delete=models.SET_NULL, null=True)
+    task = models.ForeignKey(Task, on_delete=models.SET_NULL, null=True)
+    comment = models.TextField()
+
+    created_on = models.DateTimeField(auto_now_add=True)
+    updated_on = models.DateTimeField(auto_now=True)
+    status = models.BooleanField(default=True)
+
+    def __str__(self):
+        return '{}-{}'.format(self.user, self.task)

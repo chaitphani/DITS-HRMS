@@ -127,6 +127,21 @@ class IssueView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+class TaskCommentView(APIView):
+
+    def post(self, request, task_id):
+        try:
+            task_obj = Task.objects.get(id=task_id)
+            user_obj = StaffUser.objects.get(id=request.session.get('id'))
+
+            comment_obj = TaskComment.objects.create(user=user_obj, task=task_obj, comment=request.data.get('comment'), status=True)
+            comment_obj.save()
+            return redirect('/task/'+ str(task_id) +'/edit')
+        except Exception as e:
+            print('----error in e----', e)
+            return Response({'error':'Task obj not found with the id..'}, status=status.HTTP_404_NOT_FOUND)
+
+
 # class LoginView(APIView):
 
 #     def post(self, request):
