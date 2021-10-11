@@ -8,8 +8,7 @@ def get_members(request):
         all_staff = StaffUser.objects.filter(active_status=True, is_employee=True)
         teams = Team.objects.filter(status=True)
         user_obj = StaffUser.objects.get(id=request.session.get('id'))
-        workspaces = WorkSpace.objects.filter(status=True)
-        # member_in_workspace = WorkSpace.objects.filter(status=True, )
+        workspaces = WorkSpace.objects.all()
     except:
         members = ''
         teams = ''
