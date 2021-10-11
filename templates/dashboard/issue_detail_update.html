@@ -16,13 +16,15 @@
         {% endif %}
         <div class="row">
             <div class="col-7">
-                <span>
-                    <button class="btn btn-outline-warning btn-sm ml-5" onclick="history.back()">Back</button>
-                </span>
-                <h5 class="font-weight-bold text-info">Issue - {{object.title}}</h5>
+                <div class="row">
+                    <button class="btn btn-outline-warning btn-sm" onclick="history.back()">Back</button>&nbsp;
+                    Issue - &nbsp; <span class="font-weight-bold text-info text-capitalize">{{object.title}}</span>
+                </div>
+                
             </div>
             <div class="col-5 text-right">
-                | <select name="issue_status" id="issue_status_{{object.id}}" class="btn btn-success mb-2 rounded"
+                 
+                 <select name="issue_status" id="issue_status_{{object.id}}" class="btn btn-success mb-2 rounded"
                     onchange="issue_status_change({{object.id}})">
                     <option value="1" {% if object.issue_status == '1' %}selected{% endif %}>Not Started</option>
                     <option value="2" {% if object.issue_status == '2' %}selected{% endif %}>In Progress</option>
@@ -44,67 +46,48 @@
                 </span> -->
             </div>
         </div>
-        <div class="row">
-            <div class="col-7 bodycol7">
+
+        <div class="row p-0">
+            <div class="col-7 bodycol7 pr-1">
                 <form method="POST">
                     {% csrf_token %}
                     <div class="row">
-                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
                             <label for="planned_start_end_date">Planned Start</label>
-                            <small class="ml-3 font-weight-bold text-danger">{% if object.planned_start_date %}{{object.planned_start_date|date:'d-m-Y H:i'}}{% endif %}</small>
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="planned_start_end_date">
-                                        <i class="fa fa-calendar"></i>
-                                    </span>
-                                </div>
+                            <div class="mb-3">
                                 <input type="datetime-local" class="form-control" id="id_planned_start_date"
                                     name="planned_start_date">
+                                <small class="font-weight-bold text-danger">{% if object.planned_start_date %}{{object.planned_start_date|date:'d-m-Y H:i'}}{% endif %}</small>
                             </div>
                         </div>
 
-                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
                             <label for="planned_start_end_date">Planned End</label>
-                            <small class="ml-3 font-weight-bold text-danger">{% if object.planned_end_date %}{{object.planned_end_date|date:'d-m-Y H:i'}}{% endif %}</small>
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="planned_start_end_date"><i
-                                            class="fa fa-calendar"></i></span>
-                                </div>
+                            <div class="mb-3">
                                 <input type="datetime-local" class="form-control id_date" id="planned_end_date"
                                     name="planned_end_date">
+                            <small class="font-weight-bold text-danger">{% if object.planned_end_date %}{{object.planned_end_date|date:'d-m-Y H:i'}}{% endif %}</small>
                             </div>
                         </div>
-                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
                             <label for="actual_start_end_date">Actual Start</label>
-                            <small class="ml-3 font-weight-bold text-danger">{% if object.actual_start_date %}{{object.actual_start_date|date:'d-m-Y H:i'}}{% endif %}</small>
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="actual_start_end_date"><i
-                                            class="fa fa-calendar"></i></span>
-                                </div>
+                            <div class="mb-3">
                                 <input type="datetime-local" class="form-control id_date" id="actual_start_date"
                                     name="actual_start_date">
+                            <small class="ml-3 font-weight-bold text-danger">{% if object.actual_start_date %}{{object.actual_start_date|date:'d-m-Y H:i'}}{% endif %}</small>
                             </div>
                         </div>
-                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
                             <label for="actual_start_end_date">Actual End</label>
-                            <small class="ml-3 font-weight-bold text-danger">{% if object.actual_end_date %}{{object.actual_end_date|date:'d-m-Y H:i'}}{% endif %}</small>
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="actual_start_end_date"><i
-                                            class="fa fa-calendar"></i></span>
-                                </div>
+                            <div class="mb-3">
                                 <input type="datetime-local" class="form-control id_date" id="actual_end_date"
                                     name="actual_end_date">
+                            <small class="font-weight-bold text-danger">{% if object.actual_end_date %}{{object.actual_end_date|date:'d-m-Y H:i'}}{% endif %}</small>
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
                             <label for="priority">Priority</label>
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="priority"><i class="fa fa-calendar"></i></span>
-                                </div>
+                            <div class="mb-3">
                                 <select class="form-control" name="priority">
                                     <option value="4" {% if object.priority == '4' %}selected{% endif %}>Critical</option>
                                     <option value="1" {% if object.priority == '1' %}selected{% endif %}>High</option>
@@ -115,10 +98,7 @@
                         </div>
                         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
                             <label>Assigned To</label>
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id=""><i class="fa fa-user"></i></span>
-                                </div>
+                            <div class="mb-3">
                                 <select class="form-control" name="assigned_to">
                                     {% for employee in employees %}
                                         <option value="{{employee.id}}" {% if object.assigned_to.id == employee.id %} selected {% endif %}>{{employee.name}}</option>
@@ -133,8 +113,10 @@
                         </div>
                     </div>
                     <br>
-                    <input type="submit" class="btn btn-default bg-gradient-success text-white text-right"
+                   <div class="col-12 pull-right text-right mb-5">
+                    <input type="submit" class="btn btn-default bg-gradient-success text-white"
                         value="Update">
+                   </div>
                 </form>
                     <!-- <div class="col-12"><br>
                             <input type="text" class="form-control" placeholder="Add a to-do list item">
@@ -146,7 +128,7 @@
             <div class="col-5 bodycol5">
                 <!------------------------ multiple taskmanagertabs with their multiple panels to manage all the data in a single page  -->
                 <div class="row taskmanagertab">
-                    <button class="taskmanagertablinks" style="width: 30%;"
+                    <button class="taskmanagertablinks" style="width: 30%;font-size:12px"
                         onclick="opentaskmanagertabs(event, 'taskmanager_comments')" id="defaultOpen">Comments</button>
                     <!-- <button class="taskmanagertablinks" style="width: 24%;"
                         onclick="opentaskmanagertabs(event, 'taskmanager_documents')">Documents</button>
@@ -155,36 +137,38 @@
                     <button class="taskmanagertablinks" style="width: 24%;"
                         onclick="opentaskmanagertabs(event, 'taskmanager_issues')">Issues</button> -->
                 </div>
-                <div id="taskmanager_comments" class="taskmanagertabcontent" style="display: block;">
+                <div id="taskmanager_comments" class="issuemanagertabcontent" style="max-height:280px;overflow:auto;overflow-x:hidden">
                     <!-- comment section -->
-                    <div class="container-fluid">
+                    <div class="container-fluid p-1">
                         <!-- header options -->
-                        <!-- <div class="row">
-                            <div class="col-6">
+                        <div class="row">
+                            <div class="col-lg-8 col-md-6">
                                 <span class="btn-group" role="group" aria-label="toggle_button">
-                                    <button type="button" id="allmessages" class="btn btn-primary">All
-                                        Messages</button>
-                                    <button type="button" id="replylater" class="btn btn-secondary">Reply Later</button>
+                                    <button type="button" id="allmessages" class="btn btn-primary btn-sm"><small>All Messages</small></button>
+                                    <button type="button" id="replylater" class="btn btn-secondary btn-sm"><small>Reply Later</small></button>
                                 </span>
                             </div>
-                            <div class="col-6 text-right">
-                                <a href="#">Show Receipt</a>
+                            <div class="col-lg-4 col-md-6 text-right">
+                                <a href="#"><small>Show Receipt</small></a>
                             </div>
-                        </div> -->
+                        </div>
                         <!-- chatcontent -->
                         {% for comment in comments %}
-                            <div class="row chatstrip">
+                            <div class="chatstrip">
+                            <div class="row pl-1 pr-1 pb-0">
                                 <div class="col-12">
-                                    <small>{{comment.created_on|date:'d-m-Y'}}</small>
+                                    <small>{{comment.created_on|date:'d-m-Y'}} | {{comment.created_on|date:'H:i'}}</small>
                                 </div>
-                                <div class="col-6"><b>{{comment.user}}</b></div>
-                                <div class="col-6 text-right"><small>{{comment.created_on|date:'H:i'}}</small></div>
-                                <div class="col-8">
-                                    <p>{{comment.comment}}</p>
+
+                                <div class="col-12 text-capitalize"><b>{{comment.user}}</b></div>
+                                <div class="col-12">
+                                    <small>{{comment.comment}}</small>
                                 </div>
                                 <!-- <div class="col-4 text-right"><a href="#"><i class="fa fa-reply"></i>
                                         Reply</a></div> -->
                             </div>
+                            </div>
+                        
                         {% endfor %}
                         <!-- chatcontent -->
                         <!-- <div class="row chatstrip">
@@ -200,7 +184,8 @@
                                     Reply</a></div>
                         </div> -->
                         <!-- searchbox -->
-                        <div class="row" id="searchbox">
+                        <div class="row searchrow" id="searchbox">
+                        <div class="col-12 mt-3">
                             <form action="{% url 'issue-comment-add' id %}" method="post">
                                 {% csrf_token %}
                                 <div class="input-group">
@@ -211,6 +196,7 @@
                                     </div>
                                 </div>
                             </form>
+                        </div>
                         </div>
                     </div>
                     <!-- default for reply later message -->
