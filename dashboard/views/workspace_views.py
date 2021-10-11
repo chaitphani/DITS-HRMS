@@ -110,4 +110,5 @@ def issue_detail_update_view(request, id):
         return redirect('/issue/'+str(issue_obj.id)+'/edit')
 
     employees = StaffUser.objects.filter(active_status=True, is_employee=True)
-    return render(request, 'dashboard/issue_detail_update.html', {'object':issue_obj, 'employees':employees})
+    issue_comments = IssueComment.objects.filter(status=True, issue=issue_obj)
+    return render(request, 'dashboard/issue_detail_update.html', {'object':issue_obj, 'employees':employees, 'comments':issue_comments, 'id':id})

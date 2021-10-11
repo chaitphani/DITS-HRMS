@@ -209,7 +209,8 @@
                         </div> -->
                         <!-- searchbox -->
                         <div class="row" id="searchbox">
-                            <form action="{% url 'comment-add' id %}" method="post">
+                            <form action="{% url 'task-comment-add' id %}" method="post">
+                                {% csrf_token %}
                                 <div class="input-group">
                                     <input type="text" placeholder="Type your comment here..." class="form-control"
                                         aria-label="Large" aria-describedby="inputGroup-sizing-sm" name="comment">

@@ -22,7 +22,8 @@ urlpatterns = (
     path('api/task', api_views.TaskView.as_view(), name='task-add'),
     path('api/issue', api_views.IssueView.as_view(), name='issue-add'),
     path('api/work-space', api_views.WorkSpaceView.as_view(), name='work-space-add'),
-    path('api/comment/<int:task_id>', api_views.TaskCommentView.as_view(), name='comment-add'),
+    path('api/comment/task/<int:task_id>', api_views.TaskCommentView.as_view(), name='task-comment-add'),
+    path('api/comment/issue/<int:issue_id>', api_views.IssueCommentView.as_view(), name='issue-comment-add'),
 
     # path('api/work-space/<int:id>/edit', api_views.WorkspaceUpdateView.as_view(), name='work-space-edit'),
     
