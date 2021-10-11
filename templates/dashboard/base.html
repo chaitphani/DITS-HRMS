@@ -108,7 +108,7 @@
 							<i class="fas fa-warehouse"></i>&nbsp;&nbsp;&nbsp;
 							<!-- <img class="img-profile rounded-circle"
 								src="/static/img/undraw_profile.svg"> -->
-							<a href="/workspace/{{work.id}}/update" class="text-white">
+							<a href="/workspace/{{work.id}}/update" class="{% if work.status == True %}text-white{% else %}text-secondary{% endif %}">
 								{{work.name}}
 							</a>
 						</span>

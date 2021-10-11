@@ -21,4 +21,4 @@ class WorkspaceUpdateForm(forms.ModelForm):
 
     class Meta:
         model = WorkSpace
-        fields = ['name', 'slug', 'team', 'status', 'staff']
+        fields = ['name', 'slug', 'team', 'staff', 'status']

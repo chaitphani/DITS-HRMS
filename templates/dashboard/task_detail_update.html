@@ -57,23 +57,21 @@
                     {% csrf_token %}
                         <div class="row">
                             <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
-                                <div><label for="planned_start_end_date">Planned Start</label></div>                            
+                                <div><label for="planned_start_end_date">Planned Start</label></div>
+                                <small class="font-weight-bold text-danger">{% if object.planned_start_date %}{{object.planned_start_date|date:'d-m-Y H:i'}}{% endif %}</small>                            
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="planned_start_end_date">
                                             <i class="fa fa-calendar"></i>
                                         </span>
                                     </div>
-                                    <input type="datetime-local" class="form-control" id="id_planned_start_date"
-                                    placeholder=""  name="planned_start_date">
-                                
-                                <div><small class="font-weight-bold text-danger">{% if object.planned_start_date %}{{object.planned_start_date|date:'d-m-Y H:i'}}{% endif %}</small></div>
+                                    <input type="datetime-local" class="form-control" id="id_planned_start_date" name="planned_start_date">
                             </div>
                         </div>
 
                         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
                             <div><label for="planned_start_end_date">Planned End</label></div>
-                            
+                            <small class="font-weight-bold text-danger">{% if object.planned_end_date %}{{object.planned_end_date|date:'d-m-Y H:i'}}{% endif %}</small>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="planned_start_end_date"><i
@@ -81,12 +79,11 @@
                                 </div>
                                 <input type="datetime-local" class="form-control id_date" id="planned_end_date"
                                     name="planned_end_date">
-                                  <div><small class="font-weight-bold text-danger">{% if object.planned_end_date %}{{object.planned_end_date|date:'d-m-Y H:i'}}{% endif %}</small></div>  
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
                             <label for="actual_start_end_date">Actual Start</label>
-                            
+                            <small class="font-weight-bold text-danger">{% if object.actual_start_date %}{{object.actual_start_date|date:'d-m-Y H:i'}}{% endif %}</small>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="actual_start_end_date"><i
@@ -94,12 +91,11 @@
                                 </div>
                                 <input type="datetime-local" class="form-control id_date" id="actual_start_date"
                                     name="actual_start_date">
-                                <div><small class="font-weight-bold text-danger">{% if object.actual_start_date %}{{object.actual_start_date|date:'d-m-Y H:i'}}{% endif %}</small></div>
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
                             <label for="actual_start_end_date">Actual End</label>
-                            
+                            <small class="font-weight-bold text-danger">{% if object.actual_end_date %}{{object.actual_end_date|date:'d-m-Y H:i'}}{% endif %}</small>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="actual_start_end_date"><i
@@ -107,7 +103,6 @@
                                 </div>
                                 <input type="datetime-local" class="form-control id_date" id="actual_end_date"
                                     name="actual_end_date">
-                            <div><small class="font-weight-bold text-danger">{% if object.actual_end_date %}{{object.actual_end_date|date:'d-m-Y H:i'}}{% endif %}</small></div>
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
@@ -143,7 +138,6 @@
                                 class="form-control">{% if object.description %}{{object.description}}{% endif %}</textarea>
                         </div>
                     </div>
-                   
                    <div class="pull-right mt-2  mb-5"> <input type="submit" class="btn btn-default btn-sm bg-gradient-success text-white text-right"
                         value="Update"></div>
                 </form>
@@ -172,64 +166,69 @@
                     <!-- comment section -->
                     <div class="container-fluid p-1">
                         <!-- header options -->
-                        <div class="row">
+                        <!-- <div class="row">
                             <div class="col-8 pl-0" >
                                 <span class="btn-group" role="group" aria-label="toggle_button">
-                                    <button type="button" id="allmessages" class="btn btn-primary btn-sm text-white"><small>All
-                                        Messages</small></button>
-                                    <button type="button" id="replylater" class="btn btn-secondary btn-sm text-white"><small>Reply Later</small></button>
+                                    <button type="button" id="allmessages" class="btn btn-primary btn-sm text-white">
+                                        <small>All Messages</small>
+                                    </button>
+                                    <button type="button" id="replylater" class="btn btn-secondary btn-sm text-white">
+                                        <small>Reply Later</small>
+                                    </button> 
                                 </span>
                             </div>
-                            <div class="col-4 text-right pr-0">
+                             <div class="col-4 text-right pr-0">
                                 <a href="#">Show Receipt</a>
                             </div>
-                        </div>
+                        </div> -->
                         <!-- chatcontent -->
-                        <div class="row chatstrip">
-                            <div class="col-12">
-                                <small>aug 21, 2021</small>
-                            </div>
-                            <div class="col-6"><b>Vishal Yadav</b></div>
-                            <div class="col-6 text-right"><small>10:37 am</small></div>
-                            <div class="col-8">
-                                <p>Hello Sandeep this is just test message.</p>
-                            </div>
-                            <div class="col-4 text-right"><a href="#"><i class="fa fa-reply"></i>
-                                    Reply</a></div>
-                        </div>
-                        <!-- chatcontent -->
-                        <div class="row chatstrip">
-                            <div class="col-12">
-                                <small>aug 21, 2021</small>
-                            </div>
-                            <div class="col-6"><b>Vishal Yadav</b></div>
-                            <div class="col-6 text-right"><small>10:37 am</small></div>
-                            <div class="col-8">
-                                <p>Hello Sandeep this is just test message.</p>
-                            </div>
-                            <div class="col-4 text-right"><a href="#"><i class="fa fa-reply"></i>
-                                    Reply</a></div>
-                        </div>
-                        <!-- searchbox -->
-                        <div class="row" id="searchbox">
-                            <div class="input-group">
-                                <input type="text" placeholder="Type your comment here..." class="form-control"
-                                    aria-label="Large" aria-describedby="inputGroup-sizing-sm">
-                                <div class="input-group-append">
-                                    <a href="#"><span class="input-group-text">send</span></a>
+                        {% for comment in comments %}
+                            <div class="row chatstrip">
+                                <div class="col-12">
+                                    <small>{{comment.created_on|date:'d-m-Y'}}</small>
+                                </div>
+                                <div class="col-6"><b>{{comment.user}}</b></div>
+                                <div class="col-6 text-right"><small>{{comment.created_on|date:'H:i'}}</small></div>
+                                <div class="col-8">
+                                    <p>{{comment.comment}}</p>
                                 </div>
                             </div>
+                        {% endfor %}
+                        <!-- chatcontent -->
+                        <!-- <div class="row chatstrip">
+                            <div class="col-12">
+                                <small>aug 21, 2021</small>
+                            </div>
+                            <div class="col-6"><b>Vishal Yadav</b></div>
+                            <div class="col-6 text-right"><small>10:37 am</small></div>
+                            <div class="col-8">
+                                <p>Hello Sandeep this is just test message.</p>
+                            </div>
+                            <div class="col-4 text-right"><a href="#"><i class="fa fa-reply"></i>
+                                    Reply</a></div>
+                        </div> -->
+                        <!-- searchbox -->
+                        <div class="row" id="searchbox">
+                            <form action="{% url 'comment-add' id %}" method="post">
+                                <div class="input-group">
+                                    <input type="text" placeholder="Type your comment here..." class="form-control"
+                                        aria-label="Large" aria-describedby="inputGroup-sizing-sm" name="comment">
+                                    <div class="input-group-append">
+                                        <input type="submit" value="Send" class="btn btn-secondary btn-sm">
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                     <!-- default for reply later message -->
-                    <div class="container-fluid" id="defaultmessage" style="display: none;">
+                    <!-- <div class="container-fluid" id="defaultmessage" style="display: none;">
                         <div class="text-center" style="margin: 50px auto;">
                             <img src="/static/img/undraw_Typing_re_d4sq.svg" alt="" style="width: 100px;height:100px">
                             <h4>No Messages Yet</h4>
                             <p>Mark messages as "Reply Later" in the updates tab to
                                 filter them here so that you can reply them later.</p>
                         </div>
-                    </div>
+                    </div> -->
                     <!-- default for reply later message -->
                 </div>
                 <div id="taskmanager_documents" class="taskmanagertabcontent">
