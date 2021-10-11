@@ -96,6 +96,8 @@ def workspace_edit(request, id):
         form = WorkspaceUpdateForm(instance=workspace_obj)
     return render(request, 'dashboard/workspace_update.html', {'object':workspace_obj})
 
+
+
 # @is_authenticated
 # def invite_member(request):
 
