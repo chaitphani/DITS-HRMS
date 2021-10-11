@@ -1,6 +1,23 @@
 {% extends 'dashboard/base.html' %}
 {% block content %}
-
+<style>
+    #task_table_length select, #task_table_filter input{
+        display: block;
+        width: 100%;
+        height: calc(1.5em + .75rem + 2px);
+        padding: .375rem .75rem;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        color: #6e707e;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #d1d3e2;
+        border-radius: .35rem;
+        transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    
+    }
+</style>
 <!-- Page Wrapper -->
 <div id="wrapper">
         <!-- Main Content -->
@@ -79,17 +96,14 @@
 
     <div id="Tasks" class="tabcontent" style="display:block">
         <h3>Tasks</h3>
-        <table id="task_table"  style="font-size:14px">
+        <table id="task_table" style="font-size:14px">
             <thead>
                 <tr class="text-uppercase text-center">
                     <th>ID </th>
                     <th> Task </th>
                     <th> Status </th>
-                    <!-- <th>| Planned Start/End</th> -->
                     <th> Planned Start/End </th>
-                    <!-- <th>| Planned End</th> -->
                     <th>| Priority |</th>
-                    <!-- <th>| Work space |</th> -->
                     <th>| User</th>
                     <th>| Action |</th>
                 </tr>
@@ -107,7 +121,6 @@
                         {% else %} Start {% endif %} - {% if task.planned_end_date %}
                         {{task.planned_end_date|date:'d-m-Y'}} {% else %} End {% endif %}
                     </td>
-                    <!-- <td></td> -->
                     <td>
                         <select name="priority" id="priority_{{task.id}}" class="form-control" style="height:30px;font-size:12px"
                             onchange="priority_status_change({{task.id}})">
@@ -117,12 +130,8 @@
                             <option value="3" {% if task.priority == '3' %}selected{% endif %}>Low</option>
                         </select>
                     </td>
-                    <!-- <td>{{task.workspace.name}}</td> -->
                     <td>{{task.assigned_to.name}}</td>
                     <td>
-                        <!-- <button type="button" id="{{ task.id }}" class="btn btn-primary btn-sm detail_task"
-											data-toggle="modal" data-target="#taskaction_modalbox">Detail
-										</button> -->
                         <a href="{% url 'task-edit' task.id %}" class="btn btn-primary detail_task" style="height:30px;font-size:12px">Detail</a>
                     </td>
                 </tr>
@@ -163,11 +172,8 @@
                     <th>ID </th>
                     <th> Issue </th>
                     <th> Status </th>
-                    <!-- <th>| Planned Start/End</th> -->
                     <th> Planned Start/End </th>
-                    <!-- <th>| Planned End</th> -->
                     <th>| Priority |</th>
-                    <!-- <th>| Work space |</th> -->
                     <th>| User</th>
                     <th>| Action |</th>
                 </tr>
@@ -185,7 +191,6 @@
                         {% else %} Start {% endif %} - {% if issue.planned_end_date %}
                         {{issue.planned_end_date|date:'d-m-Y'}} {% else %} End {% endif %}
                     </td>
-                    <!-- <td></td> -->
                     <td>
                         <select style="height:30px;font-size:12px" name="priority" id="modify_{{issue.id}}" class="form-control"
                             onchange="priority_status_modify({{issue.id}})">
@@ -195,12 +200,8 @@
                             <option value="3" {% if issue.priority == '3' %}selected{% endif %}>Low</option>
                         </select>
                     </td>
-                    <!-- <td>{{issue.workspace.name}}</td> -->
                     <td>{{issue.assigned_to.name}}</td>
                     <td>
-                        <!-- <button type="button" id="{{ issue.id }}" class="btn btn-primary btn-sm detail_task"
-											data-toggle="modal" data-target="#taskaction_modalbox">Detail
-										</button> -->
                         <a href="{% url 'issue-edit' issue.id %}" style="height:30px;font-size:12px"
                             class="btn btn-primary  detail_task">Detail</a>
                     </td>
@@ -723,12 +724,12 @@
     </div>
 </div>
 
-
-
-
 <script>
   $(function(){
-    $("#task_table").dataTable();
+    $("#task_table").dataTable({
+        "aLengthMenu": [[5, 10, 15, -1], [5, 10, 15, "All"]],
+        "iDisplayLength": 5
+    });
     $("#issue_table").dataTable();
   })
   </script>
