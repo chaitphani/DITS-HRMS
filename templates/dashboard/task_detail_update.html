@@ -29,14 +29,14 @@
         <div class="row">
             <div class="col-7">
                 <div class="row">
-                    <button class="btn btn-outline-warning btn-sm ml-0" onclick="history.back()">
-                        <i class="fa fa-arrow-left"></i>&nbsp;Back
+                    <button class="btn btn-outline-warning button-33 btn-sm ml-0" onclick="history.back()">
+                        <i class="fa fa-chevron-left" aria-hidden="true"></i>&nbsp;&nbsp;Back
                     </button>
-                    <h5 class="font-weight-bold text-info text-capitalize ml-5 mt-1">Task - &nbsp;{{object.title}}</h5>
+                    <span class="font-weight-bold text-info text-capitalize ml-3 pt-1">Task - &nbsp;{{object.title}}</span>
                 </div>
             </div>
             <div class="col-5 text-right">
-                <select name="task_status" id="task_status_{{object.id}}" class="btn btn-success btn-sm mb-2 rounded"
+                <select name="task_status" id="task_status_{{object.id}}" class="btn btn-success button-33 mb-2"
                     onchange="task_status_change({{object.id}})">
                     <option value="1" {% if object.task_status == '1' %}selected{% endif %}>Not Started</option>
                     <option value="2" {% if object.task_status == '2' %}selected{% endif %}>In Progress</option>
@@ -154,9 +154,9 @@
                 </div>
                 <div id="taskmanager_comments" class="taskmanagertabcontent">
                     <!-- comment section -->
-                    <div class="container-fluid p-1">
+                    <div class="container-fluid p-1 pt-0">
                         <!-- header options -->
-                         <div class="row">
+                         <div class="row" style="display:none">
                             <div class="col-6" >
                                 <span class="btn-group" role="group" aria-label="toggle_button">
                                     <button type="button" id="allmessages" class="btn btn-primary btn-sm text-white">
@@ -181,25 +181,27 @@
                                         <small style="font-size:9px">
                                             {{comment.created_on|date:'d-m-Y'}} | {{comment.created_on|date:'H:i'}}
                                         </small> -&nbsp;
-                                        <b style="font-size:12px" class="text-capitalize">me</b> <!-- sender -->
+                                        <b style="font-size:9px" class="text-capitalize">me</b> <!-- sender -->
                                     </div>
                                 {% else %}
                                     <div class="col-8 chatbox bg-warning-1">
                                         <span>{{comment.comment}}</span><br>
                                         <small style="font-size:9px">{{comment.created_on|date:'d-m-Y'}} | {{comment.created_on|date:'H:i'}}</small> -&nbsp;
-                                        <small  style="font-size:12px" class="text-capitalize">{{comment.user}}</small> <!--reciver -->
+                                        <small  style="font-size:9px" class="text-capitalize">{{comment.user}}</small> <!--reciver -->
                                     </div>
                                 {% endif %}                   
                             </div>   
                         {% endfor %}
+
+                        {% comment %} comment box here {% endcomment %}
                         <div class="row searchrow" id="searchbox">
-                            <div class="col-12 mt-3">
+                            <div class="col-12">
                                 <form action="{% url 'task-comment-add' id %}" method="post">
                                     {% csrf_token %}
                                     <div class="input-group">
                                         <input type="text" id="taskchattxt" placeholder="Type your comment here..." class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm" name="comment" onkeyup="EnableDisable(this)" required>
                                         <div class="input-group-append">
-                                            <input type="submit" id="taskchatbtnSubmit" value="Send"  class="btn btn-secondary btn-sm" disabled="disabled">
+                                            <input type="submit" id="taskchatbtnSubmit" value="Send"  class="btn btn-success button-33 btn-sm" disabled="disabled">
                                         </div>
                                     </div>
                                 </form>
@@ -221,18 +223,6 @@
                             }
                         };
                     </script>
-
-
-                    <!-- default for reply later message -->
-                    <!-- <div class="container-fluid" id="defaultmessage" style="display: none;">
-                        <div class="text-center" style="margin: 50px auto;">
-                            <img src="/static/img/undraw_Typing_re_d4sq.svg" alt="" style="width: 100px;height:100px">
-                            <h4>No Messages Yet</h4>
-                            <p>Mark messages as "Reply Later" in the updates tab to
-                                filter them here so that you can reply them later.</p>
-                        </div>
-                    </div> -->
-                    <!-- default for reply later message -->
                 </div>
 
                 <div id="taskmanager_documents" class="taskmanagertabcontent">
