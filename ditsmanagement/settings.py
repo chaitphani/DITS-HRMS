@@ -154,3 +154,6 @@ MESSAGE_TAGS = {
     messages.WARNING: 'alert-warning',
     messages.ERROR: 'alert-danger',
 }
+
+
+CURRENT_DOMAIN = 'http://127.0.0.1:8000'

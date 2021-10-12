@@ -15,6 +15,7 @@ def tasK_status_change(request):
         aftr_status = task_obj.task_status
         task_obj.save()
 
+        id = request.GET.get('id')
         from_mail = settings.EMAIL_HOST_USER
         to_email = task_obj.assigned_to.email
         subject = "Task Status Changed - " + task_obj.assigned_to.name
@@ -23,8 +24,8 @@ def tasK_status_change(request):
                 "Workspace: {} ".format(task_obj.workspace.name)+'\n'+\
                 "Task Name: {} ".format(task_obj.title)+'\n'+\
                 "Previous Status: {} ".format(prev_status)+'\n'+\
-                "Present Status: {} ".format(aftr_status)
-
+                "Present Status: {} ".format(aftr_status)+'\n'+\
+                "link: {}/task/{}/edit ".format(settings.CURRENT_DOMAIN, id)
         send_mail(
             subject,
             body,
@@ -32,7 +33,6 @@ def tasK_status_change(request):
             [to_email],
             fail_silently=False,
         )
-
         messages.success(request, task_obj.title + ' task-status change success...')
     return HttpResponse('success')
 

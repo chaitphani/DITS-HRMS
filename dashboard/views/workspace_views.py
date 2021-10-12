@@ -8,8 +8,10 @@ from dashboard.forms import *
 from dashboard.serializers import *
 from django.db.models import Sum, Count, F
 
-from django.core.mail import send_mail
 from django.conf import settings
+
+from django.template.loader import render_to_string
+from django.core.mail import EmailMultiAlternatives
 
 
 def is_authenticated(f):
@@ -46,6 +48,7 @@ def workspace_view(request, name):
 def task_detail_update_view(request, id):
 
     task_obj = Task.objects.get(status=True, id=id)
+    prev_assigned_user = task_obj.assigned_to.name
 
     if request.method == 'POST':
         planned_start_date = request.POST.get('planned_start_date')
@@ -70,6 +73,18 @@ def task_detail_update_view(request, id):
         task_obj.description = description
         task_obj.assigned_to = staff_mem
         task_obj.save()
+        if prev_assigned_user != staff_mem.name:
+
+            from_mail = settings.EMAIL_HOST_USER
+            to_mail = staff_mem.email
+            subject = 'A new task has been added for you..'
+
+            message = render_to_string('{0}/templates/mail_templates/task_assigned.html'.format(settings.BASE_DIR),{'name':staff_mem.name, 'workspace':task_obj.workspace.name, 'team':task_obj.workspace.team.name, 'task':task_obj.title, 'status':task_obj.get_task_status_display(), 'priority':task_obj.get_priority_display(), 'end_date':task_obj.planned_end_date})
+            
+            msg = EmailMultiAlternatives(subject, message, from_mail, [to_mail])
+
+            msg.attach_alternative(message, 'text/html')
+            msg.send(fail_silently=False)
         messages.success(request, task_obj.title + ' update success...')
         return redirect('/task/'+str(task_obj.id)+'/edit')
         
@@ -82,6 +97,7 @@ def task_detail_update_view(request, id):
 def issue_detail_update_view(request, id):
 
     issue_obj = Issue.objects.get(status=True, id=id)
+    prev_assigned_user = issue_obj.assigned_to.name
 
     if request.method == 'POST':
         priority = request.POST.get('priority')
@@ -106,6 +122,18 @@ def issue_detail_update_view(request, id):
         issue_obj.description = description
         issue_obj.assigned_to = staff_mem
         issue_obj.save()
+        if prev_assigned_user != staff_mem.name:
+
+            from_mail = settings.EMAIL_HOST_USER
+            to_mail = staff_mem.email
+            subject = 'A new task has been added for you..'
+
+            message = render_to_string('{0}/templates/mail_templates/issue_assigned.html'.format(settings.BASE_DIR),{'name':staff_mem.name, 'workspace':issue_obj.workspace.name, 'team':issue_obj.workspace.team.name, 'task':issue_obj.title, 'status':issue_obj.get_task_status_display(), 'priority':issue_obj.get_priority_display(), 'end_date':issue_obj.planned_end_date})
+            
+            msg = EmailMultiAlternatives(subject, message, from_mail, [to_mail])
+
+            msg.attach_alternative(message, 'text/html')
+            msg.send(fail_silently=False)
         messages.success(request, issue_obj.title + ' update success...')
         return redirect('/issue/'+str(issue_obj.id)+'/edit')
 
