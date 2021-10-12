@@ -4,6 +4,7 @@
 
 <div class="container-fluid">
     <div class="card p-4">
+
         {% if messages %}
         <ul class="messages list-unstyled">
             {% for message in messages %}
@@ -14,11 +15,14 @@
                 {% endfor %}
         </ul>
         {% endif %}
+
         <div class="row">
             <div class="col-7">
                 <div class="row">
-                    <button class="btn btn-outline-warning btn-sm ml-0" onclick="history.back()">Back</button>&nbsp;
-                    Task - &nbsp;<span class="font-weight-bold text-info text-capitalize">{{object.title}}</span>
+                    <button class="btn btn-outline-warning btn-sm ml-0" onclick="history.back()">
+                        <i class="fa fa-arrow-left"></i>&nbsp;Back
+                    </button>
+                    <h5 class="font-weight-bold text-info text-capitalize ml-5 mt-1">Task - &nbsp;{{object.title}}</h5>
                 </div>
             </div>
             <div class="col-5 text-right">
@@ -44,7 +48,9 @@
                 </span> -->
             </div>
         </div>
+
         <div class="row p-0">
+
             <div class="col-lg-7 bodycol7 pr-1">
                 <form method="POST">
                     {% csrf_token %}
@@ -125,7 +131,7 @@
             </div>
 
             <div class="col-lg-5 bodycol5">
-                <!------------------------ multiple taskmanagertabs with their multiple panels to manage all the data in a single page  -->
+
                 <div class="row taskmanagertab">
                     <button class="taskmanagertablinks" style="width: 24%;padding:5px 5px; margin:0;text-align:center"
                         onclick="opentaskmanagertabs(event, 'taskmanager_comments')" id="defaultOpen"><small>Comments</small></button>

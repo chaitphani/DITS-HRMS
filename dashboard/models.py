@@ -4,9 +4,9 @@ from django.contrib.auth.models import User
 
 import re
 
-priority_choices = (('High', 'High'),('Medium', 'Medium'),('Low', 'Low'), ('Critical', 'Critical'), )
-task_status_choices = (('Not Started', 'Not Started'),('In Progress', 'In Progress'),('In Review', 'In Review'),('Completed', 'Completed'),('Blocked', 'Blocked'),)
-issue_type = (('Bug','Bug'), ('Feature', 'Feature'), ('Improvement', 'Improvement'))
+priority_choices = (('1', 'High'),('2', 'Medium'),('3', 'Low'), ('4', 'Critical'), )
+task_status_choices = (('1', 'Not Started'),('2', 'In Progress'),('3', 'In Review'),('4', 'Completed'),('5', 'Blocked'),)
+issue_type = (('1','Bug'), ('2', 'Feature'), ('3', 'Improvement'))
 
 
 class Team(models.Model):
@@ -68,8 +68,8 @@ class Task(models.Model):
 
     title = models.CharField(max_length=120)
     assigned_to = models.ForeignKey(StaffUser, on_delete=models.SET_NULL, null=True, blank=True)
-    priority = models.CharField(max_length=10, choices=priority_choices, default='Medium')
-    task_status = models.CharField(max_length=15, choices=task_status_choices, default='In Progress')
+    priority = models.CharField(max_length=10, choices=priority_choices, default='2')
+    task_status = models.CharField(max_length=15, choices=task_status_choices, default='2')
     description = models.TextField(null=True, blank=True)
 
     planned_start_date = models.DateTimeField(null=True, blank=True)
@@ -92,9 +92,9 @@ class Issue(models.Model):
 
     title = models.CharField(max_length=120)
     assigned_to = models.ForeignKey(StaffUser, on_delete=models.SET_NULL, null=True, blank=True)
-    issue_type = models.CharField(max_length=20, choices=issue_type, default='Bug')
-    priority = models.CharField(max_length=10, choices=priority_choices, default='Medium')
-    issue_status = models.CharField(max_length=15, choices=task_status_choices, default='In Progress')
+    issue_type = models.CharField(max_length=20, choices=issue_type, default='1')
+    priority = models.CharField(max_length=10, choices=priority_choices, default='2')
+    issue_status = models.CharField(max_length=15, choices=task_status_choices, default='2')
     description = models.TextField(null=True, blank=True)
 
     planned_start_date = models.DateTimeField(null=True, blank=True)
