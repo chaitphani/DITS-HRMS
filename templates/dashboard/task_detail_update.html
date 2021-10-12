@@ -164,48 +164,38 @@
                         </div>
                         <!-- chatcontent -->
 
-                       
                         {% for comment in comments %}
                             <div class="row mt-3 pl-1 pr-1 pb-0">
-                            {% if request.session.user_name == comment.user.name %}
-                                    <div class="col-12">
-                                            <div class="col-10 chatbox">
-                                            <span>{{comment.comment}}</span><br>
-                                            <small style="font-size:9px">{{comment.created_on|date:'d-m-Y'}} | {{comment.created_on|date:'H:i'}}</small>
-                                           
-                                            -&nbsp;
-                                                
-                                                    <b style="font-size:9px" class="text-capitalize">me</b> <!-- sender -->
-                                            </div>
+                                {% if request.session.user_name == comment.user.name %}
+                                    <div class="offset-4 col-8 chatbox bg-info text-white">
+                                        <span>{{comment.comment}}</span><br>
+                                        <small style="font-size:9px">
+                                            {{comment.created_on|date:'d-m-Y'}} | {{comment.created_on|date:'H:i'}}
+                                        </small> -&nbsp;
+                                        <b style="font-size:12px" class="text-capitalize">me</b> <!-- sender -->
                                     </div>
-{% else %}
-                                    <div class="col-12 mt-3 text-left">
-                                            <div class="offset-2 col-10 chatbox">
-                                            <span>{{comment.comment}}</span><br>
-                                            <small style="font-size:9px">{{comment.created_on|date:'d-m-Y'}} | {{comment.created_on|date:'H:i'}}</small>
-                                           
-                                            -&nbsp;
-                                                
-                                            <small  style="font-size:9px" class="text-capitalize">{{comment.user}}</small> <!--reciver -->
-                                              
-                                            </div>
+                                {% else %}
+                                    <div class="col-8 chatbox bg-warning text-white">
+                                        <span>{{comment.comment}}</span><br>
+                                        <small style="font-size:9px">{{comment.created_on|date:'d-m-Y'}} | {{comment.created_on|date:'H:i'}}</small> -&nbsp;
+                                        <small  style="font-size:12px" class="text-capitalize">{{comment.user}}</small> <!--reciver -->
                                     </div>
-                            {% endif %}                   
+                                {% endif %}                   
                             </div>   
                         {% endfor %}
-
-                            <div class="row searchrow" id="searchbox">
-                                    <div class="col-12 mt-3">
-                                        <form action="{% url 'task-comment-add' id %}" method="post">
-                                            <div class="input-group">
-                                                <input type="text" id="taskchattxt" placeholder="Type your comment here..." class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm" name="comment" onkeyup="EnableDisable(this)" required>
-                                                <div class="input-group-append">
-                                                    <input type="submit" id="taskchatbtnSubmit" value="Send"  class="btn btn-secondary btn-sm" disabled="disabled">
-                                                </div>
-                                            </div>
-                                        </form>
+                        <div class="row searchrow" id="searchbox">
+                            <div class="col-12 mt-3">
+                                <form action="{% url 'task-comment-add' id %}" method="post">
+                                    {% csrf_token %}
+                                    <div class="input-group">
+                                        <input type="text" id="taskchattxt" placeholder="Type your comment here..." class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm" name="comment" onkeyup="EnableDisable(this)" required>
+                                        <div class="input-group-append">
+                                            <input type="submit" id="taskchatbtnSubmit" value="Send"  class="btn btn-secondary btn-sm" disabled="disabled">
+                                        </div>
                                     </div>
+                                </form>
                             </div>
+                        </div>
                     </div>
                     <script type="text/javascript">
                         function EnableDisable(taskchattxt) {
