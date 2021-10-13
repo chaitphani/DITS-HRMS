@@ -21,52 +21,52 @@
 <!-- Page Wrapper -->
 <div id="wrapper">
         <!-- Main Content -->
-        <div id="content">
-            <!-- Topbar -->
-            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-                <!-- back button -->
-              
-                <div class="text-center d-md-inline">
+    <div id="content">
+        <!-- Topbar -->
+        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+            <!-- back button -->
+            
+            <div class="text-center d-md-inline">
                 <a href="/">
-				<div style="height:40px;width:40px;background-color:rgba(67, 115, 223, .4);padding:6px 5px 0px 0px;border-radius:50%">
-                <span style="font-size:12px;color:#fff"><i class="fa fa-chevron-left"></i></span>
-                </div>
+                    <div style="height:40px;width:40px;background-color:rgba(67, 115, 223, .4);padding:6px 5px 0px 0px;border-radius:50%">
+                        <span style="font-size:12px;color:#fff"><i class="fa fa-chevron-left"></i></span>
+                    </div>
                 </a>
-			    </div>
-              
-                <!-- Topbar Navbar -->
-                <ul class="navbar-nav ml-auto">
-                    <div class="topbar-divider d-none d-sm-block"></div>
-                    <!-- Add new button -->
-                    <li class="nav-item dropdown no-arrow">
-                        <a class="nav-link dropdown-toggle" href="#" id="newbuttonDropdown" role="button"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <div class="icon-circle bg-primary">
-                                <i class="fas fa-receipt text-white"></i>
-                            </div>&nbsp; Add New
+            </div>
+            
+            <!-- Topbar Navbar -->
+            <ul class="navbar-nav ml-auto">
+                <div class="topbar-divider d-none d-sm-block"></div>
+                <!-- Add new button -->
+                <li class="nav-item dropdown no-arrow">
+                    <a class="nav-link dropdown-toggle" href="#" id="newbuttonDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <div class="icon-circle bg-primary">
+                            <i class="fas fa-receipt text-white"></i>
+                        </div>&nbsp; Add New
+                    </a>
+                    <!-- Dropdown - User Information -->
+                    <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                        aria-labelledby="userDropdown">
+                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#createtask">
+                            <i class="fas fa-tasks fa-sm fa-fw mr-2 text-gray-400"></i>
+                            New Task
                         </a>
-                        <!-- Dropdown - User Information -->
-                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                            aria-labelledby="userDropdown">
-                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#createtask">
-                                <i class="fas fa-tasks fa-sm fa-fw mr-2 text-gray-400"></i>
-                                New Task
-                            </a>
-                            <a class="dropdown-item" style="display:none" href="#" data-toggle="modal" data-target="#createmeeting">
-                                <i class="fas fa-calendar fa-sm fa-fw mr-2 text-gray-400"></i>
-                                New Meeting
-                            </a>
+                        <a class="dropdown-item" style="display:none" href="#" data-toggle="modal" data-target="#createmeeting">
+                            <i class="fas fa-calendar fa-sm fa-fw mr-2 text-gray-400"></i>
+                            New Meeting
+                        </a>
 
-                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#createissue">
-                                <i class="fas fa-receipt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                New Issue
-                            </a>
-                        </div>
-                    </li>
-                </ul>
-            </nav>
-            <!-- End of Topbar -->
-        </div>
+                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#createissue">
+                            <i class="fas fa-receipt fa-sm fa-fw mr-2 text-gray-400"></i>
+                            New Issue
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+        <!-- End of Topbar -->
+    </div>
 </div>
 
 <!-- Scroll to Top Button-->
@@ -84,7 +84,6 @@
         <button class="tablinks" onclick="opennavbartabs(event, 'Issues')">Issues</button>
         <button class="tablinks" onclick="opennavbartabs(event, 'Settings')">Settings</button>
     </div>
-
 
     {% comment %} <div id="Projects" class="tabcontent">
         <h3>Projects</h3>
@@ -723,7 +722,6 @@
         </div>
     </div>
 </div>
-
 <script>
   $(function(){
     $("#task_table").dataTable({

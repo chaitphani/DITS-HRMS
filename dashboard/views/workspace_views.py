@@ -31,23 +31,48 @@ def is_authenticated(f):
     return wrap
 
 
+def is_staff_at_work(f):
+    def wrap(request, *args, **kwargs):
+        # this check the session if userid key exist, if not it will redirect to login page
+        staff_in_work = []
+        list_staff_ = WorkSpace.objects.filter(status=True).values('staff__name')
+        for staff in list_staff_:
+            staff_in_work.append(staff['staff__name'])
+        if request.session['user_name'] in staff_in_work:
+            return f(request, *args, **kwargs)
+
+        messages.info(request, 'No workspace')
+        return redirect("home")
+    wrap.__doc__ = f.__doc__
+    # wrap.__name__ = f.__name__
+    return wrap
+
+
+@is_authenticated
+@is_staff_at_work
 def workspace_view(request, name):
 
     workspace_obj = WorkSpace.objects.filter(slug=name)
     tasks = Task.objects.filter(status=True, workspace__slug=name).order_by('-id')
     issues = Issue.objects.filter(status=True, workspace__slug=name).order_by('-id')
 
-    employees = StaffUser.objects.filter(active_status=True, is_employee=True)
     # workspace = WorkSpace.objects.filter(status=True)
     # tasks_in_workspace = workspace.prefetch_related('task_set', 'issue_set').filter(status=True).annotate(task_count=Count('task__id'), task_assignees=F('task__assigned_to__name'), issue_count=Count('issue__id')).values()
 
-    return render(request, 'dashboard/workspace.html', {'tasks':tasks, 'issues':issues, 'employees':employees, 'workspace':workspace_obj})
+    employees = StaffUser.objects.filter(active_status=True, is_employee=True)
+    return render(request, 'dashboard/workspace.html', {'tasks':tasks, 'issues':issues, 'employees':employees, 'workspace':workspace_obj,
+    #  'staff_list_work':staff_in_work
+    })
 
 
 @is_authenticated
+@is_staff_at_work
 def task_detail_update_view(request, id):
-
+    
     task_obj = Task.objects.get(status=True, id=id)
+    # task_main_obj = Task.objects.get(id=id, workspace=task_obj.workspace, workspace__staff=request.session.get('id'))
+    # print('-----taskmain obj-------', task_main_obj)
+
     prev_assigned_user = task_obj.assigned_to.name
 
     if request.method == 'POST':
@@ -90,10 +115,11 @@ def task_detail_update_view(request, id):
         
     employees = StaffUser.objects.filter(active_status=True, is_employee=True)
     task_comments = TaskComment.objects.filter(status=True, task=task_obj).order_by('-id')
-    return render(request, 'dashboard/task_detail_update.html', {'object':task_obj, 'employees':employees, 'comments':task_comments, 'id':id})
+    return render(request, 'dashboard/task_detail_update.html', {'object':task_obj, 'employees':employees, 'comments':task_comments, 'id':id, "staff_list_work":staff_in_work})
 
 
 @is_authenticated
+@is_staff_at_work
 def issue_detail_update_view(request, id):
 
     issue_obj = Issue.objects.get(status=True, id=id)

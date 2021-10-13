@@ -77,13 +77,6 @@ def home(request):
 
 
 @is_authenticated
-def team_select(request, slug):
-
-    teams_obj = Team.objects.filter(slug=slug)
-    return render(request, 'dashboard/team.html', {'teams':teams_obj, })
-
-
-@is_authenticated
 def workspace_edit(request, id):
     
     workspace_obj = WorkSpace.objects.get(id=id)
