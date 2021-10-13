@@ -88,8 +88,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12" style="border-bottom: 1px solid #ccc;">
-                    <h5>Workspace Settings > <span style="color: #000;"><label for="">User Management</label></span>
-                    </h5>
+                    <h5>Workspace Settings</h5>
                 </div>
                 <div class="settingtab">
                     <button class="settingtablinks active"
@@ -105,14 +104,21 @@
                     <br>
 
                     <div class="row">
-                        <div style="width:30%;padding: 10px;">
-                            <img src="" alt="" style="width: 80px;height:80px;"><br>
-                            <a href="#"><i class="fa fa-cloud-upload"></i> Upload Photo</a>
+                        <div style="width:30%;padding: 10px;text-align:center">
+                            <div style="width: 80px;height:80px;margin:0 auto;box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;">
+                            <img class="img-center" src="" alt="Workspace logo" style="width: 80px;height:80px;">
+                            </div>
+
+                            <a type="file" for="file-upload" href="#"><i class="fa fa-cloud-upload"></i> Upload Photo</a>
+                           
+
+                            <input id="file-upload" type="file">
                         </div>
+
                         <div style="width:70%;padding: 10px;">
                             <a href="#" data-target="#editworkspace" data-toggle="modal"><b>Workspace
-                                    Name <i class="fa fa-pencil-alt"></i></b></a><br>
-                            <small>https://DITS Management.com</small><br>
+                                    Name <i class="fa fa-pencil"></i></b></a><br>
+                            <small><a href="https://DITS Management.com">https://DITS Management.com</a></small><br>
                             <input type="button" class="btn btn-primary" value="Delete Workspace">
                         </div>
                     </div>
