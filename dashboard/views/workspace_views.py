@@ -58,8 +58,8 @@ def task_detail_update_view(request, id):
         description = request.POST.get('description')
         assigned_to = request.POST.get('assigned_to')
         priority = request.POST.get('priority')
-        staff_mem = StaffUser.objects.get(id=assigned_to)
 
+        staff_mem = StaffUser.objects.get(id=assigned_to)
         if planned_start_date != '':
             task_obj.planned_start_date = datetime.strptime(planned_start_date, "%Y-%m-%dT%H:%M")
         if planned_end_date != '':
@@ -72,9 +72,7 @@ def task_detail_update_view(request, id):
         task_obj.priority = priority
         task_obj.description = description
         task_obj.assigned_to = staff_mem
-        task_obj.save()
         if prev_assigned_user != staff_mem.name:
-
             from_mail = settings.EMAIL_HOST_USER
             to_mail = staff_mem.email
             subject = 'A new task has been added for you..'
@@ -85,6 +83,8 @@ def task_detail_update_view(request, id):
 
             msg.attach_alternative(message, 'text/html')
             msg.send(fail_silently=False)
+        task_obj.save()
+        
         messages.success(request, task_obj.title + ' update success...')
         return redirect('/task/'+str(task_obj.id)+'/edit')
         

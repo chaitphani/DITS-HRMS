@@ -281,16 +281,5 @@
 </div>
 
 <script src="{% static 'js/task_status_change.js'%}"></script>
-<script>
-    $('#update_btn').on('click', function(e){
-        e.preventDefault();
-        action = confirm('Are you sure to update...?');
-        if (action == false){
-            e.preventDefault();
-        }
-        else{
-            location.reload();
-        }
-    });
-</script>
+
 {% endblock %}

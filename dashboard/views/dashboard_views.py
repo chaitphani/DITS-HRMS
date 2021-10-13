@@ -57,7 +57,7 @@ def home(request):
                 task_obj.priority = request.GET.get('priority')
                 task_obj.save()
                 messages.success(request, task_obj.title + ' Priority changed successfully...')
-                
+
         elif request.GET.get('iss_id'):
             if request.method == 'GET' and request.is_ajax():
                 issue_obj = Issue.objects.get(id=request.GET.get('iss_id'))
