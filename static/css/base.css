@@ -77,6 +77,7 @@
     border-left: 1px solid #ccc;
     min-height: 300px;
     position:relative;
+    background-color:whitesmoke;
 }
 
 #headtaskmanagertab {
@@ -100,12 +101,27 @@
     bottom: 5px;
     width: 100%;
 } */
+
+
+    .bg-info-1{
+        background-color: #849ceb;
+        color:#011f83;
+    }
+    .bg-success-1{
+        background-color: #8deeb0;
+        color: green;
+    }
+    .bg-secondary-1{
+        background-color: whitesmoke;
+    }
+
 .searchrow{
     position: absolute;
     bottom: 0px;
-    left:18px;
+    left:12px;
     width: 100%;
-    background-color:#fff; padding:5px;
+    background-color:#fff; 
+    padding:5px;
     box-shadow: rgba(33, 35, 38, 0.1) 0px -10px 10px -10px;
 }
 
@@ -160,7 +176,9 @@ input:focus, select:focus, input.form-control:focus {
     background-color: #fff;
 }
 
-.chatbox{padding:4px 15px 4px 15px;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;border-radius:15px}
+.chatbox{padding:4px 15px 4px 15px;
+    box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px, rgba(9, 30, 66, 0.13) 0px 0px 1px 1px;   
+    border-radius:15px}
 
 .taskmanagertab {
     overflow: hidden;
@@ -168,7 +186,6 @@ input:focus, select:focus, input.form-control:focus {
     margin-bottom: 5px;
     border-bottom: 1px solid #ccc;
 }
-
 /* Style the buttons inside the taskmanagertab */
 .taskmanagertab button {
     background-color: inherit;

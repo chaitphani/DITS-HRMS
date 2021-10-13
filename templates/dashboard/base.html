@@ -207,7 +207,7 @@
 							</div>
 						</li>
 						<!-- Nav Item - Alerts -->
-						<li class="nav-item dropdown no-arrow mx-1" style="display:none">
+						<li class="nav-item dropdown no-arrow mx-1" style="display:block">
 							<a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
 								data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 								<i class="fas fa-bell fa-fw"></i>
@@ -220,6 +220,7 @@
 								<h6 class="dropdown-header">
 									Alerts Center
 								</h6>
+								<div style="height:200px;overflow:auto;">
 								<a class="dropdown-item d-flex align-items-center" href="#">
 									<div class="mr-3">
 										<div class="icon-circle bg-primary">
@@ -253,10 +254,26 @@
 										alert notification text here
 									</div>
 								</a>
+								<a class="dropdown-item d-flex align-items-center" href="#">
+									<div class="mr-3">
+										<div class="icon-circle bg-warning">
+											<i class="fas fa-exclamation-triangle text-white"></i>
+										</div>
+									</div>
+									<div>
+										<div class="small text-gray-500">September 2, 2021</div>
+										alert notification text here
+									</div>
+								</a>
+								</div>
+
 								<a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
 							</div>
 						</li>
-
+						<style>
+						.mx-1 ::-webkit-scrollbar {
+						width: 0px;
+						}</style>
 						<!-- Nav Item - Messages -->
 						<!-- <li style="display:none;" class="nav-item dropdown no-arrow mx-1">
 							<a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
@@ -429,8 +446,6 @@
 			</div>
 		</div>
 	</div>
-
-
 
 	<!-------------------------------------The Modal to create Team --------------------------------------->
 	<div class="modal" id="createteam">
