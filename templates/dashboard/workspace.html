@@ -131,7 +131,7 @@
                     </td>
                     <td>{{task.assigned_to.name}}</td>
                     <td>
-                        <a href="{% url 'task-edit' task.id %}" class="btn btn-primary detail_task" style="height:30px;font-size:12px">Detail</a>
+                        <a href="{% url 'task-edit' task.workspace.slug task.id %}" class="btn btn-primary detail_task" style="height:30px;font-size:12px">Detail</a>
                     </td>
                 </tr>
                 {% endfor %}
@@ -201,7 +201,7 @@
                     </td>
                     <td>{{issue.assigned_to.name}}</td>
                     <td>
-                        <a href="{% url 'issue-edit' issue.id %}" style="height:30px;font-size:12px"
+                        <a href="{% url 'issue-edit' issue.workspace.slug issue.id %}" style="height:30px;font-size:12px"
                             class="btn btn-primary  detail_task">Detail</a>
                     </td>
                 </tr>
