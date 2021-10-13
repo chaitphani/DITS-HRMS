@@ -44,7 +44,7 @@
                         <!-- box n -->
                         {% for space in workspace %}
                         <div class="wrapper">
-                            <a class="box" href="/workspace/{{space.slug}}">
+                            <a class="box" href="{% url 'workspace' space.slug %}">
                                 <div class="box_insidediv">
                                     <div class="col-lg-12">
                                         <span class="user_txticon text-capitalize">{{space.name|first}}</span><br>

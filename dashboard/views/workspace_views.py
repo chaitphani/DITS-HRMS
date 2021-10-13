@@ -41,7 +41,7 @@ def is_staff_at_work(f):
         if request.session['user_name'] in staff_in_work:
             return f(request, *args, **kwargs)
 
-        messages.info(request, 'No workspace')
+        messages.info(request, 'You have no workspace yet..!')
         return redirect("home")
     wrap.__doc__ = f.__doc__
     # wrap.__name__ = f.__name__
@@ -56,23 +56,16 @@ def workspace_view(request, name):
     tasks = Task.objects.filter(status=True, workspace__slug=name).order_by('-id')
     issues = Issue.objects.filter(status=True, workspace__slug=name).order_by('-id')
 
-    # workspace = WorkSpace.objects.filter(status=True)
-    # tasks_in_workspace = workspace.prefetch_related('task_set', 'issue_set').filter(status=True).annotate(task_count=Count('task__id'), task_assignees=F('task__assigned_to__name'), issue_count=Count('issue__id')).values()
-
     employees = StaffUser.objects.filter(active_status=True, is_employee=True)
     return render(request, 'dashboard/workspace.html', {'tasks':tasks, 'issues':issues, 'employees':employees, 'workspace':workspace_obj,
-    #  'staff_list_work':staff_in_work
     })
 
 
 @is_authenticated
 @is_staff_at_work
-def task_detail_update_view(request, id):
+def task_detail_update_view(request, id, workspace_slug):
     
-    task_obj = Task.objects.get(status=True, id=id)
-    # task_main_obj = Task.objects.get(id=id, workspace=task_obj.workspace, workspace__staff=request.session.get('id'))
-    # print('-----taskmain obj-------', task_main_obj)
-
+    task_obj = Task.objects.get(status=True, id=id, workspace__slug=workspace_slug)
     prev_assigned_user = task_obj.assigned_to.name
 
     if request.method == 'POST':
@@ -97,6 +90,7 @@ def task_detail_update_view(request, id):
         task_obj.priority = priority
         task_obj.description = description
         task_obj.assigned_to = staff_mem
+        task_obj.save()
         if prev_assigned_user != staff_mem.name:
             from_mail = settings.EMAIL_HOST_USER
             to_mail = staff_mem.email
@@ -105,11 +99,8 @@ def task_detail_update_view(request, id):
             message = render_to_string('{0}/templates/mail_templates/task_assigned.html'.format(settings.BASE_DIR),{'name':staff_mem.name, 'workspace':task_obj.workspace.name, 'team':task_obj.workspace.team.name, 'task':task_obj.title, 'status':task_obj.get_task_status_display(), 'priority':task_obj.get_priority_display(), 'end_date':task_obj.planned_end_date})
             
             msg = EmailMultiAlternatives(subject, message, from_mail, [to_mail])
-
             msg.attach_alternative(message, 'text/html')
             msg.send(fail_silently=False)
-        task_obj.save()
-        
         messages.success(request, task_obj.title + ' update success...')
         return redirect('/task/'+str(task_obj.id)+'/edit')
         
@@ -120,9 +111,9 @@ def task_detail_update_view(request, id):
 
 @is_authenticated
 @is_staff_at_work
-def issue_detail_update_view(request, id):
+def issue_detail_update_view(request, id, workspace_slug):
 
-    issue_obj = Issue.objects.get(status=True, id=id)
+    issue_obj = Issue.objects.get(status=True, id=id, workspace__slug=workspace_slug)
     prev_assigned_user = issue_obj.assigned_to.name
 
     if request.method == 'POST':
