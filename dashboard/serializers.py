@@ -6,7 +6,7 @@ class TaskSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Task
-        fields = ['title', 'workspace', 'assigned_to', 'priority', 'task_status', 'description', 'planned_start_date', 'planned_end_date']
+        fields = ['id', 'title', 'workspace', 'assigned_to', 'priority', 'task_status', 'description', 'planned_start_date', 'planned_end_date']
 
 
 class WorkSpaceSerializer(serializers.ModelSerializer):
@@ -30,4 +30,4 @@ class TeamSerializer(serializers.ModelSerializer):
 class IssueSerializer(serializers.ModelSerializer):
     class Meta:
         model = Issue
-        fields = ['title', 'workspace', 'assigned_to', 'priority', 'issue_status', 'description', 'planned_start_date', 'planned_end_date']
+        fields = ['id', 'title', 'workspace', 'assigned_to', 'priority', 'issue_status', 'description', 'planned_start_date', 'planned_end_date']

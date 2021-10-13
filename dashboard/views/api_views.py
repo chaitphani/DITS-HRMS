@@ -29,6 +29,7 @@ class TaskView(APIView):
                         and serializer.data['priority'] != '' or serializer.data['priority'] != None:
                     staff_mem = StaffUser.objects.get(id=serializer.data['assigned_to'])
                     workspace_obj = WorkSpace.objects.get(id=serializer.data.get('workspace'))
+                    task_new_obj = Task.objects.get(id=serializer.data.get('id'))
                     end_date = serializer.data.get('planned_end_date').split('T')[0]
 
                     from_mail = settings.EMAIL_HOST_USER
@@ -41,7 +42,7 @@ class TaskView(APIView):
                     #         "Priority level: {} ".format(serializer.data['priority'])
                     # send_mail('A New Task has been added to your dashboard...',body,from_mail,[to_email],fail_silently=False,)
 
-                    message = render_to_string('{0}/templates/mail_templates/task_assigned.html'.format(settings.BASE_DIR),{'name':staff_mem.name, 'workspace':workspace_obj.name, 'team':workspace_obj.team.name, 'task':serializer.data.get('title'), 'status':serializer.data.get('task_status'), 'priority':serializer.data.get('priority'), 'end_date':end_date})
+                    message = render_to_string('{0}/templates/mail_templates/task_assigned.html'.format(settings.BASE_DIR),{'name':staff_mem.name, 'workspace':workspace_obj.name, 'team':workspace_obj.team.name, 'task':task_new_obj.title, 'status':task_new_obj.get_task_status_display(), 'priority':task_new_obj.get_priority_display(), 'end_date':end_date})
                     
                     msg = EmailMultiAlternatives(subject, message, from_mail, [to_email])
 
@@ -103,6 +104,8 @@ class IssueView(APIView):
                         and serializer.data['priority'] != '' or serializer.data['priority'] != None:
                     staff_mem = StaffUser.objects.get(id=serializer.data['assigned_to'])
                     workspace_obj = WorkSpace.objects.get(id=serializer.data.get('workspace'))
+                    issue_new_obj = Issue.objects.get(id=serializer.data.get('id'))
+
                     end_date = serializer.data.get('planned_end_date').split('T')[0]
 
                     from_mail = settings.EMAIL_HOST_USER
@@ -114,8 +117,8 @@ class IssueView(APIView):
                     #         "Description: {} ".format(serializer.data['description'])+'\n'+\
                     #         "Priority level: {} ".format(serializer.data['priority'])
                     # send_mail('A New issue has been added to your dashboard...',body,from_mail,[to_email], fail_silently=False,)       
-                      
-                    message = render_to_string('{0}/templates/mail_templates/issue_assigned.html'.format(settings.BASE_DIR),{'name':staff_mem.name, 'workspace':workspace_obj.name, 'team':workspace_obj.team.name, 'task':serializer.data.get('title'), 'status':serializer.data.get('issue_status'), 'priority':serializer.data.get('priority'), 'end_date':end_date})
+                    
+                    message = render_to_string('{0}/templates/mail_templates/issue_assigned.html'.format(settings.BASE_DIR),{'name':staff_mem.name, 'workspace':workspace_obj.name, 'team':workspace_obj.team.name, 'task':issue_new_obj.title, 'status':issue_new_obj.get_issue_status_display(), 'priority':issue_new_obj.get_priority_display(), 'end_date':end_date})
                     msg = EmailMultiAlternatives(subject, message, from_mail, [to_email])
 
                     msg.attach_alternative(message, 'text/html')
