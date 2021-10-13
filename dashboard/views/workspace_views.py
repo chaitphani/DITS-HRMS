@@ -115,7 +115,7 @@ def task_detail_update_view(request, id):
         
     employees = StaffUser.objects.filter(active_status=True, is_employee=True)
     task_comments = TaskComment.objects.filter(status=True, task=task_obj).order_by('-id')
-    return render(request, 'dashboard/task_detail_update.html', {'object':task_obj, 'employees':employees, 'comments':task_comments, 'id':id, "staff_list_work":staff_in_work})
+    return render(request, 'dashboard/task_detail_update.html', {'object':task_obj, 'employees':employees, 'comments':task_comments, 'id':id})
 
 
 @is_authenticated
