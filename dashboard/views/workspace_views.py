@@ -91,6 +91,7 @@ def task_detail_update_view(request, id, workspace_slug):
         task_obj.description = description
         task_obj.assigned_to = staff_mem
         task_obj.save()
+        
         if prev_assigned_user != staff_mem.name:
             from_mail = settings.EMAIL_HOST_USER
             to_mail = staff_mem.email
@@ -101,6 +102,7 @@ def task_detail_update_view(request, id, workspace_slug):
             msg = EmailMultiAlternatives(subject, message, from_mail, [to_mail])
             msg.attach_alternative(message, 'text/html')
             msg.send(fail_silently=False)
+
         messages.success(request, task_obj.title + ' update success...')
         return redirect('/' + task_obj.workspace.slug + '/' + str(task_obj.id)+'/task')
         
