@@ -156,9 +156,9 @@ class TaskCommentView(APIView):
 
             comment_obj = TaskComment.objects.create(user=user_obj, task=task_obj, comment=request.data.get('comment'), status=True)
             comment_obj.save()
-            return redirect('/task/'+ str(task_id) +'/edit')
+            return redirect('/' + task_obj.workspace.slug + '/' + str(task_obj.id)+'/task')
         except Exception as e:
-            print('----error in e----', e)
+            print('----error as e----', e)
             return Response({'error':'Task obj not found with the id..'}, status=status.HTTP_404_NOT_FOUND)
 
 
@@ -171,9 +171,9 @@ class IssueCommentView(APIView):
             
             comment_obj = IssueComment.objects.create(user=user_obj, issue=issue_obj, comment=request.data.get('comment'), status=True)
             comment_obj.save()
-            return redirect('/issue/'+ str(issue_id) +'/edit')
+            return redirect('/' + issue_obj.workspace.slug + '/' + str(issue_obj.id) + '/issue')
         except Exception as e:
-            print('----error in e----', e)
+            print('----error as e----', e)
             return Response({'error':'Issue obj not found with the id..'}, status=status.HTTP_404_NOT_FOUND)
 
 
