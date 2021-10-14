@@ -7,7 +7,7 @@
     <div class="row tab">
         <button class="tablinks" onclick="opennavbartabs(event, 'Dashboard')" id="defaultOpen">Dashboard</button>
         {% if request.session.is_admin == True %}
-            <button class="tablinks" onclick="opennavbartabs(event, 'Settings')">Settings</button>
+        <button class="tablinks" onclick="opennavbartabs(event, 'Settings')">Settings</button>
         {% endif %}
     </div>
 
@@ -52,7 +52,8 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-6">
-                                            <span>Task</span><br><span class="text-warning font-weight-bold">{{space.task_set.count}}</span>
+                                            <span>Task</span><br><span
+                                                class="text-warning font-weight-bold">{{space.task_set.count}}</span>
                                         </div>
                                         <div class="col-6">
                                             <span>Issue</span><br><span
@@ -82,38 +83,42 @@
             </div>
         </div>
     </div>
+
     {% if request.session.is_admin == True %}
+
     <div id="Settings" class="tabcontent">
-        <h3>Settings</h3>
+        
         <div class="container">
             <div class="row">
                 <div class="col-lg-12" style="border-bottom: 1px solid #ccc;">
-                    <h5>Workspace Settings</h5>
+                    <h5>Settings</h5>
                 </div>
                 <div class="settingtab">
-                    <button class="settingtablinks active"
-                        onclick="opensettingtab_section(event, 'general_info')">General Information</button>
+                    <!-- <button class="settingtablinks active"
+                        onclick="opensettingtab_section(event, 'general_info')">General Information</button> -->
                     <button class="settingtablinks" onclick="opensettingtab_section(event, 'user_management')"
                         id="defaultOpen">User
                         Management</button>
-                    <button class="settingtablinks" onclick="opensettingtab_section(event, 'roles_permissions')">Roles &
-                        Permissions</button>
+                    <!-- <button class="settingtablinks" onclick="opensettingtab_section(event, 'roles_permissions')">Roles &
+                        Permissions</button> -->
                 </div>
                 <!-- General info section -->
-                <div id="general_info" class="settingtabcontent" style="display: block;">
+                <!-- <div id="general_info" class="settingtabcontent" style="display: block;">
                     <br>
 
                     <div class="row">
                         <div style="width:30%;padding: 10px">
                             <div style="width: 80px;height:80px;box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;">
-                            <img class="img-center" src="" alt="Workspace logo" style="width: 80px;height:80px;">
+                                <img class="img-center" src="" alt="Workspace logo" style="width: 80px;height:80px;">
                             </div>
-                            
+
                             <div>
-                               <div style="position:relative;cursor:pointer">
-                                <span style="position:absolute;width:100%"><i class="fa fa-cloud-upload"></i>Upload Photo</span>
-                                 <span style="z-index:9999;opacity:0;margin-top:-8px;position:absolute"><input type="file" id="upload"></span>
-                               </div>
+                                <div style="position:relative;cursor:pointer">
+                                    <span style="position:absolute;width:100%"><i class="fa fa-cloud-upload"></i>Upload
+                                        Photo</span>
+                                    <span style="z-index:9999;opacity:0;margin-top:-8px;position:absolute"><input
+                                            type="file" id="upload"></span>
+                                </div>
                             </div>
 
                         </div>
@@ -126,43 +131,31 @@
                         </div>
 
                     </div>
-                </div>
+                </div> -->
 
                 <!-- User management section -->
                 <div id="user_management" class="settingtabcontent">
                     <br>
-                    <h4>Invite Team Members to "TeamName"</h4>
-                    <form action="" method="POST">
+                    <h4>Invite Team Members to "Workspace"</h4>
+                    <form method="POST" action="/">
                         {% csrf_token %}
-                        <div class="input-group">
-                            <input type="email" name="member_email" class="form-control"
-                                placeholder="Enter email adddress and press Enter or click the + button to add">
-                            <div class="input-group-addon"><button class="btn btn-block font-weight-bold"><i
-                                        class="fa fa-plus-circle fa-lg text-success"
-                                        style="font-size:35px"></i></button></div>
+                        <div class="input-group mb-2">
+                            <input type="email" name="email" class="form-control" placeholder="Enter email adddress..." required>
                         </div>
-                        </hr>
-
-
-
                         <div class="row">
-                            <div class="col-lg-12">
+                            <div class="col-lg-8">
                                 <small>Select a workspace</small>
-                                <div class="input-group">
-                                    <select class="form-control">
-                                        <option>Workspace1</option>
-                                        <option>Workspace2</option>
-                                        <option>Workspace3</option>
-                                    </select>
-                                    <div class="input-group-addon">
-                                        <input type="submit" class="btn btn-secondary btn-Disabled pull-right"
-                                            value="Send Invite">
-                                    </div>
-                                </div>
+                                <select class="form-control" required>
+                                    <option value="">Please select</option>
+                                    {% for space in workspace %}
+                                        <option value="{{space.id}}" class="text-capitalize">{{space.name}}</option>
+                                    {% endfor %}
+                                </select>    
                             </div>
                         </div>
+                        <input type="submit" class="btn btn-secondary pull-right" value="Send Invite">
                     </form>
-                    <hr>
+                    <!-- <hr>
                     <div class="row">
                         <div class="col-lg-8">
                             <input type="text" class="form-control" placeholder="Search">
@@ -177,30 +170,10 @@
                                 <option value="enableduser">Enabled User</option>
                             </select>
                         </div>
-                    </div>
-                    <br>
-                    <div class="row">
-                        <div class="col-lg-8">
-                            <b>Sandeep yadav</b><br>
-                            <small>sandeepyadavjnp01@gmail.com</small>
-                        </div>
-                        <div class="col-lg-4 text-right">
-                            <b>Team Owner</b>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col-lg-8">
-                            <b>Sandeep yadav</b><br>
-                            <small>sandeepyadavjnp01@gmail.com</small>
-                        </div>
-                        <div class="col-lg-4 text-right">
-                            <br>
-                            <b>Team Admin</b>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row">
+                    </div> -->
+                    <!-- <br> -->
+                    <!-- <hr> -->
+                    <!-- <div class="row">
                         <div class="col-lg-8">
                             <b>Sandeep yadav</b><br>
                             <small>sandeepyadavjnp01@gmail.com</small>
@@ -212,11 +185,11 @@
                                 <option value="Admin">Limited Member</option>
                             </select>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
 
                 <!-- Roles permissions section -->
-                <div id="roles_permissions" class="settingtabcontent" style="display: none;">
+                <!-- <div id="roles_permissions" class="settingtabcontent" style="display: none;">
                     <br>
                     <div class="col-xs-10 col-sm-6 col-md-3 col-lg-3">
                         <select name="" id="" class="form-control">
@@ -226,9 +199,7 @@
                         </select>
                     </div>
                     <br><br>
-                    <!-- accordion section -->
                     <div id="accordion">
-                        <!-- Workspaces -->
                         <div class="card">
                             <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne"
                                 aria-expanded="true" aria-controls="collapseOne">
@@ -319,7 +290,6 @@
                             </div>
                         </div>
 
-                        <!-- Tasks -->
                         <div class="card">
                             <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo"
                                 aria-expanded="false" aria-controls="collapseTwo">
@@ -415,7 +385,6 @@
                             </div>
                         </div>
 
-                        <!-- Meetings -->
                         <div class="card">
                             <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree"
                                 aria-expanded="false" aria-controls="collapseThree">
@@ -479,7 +448,6 @@
                             </div>
                         </div>
 
-                        <!-- Issues -->
                         <div class="card">
                             <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour"
                                 aria-expanded="false" aria-controls="collapseFour">
@@ -576,7 +544,6 @@
                             </div>
                         </div>
 
-                        <!-- Timesheet -->
                         <div class="card">
                             <button class="btn btn-link collapsed" style="text-decoration-style: none;"
                                 data-toggle="collapse" data-target="#collapseFive" aria-expanded="false"
@@ -613,9 +580,11 @@
                         </div>
 
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
+
     {% endif %}
-    {% endblock %}
+</div>
+{% endblock %}

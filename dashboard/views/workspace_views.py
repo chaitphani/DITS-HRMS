@@ -102,7 +102,7 @@ def task_detail_update_view(request, id, workspace_slug):
             msg.attach_alternative(message, 'text/html')
             msg.send(fail_silently=False)
         messages.success(request, task_obj.title + ' update success...')
-        return redirect('/task/'+str(task_obj.id)+'/edit')
+        return redirect('/' + task_obj.workspace.slug + '/' + str(task_obj.id)+'/task')
         
     employees = StaffUser.objects.filter(active_status=True, is_employee=True)
     task_comments = TaskComment.objects.filter(status=True, task=task_obj).order_by('-id')
@@ -139,20 +139,19 @@ def issue_detail_update_view(request, id, workspace_slug):
         issue_obj.description = description
         issue_obj.assigned_to = staff_mem
         issue_obj.save()
-        if prev_assigned_user != staff_mem.name:
 
+        if prev_assigned_user != staff_mem.name:
             from_mail = settings.EMAIL_HOST_USER
             to_mail = staff_mem.email
             subject = 'A new task has been added for you..'
-
             message = render_to_string('{0}/templates/mail_templates/issue_assigned.html'.format(settings.BASE_DIR),{'name':staff_mem.name, 'workspace':issue_obj.workspace.name, 'team':issue_obj.workspace.team.name, 'task':issue_obj.title, 'status':issue_obj.get_task_status_display(), 'priority':issue_obj.get_priority_display(), 'end_date':issue_obj.planned_end_date})
             
             msg = EmailMultiAlternatives(subject, message, from_mail, [to_mail])
-
             msg.attach_alternative(message, 'text/html')
             msg.send(fail_silently=False)
+
         messages.success(request, issue_obj.title + ' update success...')
-        return redirect('/issue/'+str(issue_obj.id)+'/edit')
+        return redirect('/' + issue_obj.workspace.slug + '/' + str(issue_obj.id) + '/issue')
 
     employees = StaffUser.objects.filter(active_status=True, is_employee=True)
     issue_comments = IssueComment.objects.filter(status=True, issue=issue_obj)

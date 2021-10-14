@@ -25,7 +25,7 @@ def tasK_status_change(request):
                 "Task Name: {} ".format(task_obj.title)+'\n'+\
                 "Previous Status: {} ".format(prev_status)+'\n'+\
                 "Present Status: {} ".format(aftr_status)+'\n'+\
-                "link: {}/task/{}/edit ".format(settings.CURRENT_DOMAIN, id)
+                "link: {}/{}/{}/task ".format(settings.CURRENT_DOMAIN, task_obj.workspace.slug, id)
         send_mail(
             subject,
             body,
@@ -33,6 +33,7 @@ def tasK_status_change(request):
             [to_email],
             fail_silently=False,
         )
+        
         messages.success(request, task_obj.title + ' task-status change success...')
     return HttpResponse('success')
 

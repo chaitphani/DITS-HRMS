@@ -1,20 +1,15 @@
-from django.db.models.query import InstanceCheckMeta
 from django.shortcuts import render, redirect
 from django.contrib import messages
-
-from datetime import datetime
-
-from rest_framework import RemovedInDRF313Warning
 
 from dashboard.models import *
 from dashboard.forms import *
 from dashboard.serializers import *
-from django.db.models import Sum, Count, F
 
-from django.core.mail import send_mail
 from django.conf import settings
 
-from dashboard.views.workspace_views import workspace_view
+from django.template.loader import render_to_string
+from django.core.mail import EmailMultiAlternatives
+from django.core.mail import send_mail
 
 
 def is_authenticated(f):
@@ -38,12 +33,56 @@ def is_authenticated(f):
 def home(request):
 
     try:
+        main_user_obj = ''
+        staff_obj = ''
+        workspace_obj = ''
+
         user_obj = StaffUser.objects.get(id=request.session.get('id'))
         employees = StaffUser.objects.filter(active_status=True, is_employee=True)
+
         if request.session.get('is_admin') == False:
             workspace = WorkSpace.objects.filter(status=True, staff=user_obj)
         else:
             workspace = WorkSpace.objects.filter(status=True)
+
+        if request.method == 'POST':
+            invite_email = request.POST.get('email')
+            workspace_id = request.POST.get('workspace')
+            workspace_obj = WorkSpace.objects.get(id=workspace_id)
+
+            try:
+                main_user_obj = User.objects.get(email=invite_email)
+                staff_obj = StaffUser.objects.get(email=invite_email)
+            except Exception as e:
+                print('----exception error in invite----', e)
+                name = invite_email.split('@')[0]
+                main_user_obj = User.objects.create_user(username=name, email=invite_email, password=str(name)+str(123))
+                staff_obj = StaffUser.objects.create(name=name, email=invite_email, password=str(name)+str(123))
+
+                from_mail = settings.EMAIL_HOST_USER
+                to_email = main_user_obj.email
+                body = "DITS staff acccount has been created: \n\n"\
+                        "User Name : {} ".format(staff_obj.name)+'\n'+\
+                        "Email: {} ".format(staff_obj.email)+'\n'+\
+                        "Password: {} ".format(staff_obj.password)+'\n'+\
+                        "link: {} ".format(settings.BASE_DOMAIN + '/login')
+
+                send_mail(
+                    'Welcome to DITS Task Management App',
+                    body,
+                    from_mail,
+                    [to_email],
+                    fail_silently=False,
+                )
+
+            workspace_obj.staff.add(staff_obj)
+
+            from_mail = settings.EMAIL_HOST_USER
+            subject = "You've been invited to the new Workspace..."
+            message = render_to_string('{0}/templates/mail_templates/join_team_invitation.html'.format(settings.BASE_DIR),{'url':settings.BASE_DOMAIN + '/' + workspace_obj.slug})
+            msg = EmailMultiAlternatives(subject, message, from_mail, [invite_email])
+            msg.attach_alternative(message, 'text/html')
+            msg.send(fail_silently=False)
 
         # tasks = Task.objects.filter(status=True).order_by('-id')
         # issues = Issue.objects.filter(status=True).order_by('-id')
