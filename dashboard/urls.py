@@ -25,11 +25,8 @@ urlpatterns = (
     path('api/comment/task/<int:task_id>', api_views.TaskCommentView.as_view(), name='task-comment-add'),
     path('api/comment/issue/<int:issue_id>', api_views.IssueCommentView.as_view(), name='issue-comment-add'),
 
-    # path('api/work-space/<int:id>/edit', api_views.WorkspaceUpdateView.as_view(), name='work-space-edit'),
-    
     path('<slug:name>', workspace_views.workspace_view, name='workspace'),
     path('<slug:workspace_slug>/<int:id>/task', workspace_views.task_detail_update_view, name='task-edit'),
     path('<slug:workspace_slug>/<int:id>/issue', workspace_views.issue_detail_update_view, name='issue-edit'),
 
-    # path('staff', StaffView.as_view(), name='signup'),
 )

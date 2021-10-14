@@ -496,7 +496,7 @@
 							</div>
 							<div class="col-lg-12">
 								<small>Assign To*</small>
-								<select name="assigned_to" id="" class="form-control" required='required'>
+								<select name="assigned_to" id="" class="form-control">
 									<option value="">Please select</option>
 									{% for employee in employees %}
 									<option value="{{employee.id}}">{{employee.name}}</option>
@@ -699,7 +699,7 @@
 							</div>
 							<div class="col-lg-12">
 								<small>Assigned To*</small>
-								<select name="assigned_to" id="" class="form-control" required='required'>
+								<select name="assigned_to" id="" class="form-control">
 									<option value="">Please select</option>
 									{% for employee in employees %}
 									<option value="{{employee.id}}">{{employee.name}}</option>
