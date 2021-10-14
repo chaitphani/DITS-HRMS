@@ -104,15 +104,18 @@
                     <br>
 
                     <div class="row">
-                        <div style="width:30%;padding: 10px;text-align:center">
-                            <div style="width: 80px;height:80px;margin:0 auto;box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;">
+                        <div style="width:30%;padding: 10px">
+                            <div style="width: 80px;height:80px;box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;">
                             <img class="img-center" src="" alt="Workspace logo" style="width: 80px;height:80px;">
                             </div>
+                            
+                            <div>
+                               <div style="position:relative;cursor:pointer">
+                                <span style="position:absolute;width:100%"><i class="fa fa-cloud-upload"></i>Upload Photo</span>
+                                 <span style="z-index:9999;opacity:0;margin-top:-8px;position:absolute"><input type="file" id="upload"></span>
+                               </div>
+                            </div>
 
-                            <a type="file" for="file-upload" href="#"><i class="fa fa-cloud-upload"></i> Upload Photo</a>
-                           
-
-                            <input id="file-upload" type="file">
                         </div>
 
                         <div style="width:70%;padding: 10px;">
@@ -121,6 +124,7 @@
                             <small><a href="https://DITS Management.com">https://DITS Management.com</a></small><br>
                             <input type="button" class="btn btn-primary" value="Delete Workspace">
                         </div>
+
                     </div>
                 </div>
 
