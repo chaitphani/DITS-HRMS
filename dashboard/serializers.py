@@ -12,8 +12,12 @@ class TaskSerializer(serializers.ModelSerializer):
 class WorkSpaceSerializer(serializers.ModelSerializer):
     class Meta:
         model = WorkSpace
-        fields = ['name', 'team', 'staff']
-
+        fields = ['name', 'team', 'staff', 'slug']
+        extra_kwargs = {
+            'slug':{
+                'read_only':True,
+            },
+        }
 
 class TeamSerializer(serializers.ModelSerializer):
     class Meta:

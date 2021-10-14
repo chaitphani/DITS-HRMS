@@ -15,6 +15,7 @@ from django.conf import settings
 from django.template.loader import render_to_string
 from django.core.mail import EmailMultiAlternatives
 
+
 class TaskView(APIView):
 
     serializer_class = TaskSerializer
@@ -42,7 +43,7 @@ class TaskView(APIView):
                     #         "Priority level: {} ".format(serializer.data['priority'])
                     # send_mail('A New Task has been added to your dashboard...',body,from_mail,[to_email],fail_silently=False,)
 
-                    message = render_to_string('{0}/templates/mail_templates/task_assigned.html'.format(settings.BASE_DIR),{'name':staff_mem.name, 'workspace':workspace_obj.name, 'team':workspace_obj.team.name, 'task':task_new_obj.title, 'status':task_new_obj.get_task_status_display(), 'priority':task_new_obj.get_priority_display(), 'end_date':end_date})
+                    message = render_to_string('{0}/templates/mail_templates/task_assigned.html'.format(settings.BASE_DIR),{'name':staff_mem.name, 'workspace':workspace_obj.name, 'team':workspace_obj.team.name, 'task':task_new_obj.title, 'status':task_new_obj.get_task_status_display(), 'priority':task_new_obj.get_priority_display(), 'end_date':end_date, 'url':settings.BASE_DOMAIN + '/' + workspace_obj.slug + '/' + task_new_obj.id + '/task'})
                     
                     msg = EmailMultiAlternatives(subject, message, from_mail, [to_email])
 
@@ -68,6 +69,20 @@ class WorkSpaceView(APIView):
             slug_name = serialize.name.lower()
             serialize.slug = re.sub("[$₹%\‘@’+;()/:&!?.'|*^–,`~#]", "", slug_name).replace(" ", "-")
             serialize.save()
+
+            slug = serializer.data.get('slug')
+            workspace_mem_list_email = []
+            for mem in serializer.data.get('staff'):
+                staff_mem = StaffUser.objects.get(id=mem)
+                workspace_mem_list_email.append(staff_mem.email)
+
+            from_mail = settings.EMAIL_HOST_USER
+            subject = "You've been invited to the new Workspace..."
+            message = render_to_string('{0}/templates/mail_templates/join_team_invitation.html'.format(settings.BASE_DIR),{'url':settings.BASE_DOMAIN + '/' + slug})
+            msg = EmailMultiAlternatives(subject, message, from_mail, workspace_mem_list_email)
+            msg.attach_alternative(message, 'text/html')
+            msg.send(fail_silently=False)
+
             messages.success(request, 'Work space add success...')
             return redirect('home')
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -85,6 +100,7 @@ class TeamView(APIView):
             slug_name = serialize.name.lower()
             serialize.slug = re.sub("[$₹%\‘@’+;()/:&!?.'|*^–,`~#]", "", slug_name).replace(" ", "-")
             serialize.save()
+
             messages.success(request, 'Team add success...')
             return redirect('home')
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -118,7 +134,7 @@ class IssueView(APIView):
                     #         "Priority level: {} ".format(serializer.data['priority'])
                     # send_mail('A New issue has been added to your dashboard...',body,from_mail,[to_email], fail_silently=False,)       
                     
-                    message = render_to_string('{0}/templates/mail_templates/issue_assigned.html'.format(settings.BASE_DIR),{'name':staff_mem.name, 'workspace':workspace_obj.name, 'team':workspace_obj.team.name, 'task':issue_new_obj.title, 'status':issue_new_obj.get_issue_status_display(), 'priority':issue_new_obj.get_priority_display(), 'end_date':end_date})
+                    message = render_to_string('{0}/templates/mail_templates/issue_assigned.html'.format(settings.BASE_DIR),{'name':staff_mem.name, 'workspace':workspace_obj.name, 'team':workspace_obj.team.name, 'task':issue_new_obj.title, 'status':issue_new_obj.get_issue_status_display(), 'priority':issue_new_obj.get_priority_display(), 'end_date':end_date, 'url':settings.BASE_DOMAIN + '/' + workspace_obj.slug + '/' + issue_new_obj.id + '/issue'})
                     msg = EmailMultiAlternatives(subject, message, from_mail, [to_email])
 
                     msg.attach_alternative(message, 'text/html')
