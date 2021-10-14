@@ -94,11 +94,9 @@
                     <h5>Settings</h5>
                 </div>
                 <div class="settingtab">
-                    <!-- <button class="settingtablinks active"
+                    <!-- <button class="settingtablinks"
                         onclick="opensettingtab_section(event, 'general_info')">General Information</button> -->
-                    <button class="settingtablinks" onclick="opensettingtab_section(event, 'user_management')"
-                        id="defaultOpen">User
-                        Management</button>
+                    <button class="settingtablinks active" onclick="opensettingtab_section(event, 'user_management')" id="defaultOpen">UserManagement</button>
                     <!-- <button class="settingtablinks" onclick="opensettingtab_section(event, 'roles_permissions')">Roles &
                         Permissions</button> -->
                 </div>
@@ -137,21 +135,24 @@
                     <h4>Invite Team Members to "Workspace"</h4>
                     <form method="POST" action="/">
                         {% csrf_token %}
-                        <div class="input-group mb-2">
+                        <div class="col-12 input-group mb-2">
                             <input type="email" name="email" class="form-control" placeholder="Enter email adddress..." required>
                         </div>
-                        <div class="row">
-                            <div class="col-lg-8">
-                                <small>Select a workspace</small>
+                        
+                        <div class="col-12"><small>Select a workspace</small></div>
+                            <div class="col-12 input-group">
                                 <select class="form-control" name="workspace" required>
                                     <option value="">Please select</option>
                                     {% for space in workspace %}
                                         <option value="{{space.id}}" class="text-capitalize">{{space.name}}</option>
                                     {% endfor %}
                                 </select>    
-                            </div>
+                            
+                            <span class="input-group-addon">
+                               <input type="submit" class="btn btn-secondary button-33" style="border-radius:0px;height:38px" value="Send Invite">
+                            </span>
                         </div>
-                        <input type="submit" class="btn btn-secondary pull-right" value="Send Invite">
+                       
                     </form>
                     <!-- <hr>
                     <div class="row">

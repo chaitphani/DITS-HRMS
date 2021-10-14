@@ -207,7 +207,7 @@
 							</div>
 						</li>
 						<!-- Nav Item - Alerts -->
-						<li class="nav-item dropdown no-arrow mx-1" style="display:block">
+						<li class="nav-item dropdown no-arrow mx-1" style="display:none">
 							<a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
 								data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 								<i class="fas fa-bell fa-fw"></i>
@@ -348,7 +348,7 @@
 							<!-- Dropdown - User Information -->
 							<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
 								aria-labelledby="userDropdown">
-								<a class="dropdown-item" href="#">
+								{% comment %} <a class="dropdown-item" href="#">
 									<i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
 									Profile Settings
 								</a>
@@ -356,7 +356,7 @@
 									<i class="fas fa-envelope fa-sm fa-fw mr-2 text-gray-400"></i>
 									Invitations
 								</a>
-								<div class="dropdown-divider"></div>
+								<div class="dropdown-divider"></div> {% endcomment %}
 								<a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
 									<i class="fas fa-power-off fa-sm fa-fw mr-2 text-gray-400"></i>
 									Logout
