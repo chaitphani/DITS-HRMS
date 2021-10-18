@@ -156,7 +156,7 @@ def issue_detail_update_view(request, id, workspace_slug):
         return redirect('/' + issue_obj.workspace.slug + '/' + str(issue_obj.id) + '/issue')
 
     employees = StaffUser.objects.filter(active_status=True, is_employee=True)
-    issue_comments = IssueComment.objects.filter(status=True, issue=issue_obj)
+    issue_comments = IssueComment.objects.filter(status=True, issue=issue_obj).order_by('-id')
     return render(request, 'dashboard/issue_detail_update.html', {'object':issue_obj, 'employees':employees, 'comments':issue_comments, 'id':id})
 
 
