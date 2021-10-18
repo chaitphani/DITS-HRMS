@@ -43,7 +43,7 @@ class TaskView(APIView):
                     #         "Priority level: {} ".format(serializer.data['priority'])
                     # send_mail('A New Task has been added to your dashboard...',body,from_mail,[to_email],fail_silently=False,)
 
-                    message = render_to_string('{0}/templates/mail_templates/task_assigned.html'.format(settings.BASE_DIR),{'name':staff_mem.name, 'workspace':workspace_obj.name, 'team':workspace_obj.team.name, 'task':task_new_obj.title, 'status':task_new_obj.get_task_status_display(), 'priority':task_new_obj.get_priority_display(), 'end_date':end_date, 'url':settings.BASE_DOMAIN + '/' + workspace_obj.slug + '/' + task_new_obj.id + '/task'})
+                    message = render_to_string('{0}/templates/mail_templates/task_assigned.html'.format(settings.BASE_DIR),{'name':staff_mem.name, 'workspace':workspace_obj.name, 'team':workspace_obj.team.name, 'task':task_new_obj.title, 'status':task_new_obj.get_task_status_display(), 'priority':task_new_obj.get_priority_display(), 'end_date':end_date, 'url':settings.BASE_DOMAIN + '/' + workspace_obj.slug + '/' + str(task_new_obj.id) + '/task'})
                     
                     msg = EmailMultiAlternatives(subject, message, from_mail, [to_email])
 
@@ -134,7 +134,7 @@ class IssueView(APIView):
                     #         "Priority level: {} ".format(serializer.data['priority'])
                     # send_mail('A New issue has been added to your dashboard...',body,from_mail,[to_email], fail_silently=False,)       
                     
-                    message = render_to_string('{0}/templates/mail_templates/issue_assigned.html'.format(settings.BASE_DIR),{'name':staff_mem.name, 'workspace':workspace_obj.name, 'team':workspace_obj.team.name, 'task':issue_new_obj.title, 'status':issue_new_obj.get_issue_status_display(), 'priority':issue_new_obj.get_priority_display(), 'end_date':end_date, 'url':settings.BASE_DOMAIN + '/' + workspace_obj.slug + '/' + issue_new_obj.id + '/issue'})
+                    message = render_to_string('{0}/templates/mail_templates/issue_assigned.html'.format(settings.BASE_DIR),{'name':staff_mem.name, 'workspace':workspace_obj.name, 'team':workspace_obj.team.name, 'task':issue_new_obj.title, 'status':issue_new_obj.get_issue_status_display(), 'priority':issue_new_obj.get_priority_display(), 'end_date':end_date, 'url':settings.BASE_DOMAIN + '/' + workspace_obj.slug + '/' + str(issue_new_obj.id) + '/issue'})
                     msg = EmailMultiAlternatives(subject, message, from_mail, [to_email])
 
                     msg.attach_alternative(message, 'text/html')
@@ -243,3 +243,4 @@ class IssueCommentView(APIView):
 #             messages.success(request, 'Member ' + serializer.data['name'] + ' add success...!')
 #             return redirect('login')
 #         return Response({'msg':'error'}, status=status.HTTP_400_BAD_REQUEST)
+
