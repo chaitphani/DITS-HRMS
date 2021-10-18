@@ -1,23 +1,9 @@
 {% extends 'dashboard/base.html' %}
 {% block content %}
-<style>
-    .dataTables_length select, .dataTables_filter input{
-        display: block;
-        width: 100%;
-        height: calc(1.5em + .75rem + 2px);
-        padding: .375rem .75rem;
-        font-size: 1rem;
-        font-weight: 400;
-        line-height: 1.5;
-        color: #6e707e;
-        background-color: #fff;
-        background-clip: padding-box;
-        border: 1px solid #d1d3e2;
-        border-radius: .35rem;
-        transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-    
-    }
-</style>
+
+<link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css"/>
+<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+
 <!-- Page Wrapper -->
 <div id="wrapper">
         <!-- Main Content -->
@@ -77,34 +63,24 @@
 <div class="container-fluid">
     <!------------------------ multiple tabs with their multiple panels to manage all the data in a single page  -->
     <div class="row tab">
-        {% comment %} <button class="tablinks" onclick="opennavbartabs(event, 'Projects')">Projects</button>
-        <button class="tablinks" onclick="opennavbartabs(event, 'Boards')">Boards</button> {% endcomment %}
         <button class="tablinks active" onclick="opennavbartabs(event, 'Tasks')">Tasks</button>
-        {% comment %} <button class="tablinks" onclick="opennavbartabs(event, 'Meetings')">Meetings</button> {% endcomment %}
         <button class="tablinks" onclick="opennavbartabs(event, 'Issues')">Issues</button>
         <button class="tablinks" onclick="opennavbartabs(event, 'Settings')">Settings</button>
     </div>
 
-    {% comment %} <div id="Projects" class="tabcontent">
-        <h3>Projects</h3>
-    </div> {% endcomment %}
-
-    {% comment %} <div id="Boards" class="tabcontent">
-        <h3>Boards</h3>
-    </div> {% endcomment %}
-
     <div id="Tasks" class="tabcontent" style="display:block">
         <h3>Tasks</h3>
-        <table id="task_table" style="font-size:14px">
+         <div class="table table-responsive">
+        <table id="task_table" style="font-size:14px" class="table w-100">
             <thead>
                 <tr class="text-uppercase text-center">
-                    <th>ID </th>
-                    <th> Task </th>
-                    <th> Status </th>
-                    <th> Planned Start/End </th>
-                    <th>| Priority |</th>
-                    <th>| User</th>
-                    <th>| Action |</th>
+                    <th>ID</th>
+                    <th>Task</th>
+                    <th>Status</th>
+                    <th>Planned Start/End</th>
+                    <th>Priority</th>
+                    <th>User</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -114,14 +90,14 @@
                     <td>{{task.title}}</td>
                     <td>
                         <input type='button' style="height:30px;font-size:12px" value="{{task.get_task_status_display}}"
-                            class="btn btn-sm w-75 font-weight-bold {% if task.task_status == '1' %} btn-danger {% elif task.task_status == '2' %} btn-warning text-dark {% else %} btn-info {% endif %}">
+                            class="btn btn-sm font-weight-bold {% if task.task_status == '1' %} btn-danger {% elif task.task_status == '2' %} btn-warning text-dark {% else %} btn-info {% endif %}">
                     </td>
                     <td>{% if task.planned_start_date %} {{task.planned_start_date|date:'d-m-Y'}}
                         {% else %} Start {% endif %} - {% if task.planned_end_date %}
                         {{task.planned_end_date|date:'d-m-Y'}} {% else %} End {% endif %}
                     </td>
                     <td>
-                        <select name="priority" id="priority_{{task.id}}" class="form-control" style="height:30px;font-size:12px"
+                        <select name="priority" id="priority_{{task.id}}" class="form-control font-weight-bold" style="height:32px;width:100px;font-size:12px"
                             onchange="priority_status_change({{task.id}})">
                             <option value="4" {% if task.priority == '4' %}selected{% endif %}>Critical</option>
                             <option value="1" {% if task.priority == '1' %}selected{% endif %}>High</option>
@@ -131,50 +107,28 @@
                     </td>
                     <td>{{task.assigned_to.name}}</td>
                     <td>
-                        <a href="{% url 'task-edit' task.workspace.slug task.id %}" class="btn btn-primary detail_task" style="height:30px;font-size:12px">Detail</a>
+                        <a href="{% url 'task-edit' task.workspace.slug task.id %}" class="btn btn-primary font-weight-bold detail_task" style="height:30px;font-size:12px"> Detail</a>
                     </td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
+        </div>
     </div>
 
-    {% comment %} <div id="Meetings" class="tabcontent">
-        <h3>Meetings</h3>
-        <table class="table table-striped table-condensed">
-            <tr>
-                <th>ID</th>
-                <th colspan="2">| Title</th>
-                <th>| Status</th>
-                <th colspan="2">| Task<th>
-                <th>| Date</th>
-                <th>| Time</th>
-                <th>| Location</th>
-            </tr>
-            <!-- <tr>
-                <td>00005</td>
-                <td colspan="2">SEO of 6iJournal</td>
-                <td><input type="button" value="Not Started" class="btn btn-danger btn-sm"></td>
-                <td colspan="3">Design DITS </td>
-                <td><a href="#" name="daterangepicker">Select Date</a></td>
-                <td>01:12 am</td>
-                <td>Location</td>
-            </tr> -->
-        </table>
-    </div> {% endcomment %}
-
-    <div id="Issues" class="tabcontent">
+    <div id="Issues" class="tabcontent" style="display:none">
         <h3>Issues</h3>
-        <table id="issue_table" style="font-size:14px">
+        <div class="table table-responsive">
+          <table id="issue_table" class="table w-100" style="font-size:14px">
             <thead>
                 <tr class="text-uppercase text-center">
-                    <th>ID </th>
-                    <th> Issue </th>
-                    <th> Status </th>
-                    <th> Planned Start/End </th>
-                    <th>| Priority |</th>
-                    <th>| User</th>
-                    <th>| Action |</th>
+                    <th>ID</th>
+                    <th>Issue</th>
+                    <th>Status</th>
+                    <th>Planned Start/End</th>
+                    <th>Priority</th>
+                    <th>User</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -184,14 +138,14 @@
                   <td>{{issue.title}}</td>
                     <td>
                         <input type='button' style="height:30px;font-size:12px" value="{{issue.get_issue_status_display}}"
-                            class="btn w-75 font-weight-bold {% if issue.issue_status == '1' %} btn-danger {% elif issue.issue_status == '2' %} btn-warning text-dark {% else %} btn-info {% endif %}">
+                            class="btn font-weight-bold {% if issue.issue_status == '1' %} btn-danger {% elif issue.issue_status == '2' %} btn-warning text-dark {% else %} btn-info {% endif %}">
                     </td>
                     <td>{% if issue.planned_start_date %} {{issue.planned_start_date|date:'d-m-Y'}}
                         {% else %} Start {% endif %} - {% if issue.planned_end_date %}
                         {{issue.planned_end_date|date:'d-m-Y'}} {% else %} End {% endif %}
                     </td>
                     <td>
-                        <select style="height:30px;font-size:12px" name="priority" id="modify_{{issue.id}}" class="form-control"
+                        <select style="height:30px;font-size:12px;width:100px" name="priority" id="modify_{{issue.id}}" class="form-control font-weight-bold"
                             onchange="priority_status_modify({{issue.id}})">
                             <option value="4" {% if issue.priority == '4' %}selected{% endif %}>Critical</option>
                             <option value="1" {% if issue.priority == '1' %}selected{% endif %}>High</option>
@@ -202,12 +156,13 @@
                     <td>{{issue.assigned_to.name}}</td>
                     <td>
                         <a href="{% url 'issue-edit' issue.workspace.slug issue.id %}" style="height:30px;font-size:12px"
-                            class="btn btn-primary  detail_task">Detail</a>
+                            class="btn btn-primary font-weight-bold detail_task">Detail</a>
                     </td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
+        </div>
     </div>
 
     <div id="Settings" class="tabcontent">
@@ -332,6 +287,7 @@
                     <br><br>
                     <!-- accordion section -->
                     <div id="accordion">
+
                         <!-- Workspaces -->
                         <div class="card">
                             <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne"
@@ -722,16 +678,15 @@
         </div>
     </div>
 </div>
+ 
+
+<script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script> 
 <script>
-  $(function(){
-    $("#task_table").dataTable({
-        "aLengthMenu": [[5, 10, 15, -1], [5, 10, 15, "All"]],
-        "iDisplayLength": 5
-    });
-    $("#issue_table").dataTable({
-        "aLengthMenu": [[5, 10, 15, -1], [5, 10, 15, "All"]],
-        "iDisplayLength": 5
-    });
-  })
-  </script>
+$(function() {
+$("#task_table").dataTable();
+$("#issue_table").dataTable();
+});
+</script>
+
 {% endblock %}
