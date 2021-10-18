@@ -52,7 +52,7 @@ class TaskView(APIView):
                     msg.attach_alternative(message, 'text/html')
                     msg.send(fail_silently=False)
                 messages.success(request, 'Task add success...!')
-                return redirect('home') 
+                return redirect('/' + workspace_obj.slug) 
             else:
                 messages.error(request, 'No workspace to assign task...!')
                 return redirect('home')
@@ -144,7 +144,7 @@ class IssueView(APIView):
                     msg.attach_alternative(message, 'text/html')
                     msg.send(fail_silently=False)
                 messages.success(request, 'Issue add success...')
-                return redirect('home')
+                return redirect('/' + workspace_obj.slug)
             else:
                 messages.error(request, 'No workspace to assign issue...!')
                 return redirect('home')
