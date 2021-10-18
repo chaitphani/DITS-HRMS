@@ -38,21 +38,29 @@
                                 <span><a href="#">{{task}}</a></span></div>
                         </div>
                         <hr style="padding:0;margin:3px">
-
                         <div style="font-size:13px;padding:5px;width:100%">
                             <span style="width:33%;"><span style="color:#aaa;font-weight:400"> End Date:- </span> <span
                                     style="color:red;font-weight:600">{{end_date}}</span></span>
-                            <span style="width:33%;"><span style="color:#aaa;font-weight:400">&nbsp;&nbsp; Status:
-                                </span> <span style="color:rgba(0, 0, 0, 0.5);font-weight:600">
+                            <span style="width:33%;">
+                                <span style="color:#aaa;font-weight:400">&nbsp;&nbsp; Status:</span> 
+                                <span style="color:rgba(0, 0, 0, 0.5);font-weight:600">
                                     {{status}}
-                                </span></span>
-                            <span style="width:33%;"><span style="color:#aaa;font-weight:400">&nbsp;&nbsp; Priority:
-                                </span> <span style="color:rgba(0, 0, 0, 0.5);font-weight:600">
+                                </span>
+                            </span>
+                            <span style="width:33%;">
+                                <span style="color:#aaa;font-weight:400">&nbsp;&nbsp; Priority:</span> 
+                                <span style="color:rgba(0, 0, 0, 0.5);font-weight:600">
                                     {{priority}}
-                                </span></span>
+                                </span>
+                            </span>
                         </div>
                     </div>
+
                     <div style="width:100%;">
+                        <div style="width:100%;padding-top:10px">
+                            <a href="{{url}}" class="button-33 btn btn-primary">Start collaborating here</a>
+                        </div>
+
                         <div style="width:100%;padding-top:30px;padding-bottom:10px">
                             <span>Cheers,</span><br />
                             <span style="background-color:#F9C47E">TaskManager</span><span> Team</span>

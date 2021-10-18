@@ -34,9 +34,11 @@ def is_staff_at_work(f):
     def wrap(request, *args, **kwargs):
         staff_in_work = []
         list_staff_ = WorkSpace.objects.filter(status=True).values('staff__name')
+
         for staff in list_staff_:
             staff_in_work.append(staff['staff__name'])
-        if request.session['user_name'] in staff_in_work:
+
+        if request.session['user_name'] in staff_in_work or request.session['is_admin'] == True:
             return f(request, *args, **kwargs)
 
         messages.info(request, 'You have no workspace yet..!')
@@ -156,3 +158,21 @@ def issue_detail_update_view(request, id, workspace_slug):
     employees = StaffUser.objects.filter(active_status=True, is_employee=True)
     issue_comments = IssueComment.objects.filter(status=True, issue=issue_obj)
     return render(request, 'dashboard/issue_detail_update.html', {'object':issue_obj, 'employees':employees, 'comments':issue_comments, 'id':id})
+
+
+@is_authenticated
+def task_delete(request, id):
+
+    task_obj = Task.objects.get(status=True, id=id)
+    task_obj.status=False
+    task_obj.save()
+    return redirect('/')
+
+
+@is_authenticated
+def issue_delete(request, id):
+
+    issue_obj = Issue.objects.get(id=id, status=True)
+    issue_obj.status=False
+    issue_obj.save()
+    return redirect('/')

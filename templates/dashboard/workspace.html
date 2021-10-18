@@ -131,7 +131,10 @@
                     </td>
                     <td>{{task.assigned_to.name}}</td>
                     <td>
-                        <a href="{% url 'task-edit' task.workspace.slug task.id %}" class="btn btn-primary detail_task" style="height:30px;font-size:12px">Detail</a>
+                        <a href="{% url 'task-edit' task.workspace.slug task.id %}" class="btn btn-primary" style="height:30px;font-size:12px">Detail</a>
+                        {% if request.session.is_admin == True %}
+                            <a href="{% url 'task-delete' task.id %}" class="btn btn-danger delete_task" style="height:30px;font-size:12px">Delete</a>
+                        {% endif %}
                     </td>
                 </tr>
                 {% endfor %}
@@ -203,6 +206,10 @@
                     <td>
                         <a href="{% url 'issue-edit' issue.workspace.slug issue.id %}" style="height:30px;font-size:12px"
                             class="btn btn-primary  detail_task">Detail</a>
+                        {% if request.session.is_admin == True %}
+                        <a href="{% url 'issue-delete' issue.id %}" style="height:30px;font-size:12px"
+                            class="btn btn-danger delete_task">Delete</a>
+                        {% endif %}
                     </td>
                 </tr>
                 {% endfor %}
@@ -733,5 +740,16 @@
         "iDisplayLength": 5
     });
   })
+  </script>
+
+  <script>
+      $('.delete_task').on('click', function(e){
+            action = confirm('Are you sure to remove...!')
+            if (action == false){
+                e.preventDefault();
+            }else{
+                location.reload();
+            }
+      })
   </script>
 {% endblock %}

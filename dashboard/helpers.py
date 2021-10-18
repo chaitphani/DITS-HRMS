@@ -10,16 +10,16 @@ def tasK_status_change(request):
 
     if request.method == "GET" and request.is_ajax():
         task_obj = Task.objects.get(id=request.GET.get('id'),)
-        prev_status = task_obj.task_status
+        prev_status = task_obj.get_task_status_display()
         task_obj.task_status = request.GET.get('task_status',)
-        aftr_status = task_obj.task_status
+        aftr_status = task_obj.get_task_status_display()
         task_obj.save()
 
         id = request.GET.get('id')
         from_mail = settings.EMAIL_HOST_USER
         to_email = task_obj.assigned_to.email
         subject = "Task Status Changed - " + task_obj.assigned_to.name
-        body = "Status change for Issue raised - " + task_obj.title + " : \n\n"\
+        body = "Status change for assigned task - " + task_obj.title + " : \n\n"\
                 "User Name : {} ".format(task_obj.assigned_to.name)+'\n'+\
                 "Workspace: {} ".format(task_obj.workspace.name)+'\n'+\
                 "Task Name: {} ".format(task_obj.title)+'\n'+\
@@ -42,9 +42,9 @@ def issue_status_change(request):
 
     if request.method == "GET" and request.is_ajax():
         issue_obj = Issue.objects.get(id=request.GET.get('id'),)
-        prev_status = issue_obj.issue_status
+        prev_status = issue_obj.get_issue_status_display()
         issue_obj.issue_status = request.GET.get('issue_status',)
-        aftr_status = issue_obj.issue_status
+        aftr_status = issue_obj.get_issue_status_display()
         issue_obj.save()
 
         from_mail = settings.EMAIL_HOST_USER
