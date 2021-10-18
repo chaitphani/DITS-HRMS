@@ -16,7 +16,6 @@ from django.core.mail import EmailMultiAlternatives
 
 def is_authenticated(f):
     def wrap(request, *args, **kwargs):
-        # this check the session if userid key exist, if not it will redirect to login page
         try:
             user_obj = StaffUser.objects.get(id=request.session['id'])
         except:
@@ -33,7 +32,6 @@ def is_authenticated(f):
 
 def is_staff_at_work(f):
     def wrap(request, *args, **kwargs):
-        # this check the session if userid key exist, if not it will redirect to login page
         staff_in_work = []
         list_staff_ = WorkSpace.objects.filter(status=True).values('staff__name')
         for staff in list_staff_:

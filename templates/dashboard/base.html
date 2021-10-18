@@ -433,9 +433,11 @@
 							{% endfor %}
 						</select>
 						<small class="mt-2">Member*</small>
-						<select name="staff" id="" class="form-control" multiple>
+						<select name="staff" class="form-control" multiple>
 							{% for staff in all_staff %}
-								<option value="{{staff.id}}" class="text-capitalize">{{staff.name}}</option>
+								<option value="{{staff.id}}" class="text-capitalize"
+									{% if staff.is_admin == True %}selected{% endif %}>{{staff.name}}
+								</option>
 							{% endfor %}
 						</select>
 						<br>
