@@ -71,7 +71,7 @@
                                     <div class="row boxinside_div_footer">
                                         <small>Members:</small> &nbsp;
                                         {% for name in space.staff.all %}
-                                        <span class="member_circle text-capitalize">{{name.name|first}}</span>
+                                            <span class="member_circle text-capitalize" title="{{name.name|title}}">{{name.name|first}}</span>
                                         {% endfor %}
                                     </div>
                                 </div>

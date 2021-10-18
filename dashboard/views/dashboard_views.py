@@ -245,3 +245,4 @@ def workspace_edit(request, id):
 #         messages.error(request, 'data is missing for the product..')
 #     return JsonResponse({'task_info': task_info})
 
+

@@ -82,7 +82,7 @@
         <button class="tablinks active" onclick="opennavbartabs(event, 'Tasks')">Tasks</button>
         {% comment %} <button class="tablinks" onclick="opennavbartabs(event, 'Meetings')">Meetings</button> {% endcomment %}
         <button class="tablinks" onclick="opennavbartabs(event, 'Issues')">Issues</button>
-        <button class="tablinks" onclick="opennavbartabs(event, 'Settings')">Settings</button>
+        {% comment %}<button class="tablinks" onclick="opennavbartabs(event, 'Settings')">Settings</button>{% endcomment %}
     </div>
 
     {% comment %} <div id="Projects" class="tabcontent">
@@ -98,7 +98,7 @@
         <table id="task_table" style="font-size:14px">
             <thead>
                 <tr class="text-uppercase text-center">
-                    <th>ID </th>
+                    <th>TICKET ID </th>
                     <th> Task </th>
                     <th> Status </th>
                     <th> Planned Start/End </th>
@@ -110,10 +110,10 @@
             <tbody>
                 {% for task in tasks %}
                 <tr class="text-capitalize text-center">
-                    <td class="">{{task.id}}</td>
+                    <td class="">{{task.task_id}}</td>
                     <td>{{task.title}}</td>
                     <td>
-                        <input type='button' style="height:30px;font-size:12px" value="{{task.get_task_status_display}}"
+                        <input type='button' style="height:30px;font-size:12px;cursor:default;" value="{{task.get_task_status_display}}"
                             class="btn btn-sm w-75 font-weight-bold {% if task.task_status == '1' %} btn-danger {% elif task.task_status == '2' %} btn-warning text-dark {% else %} btn-info {% endif %}">
                     </td>
                     <td>{% if task.planned_start_date %} {{task.planned_start_date|date:'d-m-Y'}}
@@ -121,7 +121,7 @@
                         {{task.planned_end_date|date:'d-m-Y'}} {% else %} End {% endif %}
                     </td>
                     <td>
-                        <select name="priority" id="priority_{{task.id}}" class="form-control" style="height:30px;font-size:12px"
+                        <select name="priority" id="priority_{{task.id}}" class="form-control" style="height:30px;font-size:12px;cursor: pointer;"
                             onchange="priority_status_change({{task.id}})">
                             <option value="4" {% if task.priority == '4' %}selected{% endif %}>Critical</option>
                             <option value="1" {% if task.priority == '1' %}selected{% endif %}>High</option>
@@ -171,7 +171,7 @@
         <table id="issue_table" style="font-size:14px">
             <thead>
                 <tr class="text-uppercase text-center">
-                    <th>ID </th>
+                    <th>TICKET ID </th>
                     <th> Issue </th>
                     <th> Status </th>
                     <th> Planned Start/End </th>
@@ -183,10 +183,10 @@
             <tbody>
                 {% for issue in issues %}
                 <tr class="text-capitalize text-center">
-                    <td class="">{{issue.id}}</td>
+                    <td class="">{{issue.issue_id}}</td>
                   <td>{{issue.title}}</td>
                     <td>
-                        <input type='button' style="height:30px;font-size:12px" value="{{issue.get_issue_status_display}}"
+                        <input type='button' style="height:30px;font-size:12px;cursor: default;" value="{{issue.get_issue_status_display}}"
                             class="btn w-75 font-weight-bold {% if issue.issue_status == '1' %} btn-danger {% elif issue.issue_status == '2' %} btn-warning text-dark {% else %} btn-info {% endif %}">
                     </td>
                     <td>{% if issue.planned_start_date %} {{issue.planned_start_date|date:'d-m-Y'}}
@@ -194,7 +194,7 @@
                         {{issue.planned_end_date|date:'d-m-Y'}} {% else %} End {% endif %}
                     </td>
                     <td>
-                        <select style="height:30px;font-size:12px" name="priority" id="modify_{{issue.id}}" class="form-control"
+                        <select style="height:30px;font-size:12px;cursor: pointer;" name="priority" id="modify_{{issue.id}}" class="form-control"
                             onchange="priority_status_modify({{issue.id}})">
                             <option value="4" {% if issue.priority == '4' %}selected{% endif %}>Critical</option>
                             <option value="1" {% if issue.priority == '1' %}selected{% endif %}>High</option>
@@ -217,7 +217,7 @@
         </table>
     </div>
 
-    <div id="Settings" class="tabcontent">
+    <div id="Settings" class="tabcontent" style="display: none;">
         <h3>Settings</h3>
         <div class="container">
             <div class="row">
