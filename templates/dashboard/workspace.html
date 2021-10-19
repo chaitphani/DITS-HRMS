@@ -107,7 +107,14 @@
                     </td>
                     <td>{{task.assigned_to.name}}</td>
                     <td>
+<<<<<<< HEAD
                         <a href="{% url 'task-edit' task.workspace.slug task.id %}" class="btn btn-primary font-weight-bold detail_task" style="height:30px;font-size:12px"> Detail</a>
+=======
+                        <a href="{% url 'task-edit' task.workspace.slug task.id %}" class="btn btn-primary" style="height:30px;font-size:12px">Detail</a>
+                        {% if request.session.is_admin == True %}
+                            <a href="{% url 'task-delete' task.id %}" class="btn btn-danger delete_task" style="height:30px;font-size:12px">Delete</a>
+                        {% endif %}
+>>>>>>> eba1f8cf5b8dfd2c869fa89b5a48b4b926bda3d5
                     </td>
                 </tr>
                 {% endfor %}
@@ -156,7 +163,15 @@
                     <td>{{issue.assigned_to.name}}</td>
                     <td>
                         <a href="{% url 'issue-edit' issue.workspace.slug issue.id %}" style="height:30px;font-size:12px"
+<<<<<<< HEAD
                             class="btn btn-primary font-weight-bold detail_task">Detail</a>
+=======
+                            class="btn btn-primary  detail_task">Detail</a>
+                        {% if request.session.is_admin == True %}
+                        <a href="{% url 'issue-delete' issue.id %}" style="height:30px;font-size:12px"
+                            class="btn btn-danger delete_task">Delete</a>
+                        {% endif %}
+>>>>>>> eba1f8cf5b8dfd2c869fa89b5a48b4b926bda3d5
                     </td>
                 </tr>
                 {% endfor %}
@@ -175,10 +190,8 @@
                 <div class="settingtab">
                     <button class="settingtablinks" onclick="opensettingtab_section(event, 'general_info')">General Information</button>
                     <button class="settingtablinks active" onclick="opensettingtab_section(event, 'user_management')"
-                        id="defaultOpen">User
-                        Management</button>
-                    <button class="settingtablinks" onclick="opensettingtab_section(event, 'roles_permissions')">Roles &
-                        Permissions</button>
+                        id="defaultOpen">User Management</button>
+                    <button class="settingtablinks" onclick="opensettingtab_section(event, 'roles_permissions')">Roles & Permissions</button>
                 </div>
                 <!-- General info section -->
                 <div id="general_info" class="settingtabcontent" style="display: none;">
@@ -683,10 +696,35 @@
 <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.2.min.js"></script>
 <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script> 
 <script>
+<<<<<<< HEAD
 $(function() {
 $("#task_table").dataTable();
 $("#issue_table").dataTable();
 });
 </script>
 
+=======
+  $(function(){
+    $("#task_table").dataTable({
+        "aLengthMenu": [[5, 10, 15, -1], [5, 10, 15, "All"]],
+        "iDisplayLength": 5
+    });
+    $("#issue_table").dataTable({
+        "aLengthMenu": [[5, 10, 15, -1], [5, 10, 15, "All"]],
+        "iDisplayLength": 5
+    });
+  })
+  </script>
+
+  <script>
+      $('.delete_task').on('click', function(e){
+            action = confirm('Are you sure to remove...!')
+            if (action == false){
+                e.preventDefault();
+            }else{
+                location.reload();
+            }
+      })
+  </script>
+>>>>>>> eba1f8cf5b8dfd2c869fa89b5a48b4b926bda3d5
 {% endblock %}

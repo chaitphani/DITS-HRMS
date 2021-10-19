@@ -20,19 +20,20 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
 	<!-- jQuery library -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 	<!-- font awesome cdn -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 	<!--  jquery data tables --> 
- 	<link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css">
+ 	<link rel="stylesheet" type="text/css" href="https://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css">
 
 	<!-- Custom styles for this project-->
 	<link href="{% static 'css/dits_management_style.min.css' %}" rel="stylesheet">
 
 	<link rel="stylesheet" href="{%static 'css/style.css'%}">
 	<link rel="stylesheet" href="{% static 'css/base.css' %}">
+	
 </head>
 
 <body id="page-top">
@@ -48,25 +49,11 @@
 				<div class="sidebar-brand-text mx-3">DITS Management</div>
 			</a>
 			<!-- Divider -->
-			<hr class="sidebar-divider my-0">
-
-			<!-- Nav Item - Dashboard -->
-			{% comment %} <li class="nav-item active">
-				<a class="nav-link" href="/">
-					<i class="fas fa-fw fa-tachometer-alt"></i>
-					<span>Dashboard</span></a>
-			</li> {% endcomment %}
-
-			<!-- Nav Item - Workspace -->
-			{% comment %} <li class="nav-item active">
-				<a class="nav-link" href="#" data-toggle="modal" data-target="#createworkspace">
-					<i class="fas fa-fw fa-laptop-house"></i>
-					<span>+ Workspace</span></a>
-			</li> {% endcomment %}
+			<hr class="sidebar-divider my-0 mb-3">
 
 			<!-- Divider -->
 			{% if request.session.is_admin == True %}
-				<hr class="sidebar-divider">
+				
 				<!-- Heading -->
 				<div class="sidebar-heading">
 					Team
@@ -90,7 +77,7 @@
 				        </span>
 					</li>
 				{% endfor %}
-				<hr class="sidebar-divider mt-3">
+				
 				<div class="sidebar-heading">
 					Workspace
 				</div>
@@ -137,7 +124,7 @@
 					background-color: transparent
 				}
 			</style>
-			<hr class="sidebar-divider mt-3">
+			
 			<div class="sidebar-heading sidebar-heading pb-3">
 				All Members
 			</div>
@@ -151,16 +138,6 @@
 			</li>
 			{% endfor %}
 
-			<!-- <li class="nav-item">
-				<a href="#" class="nav-link"><img class="img-profile rounded-circle"
-						src="/static/img/undraw_profile.svg">
-					Sandeep Yadav</a>
-			</li>
-			<li class="nav-item">
-				<a href="#" class="nav-link"><img class="img-profile rounded-circle"
-						src="/static/img/undraw_profile.svg">
-					Chaitanya</a>
-			</li> -->
 			<!-- Divider -->
 			<hr class="sidebar-divider mt-3">
 			<!-- Sidebar Toggler (Sidebar) -->
@@ -184,7 +161,7 @@
 					<!-- Topbar Navbar -->
 					<ul class="navbar-nav ml-auto">
 						<!-- Nav Item - Search Dropdown (Visible Only XS) -->
-						<li class="nav-item dropdown no-arrow d-sm-none">
+						<li class="nav-item dropdown no-arrow" style="display:none">
 							<a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
 								data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 								<i class="fas fa-search fa-fw"></i>
@@ -207,7 +184,7 @@
 							</div>
 						</li>
 						<!-- Nav Item - Alerts -->
-						<li class="nav-item dropdown no-arrow mx-1" style="display:none">
+						<li class="nav-item dropdown no-arrow mx-1" style="display:block">
 							<a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
 								data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 								<i class="fas fa-bell fa-fw"></i>
@@ -873,7 +850,7 @@
 	<script src="{% static 'vendor/jquery-easing/jquery.easing.min.js'%}"></script>
 
 	<!-- Custom scripts for all pages-->
-	<script src="{% static 'js/dits_management.min.js '%}"></script>
+	<script src="{% static 'js/dits_management.min.js'%}"></script>
 
 	<script src="{% static 'js/priority_status_change.js'%}"></script>
 	<script src="{% static 'js/priority_status_modify.js'%}"></script>
@@ -881,9 +858,23 @@
 	<!-- <script src="{% static 'js/task_info.js'%}"></script> -->
 	<script src="{% static 'js/base.js' %}"></script>
 
-	<!--  jquery data tables -->
-	<script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.2.min.js"></script>
-    <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
+<!-- hide sidenavbar on small screen using jquery -->
+<script type="text/javascript">
+    /* Check width on page load*/
+    if ( $(window).width() < 514) {
+    $(document).ready( function() {
+  $('#page-top').addClass('sidebar-toggled');
+    }
+    else {}
+ });
+
+ $(window).resize(function() {
+    /*If browser resized, check width again */
+    if ($(window).width() < 514) {
+     $('#page-top').addClass('sidebar-toggled');
+    }
+    else {$('#page-top').removeClass('sidebar-toggled');}
+ });</script>
 </body>
 
 </html>

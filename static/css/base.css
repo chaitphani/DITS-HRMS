@@ -263,11 +263,7 @@ background-color: #fff; */
     background-color: #eee;
 }
 
-/* Create an active/current "tab button" class */
-.settingtab button.active {
-    background-color: #fff;
-    border-left: 3px solid #4e73df
-}
+
 
 /* Style the tab content */
 .settingtabcontent {

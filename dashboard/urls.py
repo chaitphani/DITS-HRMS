@@ -29,4 +29,8 @@ urlpatterns = (
     path('<slug:workspace_slug>/<int:id>/task', workspace_views.task_detail_update_view, name='task-edit'),
     path('<slug:workspace_slug>/<int:id>/issue', workspace_views.issue_detail_update_view, name='issue-edit'),
 
+    path('<int:id>/task/delete', workspace_views.task_delete, name='task-delete'),
+    path('<int:id>/issue/delete', workspace_views.issue_delete, name='issue-delete'),
+
+
 )
