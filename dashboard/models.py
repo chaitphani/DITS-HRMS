@@ -66,7 +66,7 @@ class WorkSpace(models.Model):
 
 class Task(models.Model):
 
-    task_id = models.CharField(max_length=10)
+    task_id = models.CharField(max_length=10, null=True, blank=True)
     title = models.CharField(max_length=120)
     assigned_to = models.ForeignKey(StaffUser, on_delete=models.SET_NULL, null=True, blank=True)
     priority = models.CharField(max_length=10, choices=priority_choices, default='2')
@@ -91,7 +91,7 @@ class Task(models.Model):
 
 class Issue(models.Model):
 
-    issue_id = models.CharField(max_length=10)
+    issue_id = models.CharField(max_length=10, null=True, blank=True)
     title = models.CharField(max_length=120)
     assigned_to = models.ForeignKey(StaffUser, on_delete=models.SET_NULL, null=True, blank=True)
     issue_type = models.CharField(max_length=20, choices=issue_type, default='1')

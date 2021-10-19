@@ -95,14 +95,14 @@ def home(request):
                 task_obj = Task.objects.get(id=request.GET.get('id'))
                 task_obj.priority = request.GET.get('priority')
                 task_obj.save()
-                messages.success(request, task_obj.title + ' Priority changed successfully...')
+                messages.success(request, 'Task priority changed successfully...')
 
         elif request.GET.get('iss_id'):
             if request.method == 'GET' and request.is_ajax():
                 issue_obj = Issue.objects.get(id=request.GET.get('iss_id'))
                 issue_obj.priority = request.GET.get('issu_priority')
                 issue_obj.save()
-                messages.success(request, issue_obj.title + ' Prority changed successfully...')
+                messages.success(request, 'Issue prority changed successfully...')
 
     except Exception as e:
         print('---exception as error------', e)
