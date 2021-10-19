@@ -137,3 +137,5 @@ dmypy.json
 
 # migrations
 *migrations/
+
+notification_activity.txt

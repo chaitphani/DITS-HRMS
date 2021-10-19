@@ -103,7 +103,7 @@ def task_detail_update_view(request, id, workspace_slug):
             msg.attach_alternative(message, 'text/html')
             msg.send(fail_silently=False)
 
-        messages.success(request, task_obj.title + ' update success...')
+        messages.success(request, 'Task update success...')
         return redirect('/' + task_obj.workspace.slug + '/' + str(task_obj.id)+'/task')
         
     employees = StaffUser.objects.filter(active_status=True, is_employee=True)
@@ -152,11 +152,11 @@ def issue_detail_update_view(request, id, workspace_slug):
             msg.attach_alternative(message, 'text/html')
             msg.send(fail_silently=False)
 
-        messages.success(request, issue_obj.title + ' update success...')
+        messages.success(request, 'Issue update success...')
         return redirect('/' + issue_obj.workspace.slug + '/' + str(issue_obj.id) + '/issue')
 
     employees = StaffUser.objects.filter(active_status=True, is_employee=True)
-    issue_comments = IssueComment.objects.filter(status=True, issue=issue_obj)
+    issue_comments = IssueComment.objects.filter(status=True, issue=issue_obj).order_by('-id')
     return render(request, 'dashboard/issue_detail_update.html', {'object':issue_obj, 'employees':employees, 'comments':issue_comments, 'id':id})
 
 

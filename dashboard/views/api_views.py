@@ -25,7 +25,9 @@ class TaskView(APIView):
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
             if len(WorkSpace.objects.filter(status=True)) > 0:
-                serializer.save()
+                serialize = serializer.save()
+                serialize.task_id = 'DIVT1-' + str(serialize.id)
+                serialize.save()
                 if serializer.data['assigned_to'] != '' or serializer.data['assigned_to'] != None\
                         and serializer.data['priority'] != '' or serializer.data['priority'] != None:
                     staff_mem = StaffUser.objects.get(id=serializer.data['assigned_to'])
@@ -50,7 +52,7 @@ class TaskView(APIView):
                     msg.attach_alternative(message, 'text/html')
                     msg.send(fail_silently=False)
                 messages.success(request, 'Task add success...!')
-                return redirect('home') 
+                return redirect('/' + workspace_obj.slug) 
             else:
                 messages.error(request, 'No workspace to assign task...!')
                 return redirect('home')
@@ -115,7 +117,9 @@ class IssueView(APIView):
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
             if len(WorkSpace.objects.filter(status=True)) > 0:
-                serializer.save()
+                serialize = serializer.save()
+                serialize.issue_id = 'DIVI-1' + str(serialize.id)
+                serialize.save()
                 if serializer.data['assigned_to'] != '' or serializer.data['assigned_to'] != None\
                         and serializer.data['priority'] != '' or serializer.data['priority'] != None:
                     staff_mem = StaffUser.objects.get(id=serializer.data['assigned_to'])
@@ -140,7 +144,7 @@ class IssueView(APIView):
                     msg.attach_alternative(message, 'text/html')
                     msg.send(fail_silently=False)
                 messages.success(request, 'Issue add success...')
-                return redirect('home')
+                return redirect('/' + workspace_obj.slug)
             else:
                 messages.error(request, 'No workspace to assign issue...!')
                 return redirect('home')

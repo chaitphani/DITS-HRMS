@@ -34,7 +34,7 @@ def tasK_status_change(request):
             fail_silently=False,
         )
         
-        messages.success(request, task_obj.title + ' task-status change success...')
+        messages.success(request, 'Task-status change success...')
     return HttpResponse('success')
 
 
@@ -65,5 +65,5 @@ def issue_status_change(request):
             fail_silently=False,
         )
 
-        messages.success(request, issue_obj.title + ' issue-status change success...')
+        messages.success(request, 'Issue-status change success...')
     return HttpResponse('success')
