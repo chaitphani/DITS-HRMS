@@ -146,7 +146,7 @@ def issue_detail_update_view(request, id, workspace_slug):
             from_mail = settings.EMAIL_HOST_USER
             to_mail = staff_mem.email
             subject = 'A new task has been added for you..'
-            message = render_to_string('{0}/templates/mail_templates/issue_assigned.html'.format(settings.BASE_DIR),{'name':staff_mem.name, 'workspace':issue_obj.workspace.name, 'team':issue_obj.workspace.team.name, 'task':issue_obj.title, 'status':issue_obj.get_task_status_display(), 'priority':issue_obj.get_priority_display(), 'end_date':issue_obj.planned_end_date})
+            message = render_to_string('{0}/templates/mail_templates/issue_assigned.html'.format(settings.BASE_DIR),{'name':staff_mem.name, 'workspace':issue_obj.workspace.name, 'team':issue_obj.workspace.team.name, 'task':issue_obj.title, 'status':issue_obj.get_issue_status_display(), 'priority':issue_obj.get_priority_display(), 'end_date':issue_obj.planned_end_date})
             
             msg = EmailMultiAlternatives(subject, message, from_mail, [to_mail])
             msg.attach_alternative(message, 'text/html')
