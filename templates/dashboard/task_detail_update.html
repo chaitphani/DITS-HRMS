@@ -125,7 +125,8 @@
                             <input type="text" class="form-control" placeholder="Add a to-do list item">
                         </div>  -->
                 <div class="row text-center" id="footer">
-                    <div class="col-12">Created on - {{object.created_on|date:'d-m-Y H:i'}}</div>
+                    <div class="col-6">{{object.assigned_by}}</div>
+                    <div class="col-6">Created on - {{object.created_on|date:'d-m-Y H:i'}}</div>
                 </div>
             </div>
 

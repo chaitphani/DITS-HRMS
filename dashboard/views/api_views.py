@@ -22,11 +22,13 @@ class TaskView(APIView):
 
     @method_decorator(is_authenticated)
     def post(self, request):
+        logged_in_mem = StaffUser.objects.get(id=request.session.get('id'))
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
             if len(WorkSpace.objects.filter(status=True)) > 0:
                 serialize = serializer.save()
                 serialize.task_id = 'DIVT1-' + str(serialize.id)
+                serialize.assigned_by = logged_in_mem
                 serialize.save()
                 if serializer.data['assigned_to'] != '' or serializer.data['assigned_to'] != None\
                         and serializer.data['priority'] != '' or serializer.data['priority'] != None:
@@ -114,11 +116,13 @@ class IssueView(APIView):
 
     @method_decorator(is_authenticated)
     def post(self, request):
+        logged_in = StaffUser.objects.get(id=request.session.get('id'))
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
             if len(WorkSpace.objects.filter(status=True)) > 0:
                 serialize = serializer.save()
                 serialize.issue_id = 'DIVI-1' + str(serialize.id)
+                serialize.assigned_by = logged_in
                 serialize.save()
                 if serializer.data['assigned_to'] != '' or serializer.data['assigned_to'] != None\
                         and serializer.data['priority'] != '' or serializer.data['priority'] != None:

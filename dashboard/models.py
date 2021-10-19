@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 
 import re
 
+from django.db.models.fields import related
+
 priority_choices = (('1', 'High'),('2', 'Medium'),('3', 'Low'), ('4', 'Critical'), )
 task_status_choices = (('1', 'Not Started'),('2', 'In Progress'),('3', 'In Review'),('4', 'Completed'),('5', 'Blocked'),)
 issue_type = (('1','Bug'), ('2', 'Feature'), ('3', 'Improvement'))
@@ -68,7 +70,7 @@ class Task(models.Model):
 
     task_id = models.CharField(max_length=10, null=True, blank=True)
     title = models.CharField(max_length=120)
-    assigned_to = models.ForeignKey(StaffUser, on_delete=models.SET_NULL, null=True, blank=True)
+    assigned_to = models.ForeignKey(StaffUser, on_delete=models.SET_NULL, null=True, blank=True, related_name='task_assigned_to')
     priority = models.CharField(max_length=10, choices=priority_choices, default='2')
     task_status = models.CharField(max_length=15, choices=task_status_choices, default='2')
     description = models.TextField(null=True, blank=True)
@@ -80,6 +82,7 @@ class Task(models.Model):
     actual_end_date = models.DateTimeField(null=True, blank=True)
 
     workspace = models.ForeignKey(WorkSpace, on_delete=models.SET_NULL, null=True, blank=True)
+    assigned_by = models.ForeignKey(StaffUser, on_delete=models.SET_NULL, null=True, blank=True, related_name='task_assigned_by')
 
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
@@ -93,7 +96,7 @@ class Issue(models.Model):
 
     issue_id = models.CharField(max_length=10, null=True, blank=True)
     title = models.CharField(max_length=120)
-    assigned_to = models.ForeignKey(StaffUser, on_delete=models.SET_NULL, null=True, blank=True)
+    assigned_to = models.ForeignKey(StaffUser, on_delete=models.SET_NULL, null=True, blank=True, related_name='issue_assigned_to')
     issue_type = models.CharField(max_length=20, choices=issue_type, default='1')
     priority = models.CharField(max_length=10, choices=priority_choices, default='2')
     issue_status = models.CharField(max_length=15, choices=task_status_choices, default='2')
@@ -104,6 +107,7 @@ class Issue(models.Model):
 
     actual_start_date = models.DateTimeField(null=True, blank=True)
     actual_end_date = models.DateTimeField(null=True, blank=True)
+    assigned_by = models.ForeignKey(StaffUser, on_delete=models.SET_NULL, null=True, blank=True, related_name='issue_assigned_by')
 
     workspace = models.ForeignKey(WorkSpace, on_delete=models.SET_NULL, null=True, blank=True)
 
