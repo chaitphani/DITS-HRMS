@@ -69,19 +69,19 @@ def task_detail_update_view(request, id, workspace_slug):
     prev_assigned_user = task_obj.assigned_to.name
 
     if request.method == 'POST':
-        planned_start_date = request.POST.get('planned_start_date')
+        # planned_start_date = request.POST.get('planned_start_date')
         actual_start_date = request.POST.get('actual_start_date')
-        planned_end_date = request.POST.get('planned_end_date')
+        # planned_end_date = request.POST.get('planned_end_date')
         actual_end_date = request.POST.get('actual_end_date')
         description = request.POST.get('description')
         assigned_to = request.POST.get('assigned_to')
         priority = request.POST.get('priority')
 
         staff_mem = StaffUser.objects.get(id=assigned_to)
-        if planned_start_date != '':
-            task_obj.planned_start_date = datetime.strptime(planned_start_date, "%Y-%m-%dT%H:%M")
-        if planned_end_date != '':
-            task_obj.planned_end_date = datetime.strptime(planned_end_date, "%Y-%m-%dT%H:%M")
+        # if planned_start_date != '':
+        #     task_obj.planned_start_date = datetime.strptime(planned_start_date, "%Y-%m-%dT%H:%M")
+        # if planned_end_date != '':
+        #     task_obj.planned_end_date = datetime.strptime(planned_end_date, "%Y-%m-%dT%H:%M")
         if actual_start_date != '':
             task_obj.actual_start_date = datetime.strptime(actual_start_date, "%Y-%m-%dT%H:%M")
         if actual_end_date != '':
@@ -123,15 +123,15 @@ def issue_detail_update_view(request, id, workspace_slug):
         assigned_to = request.POST.get('assigned_to')
         description = request.POST.get('description')
         actual_end_date = request.POST.get('actual_end_date')
-        planned_end_date = request.POST.get('planned_end_date')
+        # planned_end_date = request.POST.get('planned_end_date')
         actual_start_date = request.POST.get('actual_start_date')
-        planned_start_date = request.POST.get('planned_start_date')
+        # planned_start_date = request.POST.get('planned_start_date')
         staff_mem = StaffUser.objects.get(id=assigned_to)
         
-        if planned_start_date != '':
-            issue_obj.planned_start_date = datetime.strptime(planned_start_date, "%Y-%m-%dT%H:%M")
-        if planned_end_date != '':
-            issue_obj.planned_end_date = datetime.strptime(planned_end_date, "%Y-%m-%dT%H:%M")
+        # if planned_start_date != '':
+        #     issue_obj.planned_start_date = datetime.strptime(planned_start_date, "%Y-%m-%dT%H:%M")
+        # if planned_end_date != '':
+        #     issue_obj.planned_end_date = datetime.strptime(planned_end_date, "%Y-%m-%dT%H:%M")
         if actual_start_date != '':
             issue_obj.actual_start_date = datetime.strptime(actual_start_date, "%Y-%m-%dT%H:%M")
         if actual_end_date != '':
@@ -166,7 +166,8 @@ def task_delete(request, id):
     task_obj = Task.objects.get(status=True, id=id)
     task_obj.status=False
     task_obj.save()
-    return redirect('/')
+    messages.success(request, task_obj.task_id + ' delete success...')
+    return redirect('/'+task_obj.workspace.slug)
 
 
 @is_authenticated
@@ -175,4 +176,5 @@ def issue_delete(request, id):
     issue_obj = Issue.objects.get(id=id, status=True)
     issue_obj.status=False
     issue_obj.save()
-    return redirect('/')
+    messages.success(request, issue_obj.issue_id + ' delete success...')
+    return redirect('/'+issue_obj.workspace.slug)
