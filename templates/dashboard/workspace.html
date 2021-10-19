@@ -3,7 +3,15 @@
 
 <link rel="stylesheet" type="text/css" href="https://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css"/>
 <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
-
+  <style>
+  .lesschar  {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 150px;
+}
+  </style> 
+  
 <!-- Page Wrapper -->
 <div id="wrapper">
         <!-- Main Content -->
@@ -83,12 +91,12 @@
                     <th>Action</th>
                 </tr>
             </thead>
-  
+
             <tbody>
                 {% for task in tasks %}
                 <tr class="text-capitalize text-center">
-                    <td class="">{{task.task_id}}</td>
-                    <td><p class="demo-1">{{task.title}}</p></td>
+                    <td>{{task.task_id}}</td>
+                    <td><p class="lesschar">{{task.title}}</p></td>
                     <td>
                         <input type='button' style="height:30px;font-size:12px;cursor:default;" value="{{task.get_task_status_display}}"
                             class="btn btn-sm w-100 font-weight-bold {% if task.task_status == '1' %} btn-danger {% elif task.task_status == '2' %} btn-warning text-dark {% else %} btn-info {% endif %}">
@@ -140,8 +148,8 @@
             <tbody>
                 {% for issue in issues %}
                 <tr class="text-capitalize text-center">
-                    <td class="">{{issue.issue_id}}</td>
-                  <td>{{issue.title}}</td>
+                    <td>{{issue.issue_id}}</td>
+                  <td><p class="lesschar">{{issue.title}}</p></td>
                     <td>
                         <input type='button' style="height:30px;font-size:12px;cursor: default;" value="{{issue.get_issue_status_display}}"
                             class="btn w-100 font-weight-bold {% if issue.issue_status == '1' %} btn-danger {% elif issue.issue_status == '2' %} btn-warning text-dark {% else %} btn-info {% endif %}">
