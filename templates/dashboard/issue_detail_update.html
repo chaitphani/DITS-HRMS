@@ -56,18 +56,16 @@
                         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
                             <label for="planned_start_end_date">Planned Start</label>
                             <div class="mb-3">
-                                <input type="datetime-local" class="form-control" id="id_planned_start_date"
-                                    name="planned_start_date">
-                                <small class="font-weight-bold text-danger">{% if object.planned_start_date %}{{object.planned_start_date|date:'d-m-Y H:i'}}{% endif %}</small>
+                                <input type="text" class="form-control" id=""
+                                    name="" disabled placeholder="{% if object.planned_start_date %}{{object.planned_start_date|date:'d-m-Y H:i'}}{% endif %}">
                             </div>
                         </div>
 
                         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
                             <label for="planned_start_end_date">Planned End</label>
                             <div class="mb-3">
-                                <input type="datetime-local" class="form-control id_date" id="planned_end_date"
-                                    name="planned_end_date">
-                            <small class="font-weight-bold text-danger">{% if object.planned_end_date %}{{object.planned_end_date|date:'d-m-Y H:i'}}{% endif %}</small>
+                                <input type="text" class="form-control id_date" id=""
+                                    name="" disabled placeholder="{% if object.planned_end_date %}{{object.planned_end_date|date:'d-m-Y H:i'}}{% endif %}">
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
