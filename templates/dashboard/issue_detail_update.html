@@ -1,6 +1,9 @@
 {% extends 'dashboard/base.html' %}
 {% load static %}
 {% block content %}
+<style>
+.card .form-control{font-size:14px}
+</style>
 
 <div class="container-fluid">
     <div class="card p-4">
@@ -15,15 +18,12 @@
         </ul>
         {% endif %}
         <div class="row">
-            <div class="col-7">
-                <div class="row">
+            <div class="col-7 pl-0">
                     <a class="btn btn-outline-warning button-33 btn-sm" href="/{{object.workspace.slug}}">
                         <i class="fa fa-chevron-left"></i>&nbsp;&nbsp;Back
                     </a>
-                    <span class="font-weight-bold text-info text-capitalize ml-3 pt-1">Issue - &nbsp; {{object.title}}</span>
-                </div>
             </div>
-            <div class="col-5 text-right">
+            <div class="col-5 pr-0 text-right">
                  
                  <select name="issue_status" id="issue_status_{{object.id}}" class="btn btn-success button-33 mb-2"
                     onchange="issue_status_change({{object.id}})">
@@ -47,14 +47,17 @@
                 </span> -->
             </div>
         </div>
+        <div class="row mt-2 pt-2 pb-2 border-top">
+                    <span class="font-weight-bold text-info text-capitalize ml-3 pt-1">Issue - &nbsp; {{object.title}}</span>
+        </div>
 
         <div class="row p-0">
-            <div class="col-7 bodycol7 pr-1">
+            <div class="col-lg-7 col-md-7 col-sm-12 bodycol7 pr-1 pt-2"">
                 <form method="POST">
                     {% csrf_token %}
                     <div class="row">
                         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
-                            <label for="planned_start_end_date">Planned Start</label>
+                            <small for="planned_start_end_date">Planned Start</small>
                             <div class="mb-3">
                                 <input type="text" class="form-control" id=""
                                     name="" disabled placeholder="{% if object.planned_start_date %}{{object.planned_start_date|date:'d-m-Y H:i'}}{% endif %}">
@@ -62,14 +65,14 @@
                         </div>
 
                         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
-                            <label for="planned_start_end_date">Planned End</label>
+                            <small for="planned_start_end_date">Planned End</small>
                             <div class="mb-3">
                                 <input type="text" class="form-control id_date" id=""
                                     name="" disabled placeholder="{% if object.planned_end_date %}{{object.planned_end_date|date:'d-m-Y H:i'}}{% endif %}">
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
-                            <label for="actual_start_end_date">Actual Start</label>
+                            <small for="actual_start_end_date">Actual Start</small>
                             <div class="mb-3">
                                 <input type="datetime-local" class="form-control id_date" id="actual_start_date"
                                     name="actual_start_date">
@@ -77,7 +80,7 @@
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
-                            <label for="actual_start_end_date">Actual End</label>
+                            <small for="actual_start_end_date">Actual End</small>
                             <div class="mb-3">
                                 <input type="datetime-local" class="form-control id_date" id="actual_end_date"
                                     name="actual_end_date">
@@ -85,7 +88,7 @@
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
-                            <label for="priority">Priority</label>
+                            <small for="priority">Priority</small>
                             <div class="mb-3">
                                 <select class="form-control" name="priority">
                                     <option value="4" {% if object.priority == '4' %}selected{% endif %}>Critical</option>
@@ -96,7 +99,7 @@
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
-                            <label>Assigned To</label>
+                            <small>Assigned To</small>
                             <div class="mb-3">
                                 <select class="form-control" name="assigned_to">
                                     {% for employee in employees %}
@@ -106,7 +109,7 @@
                             </div>
                         </div>                         
                         <div class="col-12">
-                            <label for="Description">Description</label>
+                            <small for="Description">Description</small>
                             <textarea name="description" id="description" placeholder="Type something.." rows="3"
                                 class="form-control">{% if object.description %}{{object.description}}{% endif %}</textarea>
                         </div>
@@ -122,10 +125,10 @@
                         </div>  -->
                          <div class="row text-center" id="footer">
                              <div class="col-6 text-left">Assigned by- {{object.assigned_by}}</div>
-                            <div class="col-6 text-right">Created on - {{object.created_on|date:'d-m-Y H:i'}}</div>
+                            <div class="col-6 text-right">on dt- {{object.created_on|date:'d-m-Y H:i'}}</div>
                     </div>
             </div>
-            <div class="col-5 bodycol5">
+            <div class="col-lg-5 col-md-5 col-sm-12 bodycol5 bg-secondary-1">
                 <!------------------------ multiple taskmanagertabs with their multiple panels to manage all the data in a single page  -->
                 <div class="row taskmanagertab">
                     <button class="taskmanagertablinks" style="width: 24%;padding:5px 5px; margin:0;text-align:center"

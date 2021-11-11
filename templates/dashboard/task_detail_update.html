@@ -1,6 +1,10 @@
 {% extends 'dashboard/base.html' %}
 {% load static %}
 {% block content %}
+<style>
+.card .form-control{font-size:14px}
+</style>
+
 <div class="container-fluid">
     <div class="card p-4">
         {% if messages %}
@@ -14,42 +18,43 @@
         </ul>
         {% endif %}
 
-        <div class="row">
-            <div class="col-7">
-                <div class="row">
-                    <a class="btn btn-outline-warning button-33 btn-sm ml-0" href="/{{object.workspace.slug}}">
-                        <i class="fa fa-chevron-left" aria-hidden="true"></i>&nbsp;&nbsp;Back
-                    </a>
-                    <span class="font-weight-bold text-info text-capitalize ml-3 pt-1">Task - &nbsp;{{object.title}}</span>
+        <div class="row p-0">
+                <div class="col-5 p-0">
+                        <a class="btn btn-outline-warning button-33 btn-sm ml-0" href="/{{object.workspace.slug}}">
+                            <i class="fa fa-chevron-left" aria-hidden="true"></i>&nbsp;&nbsp;Back
+                        </a>
                 </div>
-            </div>
-            <div class="col-5 text-right">
-                <select name="task_status" id="task_status_{{object.id}}" class="btn btn-success button-33 mb-2"
-                    onchange="task_status_change({{object.id}})">
-                    <option value="1" {% if object.task_status == '1' %}selected{% endif %}>Not Started</option>
-                    <option value="2" {% if object.task_status == '2' %}selected{% endif %}>In Progress</option>
-                    <option value="3" {% if object.task_status == '3' %}selected{% endif %}>In Review</option>
-                    <option value="4" {% if object.task_status == '4' %}selected{% endif %}>Completed</option>
-                    <option value="5" {% if object.task_status == '5' %}selected{% endif %}>Cancelled</option>
-                </select>
+                <div class="col-7 p-0 text-right">
+                    <select name="task_status" id="task_status_{{object.id}}" class="btn btn-outline-warning button-33"
+                        onchange="task_status_change({{object.id}})">
+                        <option value="1" {% if object.task_status == '1' %}selected{% endif %}>Not Started</option>
+                        <option value="2" {% if object.task_status == '2' %}selected{% endif %}>In Progress</option>
+                        <option value="3" {% if object.task_status == '3' %}selected{% endif %}>In Review</option>
+                        <option value="4" {% if object.task_status == '4' %}selected{% endif %}>Completed</option>
+                        <option value="5" {% if object.task_status == '5' %}selected{% endif %}>Cancelled</option>
+                    </select>
 
-                <!-- <span class="dropdown" style="margin-top: 10px;">
-                    <a href="#" class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">
-                        <i class="fa fa-plus-circle fa-lg" style="font-size: 32px;"></i>
-                    </a>
-                    <span class="dropdown-menu">
-                        <a class="dropdown-item" href="#">Andrew</a>
-                        <a class="dropdown-item" href="#">John</a>
-                        <a class="dropdown-item" href="#">Adam</a>
-                    </span>
-                </span> -->
-            </div>
+                    <!-- <span class="dropdown" style="margin-top: 10px;">
+                        <a href="#" class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-plus-circle fa-lg" style="font-size: 32px;"></i>
+                        </a>
+                        <span class="dropdown-menu">
+                            <a class="dropdown-item" href="#">Andrew</a>
+                            <a class="dropdown-item" href="#">John</a>
+                            <a class="dropdown-item" href="#">Adam</a>
+                        </span>
+                    </span> -->
+                </div>
         </div>
+        <div class="row mt-2 pt-2 pb-2 border-top">
+            <span class="font-weight-bold text-info text-capitalize">Task - &nbsp;{{object.title}}</span>
+        </div>
+       
 
         <div class="row p-0">
 
-            <div class="col-lg-7 bodycol7 pr-1">
+            <div class="col-lg-7 col-md-7 col-sm-12 bodycol7 pr-1 pt-2">
                 <form method="POST">
                     {% csrf_token %}
                         <div class="row">
@@ -68,11 +73,9 @@
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
-                            <label for="actual_start_end_date">Actual Start</label>
+                            <label for="actual_start_end_date">Actual Start<small class="font-weight-bold text-danger">{% if object.actual_start_date %}{{object.actual_start_date|date:'d-m-Y H:i'}}{% endif %}</small></label>
                             <div class="mb-3">
-                                <input type="datetime-local" class="form-control id_date" id="actual_start_date"
-                                    name="actual_start_date">
-                                <small class="font-weight-bold text-danger">{% if object.actual_start_date %}{{object.actual_start_date|date:'d-m-Y H:i'}}{% endif %}</small>
+                                <input type="datetime-local" class="form-control id_date" id="actual_start_date" name="actual_start_date">
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
@@ -92,7 +95,6 @@
                                     <option value="2" {% if object.priority == '2' %}selected{% endif %}>Medium</option>
                                     <option value="3" {% if object.priority == '3' %}selected{% endif %}>Low</option>
                                 </select>
-                                <small class="font-weight-bold text-danger">{% if object.actual_end_date %}{{object.actual_end_date|date:'d-m-Y H:i'}}{% endif %}</small>
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
@@ -122,13 +124,13 @@
                     <!-- <div class="col-12"><br>
                             <input type="text" class="form-control" placeholder="Add a to-do list item">
                         </div>  -->
-                <div class="row" id="footer">
+                <div class="row pr-0 text-dark" id="footer">
                     <div class="col-6 text-left">Assigned by- {{object.assigned_by}}</div>
-                    <div class="col-6 text-right">Created on - {{object.created_on|date:'d-m-Y H:i'}}</div>
+                    <div class="col-6 text-right">On dt- {{object.created_on|date:'d-m-Y H:i'}}</div>
                 </div>
             </div>
 
-            <div class="col-lg-5 bodycol5 bg-secondary-1">
+            <div class="col-lg-5 col-md-5 col-sm-12 bodycol5 bg-secondary-1">
                 <div class="row taskmanagertab">
                     <button class="taskmanagertablinks" style="width: 24%;padding:5px 5px; margin:0;text-align:center"
                         onclick="opentaskmanagertabs(event, 'taskmanager_comments')" id="defaultOpen"><small>Comments</small></button>

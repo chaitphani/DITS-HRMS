@@ -8,6 +8,7 @@ urlpatterns = [
 
     path('admin/', admin.site.urls),
     path('', include('dashboard.urls')),
+    path('attendance',include('attendance.urls'))
 
 ]
 

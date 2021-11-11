@@ -1,21 +1,21 @@
+
 {% extends 'dashboard/base.html' %}
+{% load static %}
 {% block content %}
-
-
-<!--<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.2.js"></script>-->
-    <script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
-    <script rel="text/javascript" src="https://cdn.datatables.net/tabletools/2.2.4/js/dataTables.tabletools.min.js"></script>
 
 <!-- Begin Page Content -->
 <div class="container-fluid">
     <!------------------------ multiple tabs with their multiple panels to manage all the data in a single page  -->
     <div class="row tab">
         <button class="tablinks" onclick="opennavbartabs(event, 'Dashboard')" id="defaultOpen">Dashboard</button>
+        <button class="tablinks" onclick="opennavbartabs(event, 'Attendance')">Staff Resource</button>
+       
         {% if request.session.is_admin == True %}
         <button class="tablinks" onclick="opennavbartabs(event, 'Settings')">Settings</button>
         {% endif %}
     </div>
 
+    {% comment %} dashboard content {% endcomment %}
     <div id="Dashboard" class="tabcontent">
         <!-- dashboard section -->
         <div class="container-fluid">
@@ -88,8 +88,79 @@
         </div>
     </div>
 
-    {% if request.session.is_admin == True %}
+    {% comment %} attendance content goes here {% endcomment %}
+    <div id="Attendance" class="tabcontent">
+        <!-- dashboard section -->
+        <div class="container-fluid">
+           
+            <div class="row">
+                <!-- title -->
+                <div class="col-md-12">
+                    <b>Manage Your Attendance & Leaves</b>
+                </div>
+                
+            </div>
+            <!-- content section -->
 
+            <div class="row" style="padding-top: 20px;">
+                <div class="col-lg-12">
+                    <div class="row">
+                        <!-- box n -->
+                      
+                        <div class="wrapper">
+                            <a class="box" href="{% url 'attendance_home'%}" style="height:250px">
+                                <div class="box_insidediv">
+                                    <div class="col-lg-12">
+                                        <span class="user_txticon text-capitalize bg-primary"><i class="fa fa-calendar-plus-o"></i></span><br><br>
+                                        <h5 class="text-capitalize font-weight-bold">Attendance</h5>
+                                        <small class="font-weight-bold">This Month: <span class="text-success">08</span></small>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="wrapper">
+                            <a class="box" href="{% url 'attendance_home'%}" style="height:250px">
+                                <div class="box_insidediv">
+                                    <div class="col-lg-12">
+                                        <span class="user_txticon text-capitalize bg-primary"><i class="fa fa-leaf"></i></span><br><br>
+                                        <h5 class="text-capitalize font-weight-bold">Remain Leaves</h5>
+                                        <small><span class="text-success font-weight-bold" title="Remained Leaves">10</span> / <span class="text-dark font-weight-bold" title="Total leaves">35</span></small>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                     
+                        <div class="wrapper">
+                            <a class="box" href="{% url 'attendance_home'%}" style="height:250px">
+                                <div class="box_insidediv">
+                                
+                                    <div class="col-lg-12">
+                                    <span class="user_txticon text-capitalize bg-primary"><i class="fa fa-list-alt"></i></span><br><br>
+                                        <h5 class="text-capitalize font-weight-bold">Leave Requests</h5>
+                                    </div>
+                                <div class="row">
+                                
+                                    <div class="col-lg-6">
+                                        <small class="text-capitalize font-weight-bold">Approved</small><br>
+                                        <small class="text-success font-weight-bold">25</small>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <small class="text-capitalize font-weight-bold">UnApproved</small><br>
+                                        <small class="text-danger font-weight-bold">10</small>
+                                    </div>
+                                </div>
+                                </div>
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% comment %} settings content goes here {% endcomment %}
+    {% if request.session.is_admin == True %}
     <div id="Settings" class="tabcontent">
         
         <div class="container">
@@ -590,5 +661,4 @@
 
     {% endif %}
 </div>
-
 {% endblock %}
