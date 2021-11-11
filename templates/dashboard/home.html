@@ -123,36 +123,34 @@
                                 <div class="box_insidediv">
                                     <div class="col-lg-12">
                                         <span class="user_txticon text-capitalize bg-primary"><i class="fa fa-leaf"></i></span><br><br>
-                                        <h5 class="text-capitalize font-weight-bold">Remain Leaves</h5>
+                                        <h5 class="text-capitalize font-weight-bold">Leave Balance</h5>
                                         <small><span class="text-success font-weight-bold" title="Remained Leaves">10</span> / <span class="text-dark font-weight-bold" title="Total leaves">35</span></small>
                                     </div>
                                 </div>
                             </a>
                         </div>
-                     
-                        <div class="wrapper">
-                            <a class="box" href="{% url 'attendance_home'%}" style="height:250px">
-                                <div class="box_insidediv">
-                                
-                                    <div class="col-lg-12">
-                                    <span class="user_txticon text-capitalize bg-primary"><i class="fa fa-list-alt"></i></span><br><br>
-                                        <h5 class="text-capitalize font-weight-bold">Leave Requests</h5>
+                        {% if request.session.is_admin == True %}
+                            <div class="wrapper">
+                                <a class="box" href="{% url 'attendance_home' %}" style="height:250px">
+                                    <div class="box_insidediv">
+                                        <div class="col-lg-12">
+                                        <span class="user_txticon text-capitalize bg-primary"><i class="fa fa-list-alt"></i></span><br><br>
+                                            <h5 class="text-capitalize font-weight-bold">Leave Requests</h5>
+                                        </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <small class="text-capitalize font-weight-bold">Approved</small><br>
+                                            <small class="text-success font-weight-bold">25</small>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <small class="text-capitalize font-weight-bold">UnApproved</small><br>
+                                            <small class="text-danger font-weight-bold">10</small>
+                                        </div>
                                     </div>
-                                <div class="row">
-                                
-                                    <div class="col-lg-6">
-                                        <small class="text-capitalize font-weight-bold">Approved</small><br>
-                                        <small class="text-success font-weight-bold">25</small>
                                     </div>
-                                    <div class="col-lg-6">
-                                        <small class="text-capitalize font-weight-bold">UnApproved</small><br>
-                                        <small class="text-danger font-weight-bold">10</small>
-                                    </div>
-                                </div>
-                                </div>
-                            </a>
-                        </div>
-
+                                </a>
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>

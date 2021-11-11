@@ -54,7 +54,7 @@ def home(request):
                 main_user_obj = User.objects.get(email=invite_email)
                 staff_obj = StaffUser.objects.get(email=invite_email)
             except Exception as e:
-                print('----exception error in invite----', e)
+                # print('----exception error in invite----', e)
                 name = invite_email.split('@')[0]
                 main_user_obj = User.objects.create_user(username=name, email=invite_email, password=str(name)+str(123))
                 staff_obj = StaffUser.objects.create(name=name, email=invite_email, password=str(name)+str(123))
@@ -84,12 +84,6 @@ def home(request):
             msg.attach_alternative(message, 'text/html')
             msg.send(fail_silently=False)
 
-        # tasks = Task.objects.filter(status=True).order_by('-id')
-        # issues = Issue.objects.filter(status=True).order_by('-id')
-        # tasks_in_workspace = workspace.prefetch_related('task_set', 'issue_set').filter(status=True).annotate(task_count=Count('task__id'), task_assignees=F('task__assigned_to__name'), issue_count=Count('issue__id')).values()
-        # tasks_in_workspace = WorkSpace.objects.prefetch_related('issue_set').filter(status=True).annotate(task_count=Count('issue__id'))
-        # .annotate(number_of_answers=Count('workspace'))
-
         if request.GET.get('id'):
             if request.method == "GET" and request.is_ajax():
                 task_obj = Task.objects.get(id=request.GET.get('id'))
@@ -105,7 +99,7 @@ def home(request):
                 messages.success(request, 'Issue prority changed successfully...')
 
     except Exception as e:
-        print('---exception as error------', e)
+        # print('---exception as error------', e)
         user_obj = ''
         employees = ''
         workspace = ''
@@ -127,122 +121,3 @@ def workspace_edit(request, id):
     else:
         form = WorkspaceUpdateForm(instance=workspace_obj)
     return render(request, 'dashboard/workspace_update.html', {'object':workspace_obj})
-
-
-
-# @is_authenticated
-# def invite_member(request):
-
-#     if request.method == "POST":
-#         mem_email = request.POST.get('email')
-        # try:
-        #     staff_check = StaffUser.objects.get(email = mem_email)
-        #     try:
-        #         team_obj = Team.objects.get(slug=request.GET.get('team'))
-        #         staff_check.team = team_obj
-        #         staff_check.save()
-        #         messages.success(request, 'Member invite success...!') 
-        #         return redirect('/')
-        #     except Exception as err:
-        #         print('----error in team check of invite----', err)
-        #         messages.error(request, 'No team found with the name...')
-        #         return redirect('team')
-        # except Exception as e:
-        #     print('---error in invite member----', e)
-        #     messages.error(request, 'No user found with the email...')
-        #     return redirect('team')
-        # re
-
-
-# @is_authenticated
-# def task_detail_update_view(request, id):
-
-#     task_obj = Task.objects.get(status=True, id=id)
-
-#     if request.method == 'POST':
-#         planned_start_date = request.POST.get('planned_start_date')
-#         actual_start_date = request.POST.get('actual_start_date')
-#         planned_end_date = request.POST.get('planned_end_date')
-#         actual_end_date = request.POST.get('actual_end_date')
-#         description = request.POST.get('description')
-#         assigned_to = request.POST.get('assigned_to')
-#         priority = request.POST.get('priority')
-#         staff_mem = StaffUser.objects.get(id=assigned_to)
-
-#         if planned_start_date != '':
-#             task_obj.planned_start_date = datetime.strptime(planned_start_date, "%Y-%m-%dT%H:%M")
-#         if planned_end_date != '':
-#             task_obj.planned_end_date = datetime.strptime(planned_end_date, "%Y-%m-%dT%H:%M")
-#         if actual_start_date != '':
-#             task_obj.actual_start_date = datetime.strptime(actual_start_date, "%Y-%m-%dT%H:%M")
-#         if actual_end_date != '':
-#             task_obj.actual_end_date = datetime.strptime(actual_end_date, "%Y-%m-%dT%H:%M")
-
-#         task_obj.priority = priority
-#         task_obj.description = description
-#         task_obj.assigned_to = staff_mem
-#         task_obj.save()
-#         messages.success(request, task_obj.title + ' update success...')
-#         return redirect('/task/'+task_obj.id+'/edit')
-        
-#     employees = StaffUser.objects.filter(active_status=True, is_employee=True)
-#     return render(request, 'dashboard/task_detail_update.html', {'obj':task_obj, 'employees':employees})
-
-
-# @is_authenticated
-# def issue_detail_update_view(request, id):
-
-#     issue_obj = Issue.objects.get(status=True, id=id)
-
-#     if request.method == 'POST':
-#         priority = request.POST.get('priority')
-#         assigned_to = request.POST.get('assigned_to')
-#         description = request.POST.get('description')
-#         actual_end_date = request.POST.get('actual_end_date')
-#         planned_end_date = request.POST.get('planned_end_date')
-#         actual_start_date = request.POST.get('actual_start_date')
-#         planned_start_date = request.POST.get('planned_start_date')
-#         staff_mem = StaffUser.objects.get(id=assigned_to)
-        
-#         if planned_start_date != '':
-#             issue_obj.planned_start_date = datetime.strptime(planned_start_date, "%Y-%m-%dT%H:%M")
-#         if planned_end_date != '':
-#             issue_obj.planned_end_date = datetime.strptime(planned_end_date, "%Y-%m-%dT%H:%M")
-#         if actual_start_date != '':
-#             issue_obj.actual_start_date = datetime.strptime(actual_start_date, "%Y-%m-%dT%H:%M")
-#         if actual_end_date != '':
-#             issue_obj.actual_end_date = datetime.strptime(actual_end_date, "%Y-%m-%dT%H:%M")
-
-#         issue_obj.priority = priority
-#         issue_obj.description = description
-#         issue_obj.assigned_to = staff_mem
-#         issue_obj.save()
-#         messages.success(request, issue_obj.title + ' update success...')
-#         return redirect('/issue/'+str(issue_obj.id)+'/edit')
-
-#     employees = StaffUser.objects.filter(active_status=True, is_employee=True)
-#     return render(request, 'dashboard/issue_detail_update.html', {'obj':issue_obj, 'employees':employees})
-
-
-
-# def task_view(request, id):
-
-#     task_obj =  Task.objects.get(id=id)
-#     task_info = {}
-#     try:
-#         task_info['id'] = task_obj.id
-#         task_info["title"] = task_obj.title
-#         task_info["planned_start_date"] = task_obj.planned_start_date
-#         task_info["planned_end_date"] = task_obj.planned_end_date
-#         task_info["actual_start_date"] = task_obj.actual_start_date
-#         task_info["actual_end_date"] = task_obj.actual_end_date
-#         task_info["priority"] = task_obj.priority
-#         task_info["description"] = task_obj.description
-#         task_info["task_status"] = task_obj.task_status
-#         task_info["created_on"] = task_obj.created_on
-#     except Exception as e:
-#         print('---exception error in product info api---', e)
-#         messages.error(request, 'data is missing for the product..')
-#     return JsonResponse({'task_info': task_info})
-
-

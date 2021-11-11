@@ -35,3 +35,27 @@ class IssueSerializer(serializers.ModelSerializer):
     class Meta:
         model = Issue
         fields = ['id', 'title', 'workspace', 'assigned_to', 'priority', 'issue_status', 'description', 'planned_start_date', 'planned_end_date']
+
+
+class AttendaceInSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Attendance
+        fields = ['staff_user', 'in_time'] 
+
+
+class AttendaceOutSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Attendance
+        fields = ['staff_user', 'out_time'] 
+
+
+class LeaveSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Leave
+        fields = ['from_date', 'to_date', 'descritpion', 'user', 'type'] 
+
+
+class HolidaysSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Holidays
+        fields = ['name', 'day', 'month', 'description'] 

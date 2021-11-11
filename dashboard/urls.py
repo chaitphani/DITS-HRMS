@@ -17,6 +17,7 @@ urlpatterns = (
 
     path('task-status', helper_views.tasK_status_change, name='task-status'),
     path('issue-status', helper_views.issue_status_change, name='issue-status'),
+    path('leave-status', helper_views.leave_status_change, name='leave-status'),
 
     path('api/team', api_views.TeamView.as_view(), name='team-add'),
     path('api/task', api_views.TaskView.as_view(), name='task-add'),
@@ -32,5 +33,9 @@ urlpatterns = (
     path('<int:id>/task/delete', workspace_views.task_delete, name='task-delete'),
     path('<int:id>/issue/delete', workspace_views.issue_delete, name='issue-delete'),
 
+    # attendace urls
+    path('attendace/check-in', api_views.AttendanceInView.as_view(), name='attendance_check_in'),
+    path('attendace/check-out', api_views.AttendaceOutView.as_view(), name='attendance_check_out'),
 
+    path('leave/apply', api_views.LeaveView.as_view(), name='leave_apply'),
 )

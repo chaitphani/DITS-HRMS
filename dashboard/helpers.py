@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.http.response import HttpResponse
 from django.core.mail import send_mail
 from django.conf import settings
+from django.shortcuts import redirect
 
 from dashboard.models import *
 
@@ -67,3 +68,17 @@ def issue_status_change(request):
 
         messages.success(request, 'Issue-status change success...')
     return HttpResponse('success')
+
+
+def leave_status_change(request):
+
+    if request.method == "GET" and request.is_ajax():
+        print('---inside method call------')
+        leave_obj = Leave.objects.get(id=request.GET.get('id'),)
+        leave_obj.leave_status = request.GET.get('leave_status',)
+        leave_obj.save()
+        print('-----leave obj-----', leave_obj)
+        print('-----leave obj-----', leave_obj.leave_status)
+        print('-----leave obj-----', leave_obj.leave_status)
+        messages.success(request, 'Leave status changed...')
+        return redirect('/attendance/')

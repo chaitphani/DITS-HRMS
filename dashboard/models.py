@@ -1,10 +1,6 @@
 from django.db import models
-from django.db.models.base import ModelStateFieldsCacheDescriptor
+from django.db.models.base import Model, ModelStateFieldsCacheDescriptor
 from django.contrib.auth.models import User
-
-import re
-
-from django.db.models.fields import related
 
 priority_choices = (('1', 'High'),('2', 'Medium'),('3', 'Low'), ('4', 'Critical'), )
 task_status_choices = (('1', 'Not Started'),('2', 'In Progress'),('3', 'In Review'),('4', 'Completed'),('5', 'Blocked'),)
@@ -33,6 +29,7 @@ class StaffUser(models.Model):
     email = models.EmailField(max_length=100, unique=True)
     password = models.CharField(max_length=100)
     team = models.ForeignKey(Team, on_delete=models.SET_NULL, null=True, blank=True)
+    leaves_provided = models.CharField(max_length=2, default='24')
 
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
@@ -145,3 +142,50 @@ class IssueComment(models.Model):
 
     def __str__(self):
         return '{}-{}'.format(self.user, self.issue)
+
+
+# attendance related models.
+class Attendance(models.Model):
+
+    # type_choices = (('from-office', 'from-office'), ('from-home', 'from-home'))
+    # shift_type = (('general', 'general'), ('night', 'night'))
+
+    staff_user = models.ForeignKey(StaffUser, on_delete=models.SET_NULL, null=True)
+    # type = models.CharField(max_length=20, choices=type_choices, default='from-office')
+    # shift = models.CharField(max_length=15, choices=shift_type, default='general')
+    in_time = models.DateTimeField(null=True, blank=True)
+    out_time = models.DateTimeField(null=True, blank=True)
+    status = models.BooleanField(default=True)
+
+    def __str__(self):
+        return '{}'.format(self.staff_user.name)
+
+
+class Leave(models.Model):
+
+    type_choices = (('sick', 'sick'), ('casual', 'casual'))
+    status_choices = (('Pending', 'Pending'), ('Approved', 'Approved'), ('Rejected', 'Rejected'))
+
+    user = models.ForeignKey(StaffUser, on_delete=models.SET_NULL, null=True)
+    type = models.CharField(max_length=10, choices=type_choices, default='casual')
+    from_date = models.DateField()
+    to_date = models.DateField()
+    descritpion = models.TextField()
+    leave_status = models.CharField(max_length=10, choices=status_choices, default='Pending')
+    status = models.BooleanField(default=True)
+    created_on = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return '{}'.format(self.user.name)
+
+
+class Holidays(models.Model):
+    
+    name = models.CharField(max_length=120)
+    day = models.CharField(max_length=2)
+    month = models.CharField(max_length=5)
+    status = models.BooleanField(default=True)
+    description = models.TextField(null=True, blank=True)
+
+    def __str__(self):
+        return '{}'.format(self.name)

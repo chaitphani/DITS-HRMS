@@ -9,11 +9,12 @@ from dashboard.models import *
 from dashboard.serializers import *
 from dashboard.views.dashboard_views import is_authenticated
 
-from django.core.mail import send_mail
+# from django.core.mail import send_mail
 from django.conf import settings
-
+import re
 from django.template.loader import render_to_string
 from django.core.mail import EmailMultiAlternatives
+import datetime
 
 
 class TaskView(APIView):
@@ -166,7 +167,7 @@ class TaskCommentView(APIView):
             comment_obj.save()
             return redirect('/' + task_obj.workspace.slug + '/' + str(task_obj.id)+'/task')
         except Exception as e:
-            print('----error as e----', e)
+            # print('----error as e----', e)
             return Response({'error':'Task obj not found with the id..'}, status=status.HTTP_404_NOT_FOUND)
 
 
@@ -181,9 +182,64 @@ class IssueCommentView(APIView):
             comment_obj.save()
             return redirect('/' + issue_obj.workspace.slug + '/' + str(issue_obj.id) + '/issue')
         except Exception as e:
-            print('----error as e----', e)
             return Response({'error':'Issue obj not found with the id..'}, status=status.HTTP_404_NOT_FOUND)
 
+
+class AttendanceInView(APIView):
+
+    serializer_class = AttendaceInSerializer
+
+    def post(self, request):
+
+        user_obj = StaffUser.objects.get(id=request.session.get('id'))
+        Attendance.objects.create(staff_user=user_obj, in_time=request.data.get('in_time'), status=True)
+        return redirect('/attendance/')
+
+
+class AttendaceOutView(APIView):
+
+    serializer_class = AttendaceOutSerializer
+
+    def put(self, request):
+        user_obj = StaffUser.objects.get(id=request.session.get('id'))
+        today_date = datetime.date.today()
+
+        attendace_obj = Attendance.objects.filter(staff_user=user_obj, in_time__day=today_date.day, in_time__month=today_date.month, in_time__year=today_date.year, status=True)
+
+        if len(attendace_obj) > 0:
+            # if request.data.get('out_time') == today_date:
+            att_obj = attendace_obj.first()
+            att_obj.out_time = request.data.get('out_time')
+            att_obj.save()
+            # else:
+            #     messages.error(request, 'check-out date should match with the check-in date..')
+        else:
+            messages.error(request, "You haven't check-in to provide check-out..\nPlease contact manager..")
+
+        return redirect('/attendance/')
+
+
+class LeaveView(APIView):
+
+    serializer_class = LeaveSerializer
+
+    def post(self, request):
+        user_obj = StaffUser.objects.get(id=request.session.get('id'))
+        Leave.objects.create(user=user_obj, type=request.data.get('type'), from_date=request.data.get('from_date'), to_date=request.data.get('to_date'), descritpion=request.data.get('descritpion'), status=True, leave_status='Pending')
+
+        messages.success(request, 'Leave applied success...')
+        return redirect('/attendance/')
+
+
+class HolidayView(APIView):
+
+    serializers_class = HolidaysSerializer
+    def post(self, request):
+        Holidays.objects.create(name=request.data.get('name'), day=request.data.get('day'), month=request.data.get('month'), status=True, description=request.data.get('description'))
+
+        messages.success(request, 'Holiday create success...')
+        return redirect('/attendance/')
+        
 
 # class LoginView(APIView):
 

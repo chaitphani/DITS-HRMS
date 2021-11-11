@@ -1,13 +1,19 @@
-
 <html>
 {% load static %}
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+    integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+    integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"
+    integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF"
+    crossorigin="anonymous"></script>
 
 <!-- data tables cdn-->
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
@@ -19,43 +25,44 @@
 
 <link rel="stylesheet" href="{%static 'css/style.css'%}">
 <link rel="stylesheet" href="{% static 'css/base.css' %}">
-	<!-- jQuery library -->
+<!-- jQuery library -->
 
 <!-- font awesome cdn -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
- <style>
-  .lesschar  {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 150px;
-}
- </style> 
-  
+<style>
+    .lesschar {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 150px;
+    }
+</style>
+
 
 
 <!-- Page Wrapper -->
 <div id="wrapper">
-        <!-- Main Content -->
+    <!-- Main Content -->
     <div id="content">
         <!-- Topbar -->
         <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
             <!-- back button -->
-            
+
             <div class="text-center d-md-inline">
                 <a href="/" class="btn btn-secondary">
                     <i class="fa fa-chevron-left"></i>&nbsp; back
                 </a>
             </div>
-            
-             <!-- Topbar Navbar -->
+
+            <!-- Topbar Navbar -->
             <ul class="navbar-nav ml-auto">
                 <div class="topbar-divider d-none d-sm-block"></div>
                 <!-- Add new button -->
                 <li class="nav-item dropdown no-arrow">
-                    <a class="nav-link dropdown-toggle btn btn-success btn-sm text-white" href="#" id="newbuttonDropdown" role="button"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle btn btn-success btn-sm text-white" href="#"
+                        id="newbuttonDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false">
                         <i class="fa fa-plus text-white"></i>&nbsp; Add
                     </a>
                     <!-- Dropdown - User Information -->
@@ -69,10 +76,12 @@
                             <i class="fa fa-envelope-o fa-sm fa-fw mr-2 text-gray-400"></i>
                             Apply for Leave
                         </a>
+                        {% if request.session.is_admin == True %}
                         <a class="dropdown-item" href="#" data-toggle="modal" data-target="#add_holidays">
                             <i class="fa fa-calendar-plus-o fa-sm fa-fw mr-2 text-gray-400" aria-hidden="true"></i>
                             Add Holiday
                         </a>
+                        {% endif %}
                     </div>
                 </li>
             </ul>
@@ -81,70 +90,79 @@
     </div>
 </div>
 
-
-
-
 <div class="container-fluid">
 
-   <!--alert message here-->
-   <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <strong>Alert Title!</strong> The alert messaage will be shown here.
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
+    <!--alert message here-->
+    {% if messages %}
+    <ul class="messages list-unstyled">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }} text-center font-weight-bold p-2" {% endif %}>
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
+            {{ message }}
+            </li>
+            {% endfor %}
+    </ul>
+    {% endif %}
 
     <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">
-            <a class="nav-link active" id="attendance-tab" data-toggle="tab" href="#attendance" role="tab" aria-controls="Attendance" aria-selected="true">Attendance</a>
+            <a class="nav-link active" id="attendance-tab" data-toggle="tab" href="#attendance" role="tab"
+                aria-controls="Attendance" aria-selected="true">Attendance</a>
         </li>
         <li class="nav-item" role="presentation">
-            <a class="nav-link" id="leaves-tab" data-toggle="tab" href="#leave" role="tab" aria-controls="leave" aria-selected="false">Leaves</a>
+            <a class="nav-link" id="leaves-tab" data-toggle="tab" href="#leave" role="tab" aria-controls="leave"
+                aria-selected="false">Leaves</a>
         </li>
         <li class="nav-item" role="presentation">
-            <a class="nav-link" id="holiday-tab" data-toggle="tab" href="#holiday" role="tab" aria-controls="holiday" aria-selected="false">Holidays</a>
+            <a class="nav-link" id="holiday-tab" data-toggle="tab" href="#holiday" role="tab" aria-controls="holiday"
+                aria-selected="false">Holidays</a>
         </li>
     </ul>
 
     <div class="tab-content bg-white p-2 mt-0" id="myTabContent">
-
         <div class="tab-pane fade show active" id="attendance" role="tabpanel" aria-labelledby="attendance-tab">
             <div class="table table-responsive">
-               <table id="attendance_table" style="font-size:14px" class="table w-100 table-striped table-bordered">
-                <thead>
-                    <tr class="text-uppercase bg-success text-center" style="font-size:12px">
-                        <th>#</th>
-                        <th>Date</th>
-                        <th>EmpName</th>
-                        <th>Attendance-Type</th>
-                        <th>Attendance-By</th>
-                        <th>(M)In-Time</th>
-                        <th>(M)Out-Time</th>
-                        <th>(E)In-Time</th>
-                        <th>(E)Out-Time</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>     
-                    <tr class="text-capitalize text-center">
-                        <td>1</td>
-                        <td>00/00/0000</td>
-                        <td title="employee name"><p class="lesschar">Sandeep yadav</p></td>
-                        <td>In-Office</td>
-                        <td>Self</td>
-                        <td>00:00 AM</td>
-                        <td>00:00 AM</td>
-                        <td>00:00 PM</td>
-                        <td>00:00 PM</td>
-                        <td><p class="text-success font-weight-bold" title="Present">P</p></td>
-                        <td>
-                            <a href="#deletemodal"  data-toggle="modal" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
-                        </td>
-                    </tr>
-                    
-                </tbody>
-            </table>
+                <table id="attendance_table" style="font-size:14px" class="table w-100 table-striped table-bordered">
+                    <thead>
+                        <tr class="text-uppercase bg-success text-center" style="font-size:12px">
+                            <!-- <th>#</th> -->
+                            <th>Date</th>
+                            <!-- <th>EmpName</th> -->
+                            <!-- <th>Attendance-Type</th> -->
+                            <!-- <th>Attendance-By</th> -->
+                            <th>In-Time</th>
+                            <th>Out-Time</th>
+                            <!-- <th>(E)In-Time</th> -->
+                            <!-- <th>(E)Out-Time</th> -->
+                            <!-- <th>Status</th> -->
+                            <!-- <th>Action</th> -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for object in obj %}
+                        <tr class="text-capitalize text-center">
+                            <!-- <td>1</td> -->
+                            <td>{{object.in_time|date:'d-M-Y'}}</td>
+                            <!-- <td title="employee name">
+                                <p class="lesschar">Sandeep yadav</p>
+                            </td> -->
+                            <!-- <td>In-Office</td> -->
+                            <!-- <td>Self</td> -->
+                            <td>{{object.in_time|date:'H:i'}}</td>
+                            <td>{{object.out_time|date:'H:i'}}</td>
+                            <!-- <td>00:00 PM</td> -->
+                            <!-- <td>00:00 PM</td> -->
+                            <!-- <td>
+                                <p class="text-success font-weight-bold" title="Present">P</p>
+                            </td>
+                            <td>
+                                <a href="#deletemodal" data-toggle="modal" class="btn btn-danger btn-sm"><i
+                                        class="fa fa-trash"></i></a>
+                            </td> -->
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </div>
 
@@ -153,44 +171,51 @@
                 <table id="leave_table" style="font-size:14px" class="table w-100 table-striped table-bordered">
                     <thead>
                         <tr class="text-uppercase text-center bg-success" style="font-size:12px">
-                            <th>#</th>
-                            <th>Applied Date</th>
-                            <th>EmpName</th>
+                            <!-- <th>#</th> -->
+                            <th>Applied on</th>
+                            <!-- <th>EmpName</th> -->
                             <th>Leave-Type</th>
-                            <th>Approved-By</th>
-                            <th>From Date</th>
-                            <th>To Date</th>
+                            <!-- <th>Approved-By</th> -->
+                            <th>From</th>
+                            <th>To</th>
                             <th>Reason</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
                     </thead>
-        
                     <tbody>
+                        {% for leave in leaves %}
                         <tr class="text-capitalize text-center">
-                            <td>1</td>
-                            <td>00/00/0000</td>
-                            <td>Sandeep yadav</td>
-                            <td>Sick Leave</td>
-                            <td>Manager</td>
-                            <td>00/00/0000</td>
-                            <td>00/00/0000</td>
-                            <td>Reason for leave</td>
+                            <!-- <td>1</td> -->
+                            <td>{{leave.created_on|date:'d-M-Y'}}</td>
+                            <!-- <td>Sandeep yadav</td> -->
+                            <td>{{leave.type}}</td>
+                            <!-- <td>Manager</td> -->
+                            <td>{{leave.from_date}}</td>
+                            <td>{{leave.to_date}}</td>
+                            <td>{{leave.descritpion}}</td>
                             <td>
-                            <select class="form-control btn-sm bg-success text-white" style="width:115px" id="status">
-                                <option class="bg-danger" value="Pending">Pending</option>
-                                <option class="bg-success" value="Approved">Approved</option>
-                            </select>
+                                {% if not request.session.is_admin == True %}
+                                    {{leave.leave_status}}
+                                {% else %}
+                                    <select class="form-control" id="leave_status_{{leave.id}}" onchange="leave_status_change({{leave.id}})">
+                                        <option value="Pending" {% if leave.leave_status == 'Pending' %}selected{% endif %}>Pending</option>
+                                        <option value="Approved" {% if leave.leave_status == 'Approved' %}selected{% endif %}>Approve</option>
+                                        <option value="Rejected" {% if leave.leave_status == 'Rejected' %}selected{% endif %}>Reject</option>
+                                    </select>
+                                {% endif %}
                             </td>
-                            <td>
-                            <a href="#deletemodal" data-toggle="modal" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
+                           <td>
+                                <a href="#deletemodal" data-toggle="modal" class="btn btn-danger btn-sm">
+                                    <i class="fa fa-trash"></i>
+                                </a>
                             </td>
                         </tr>
+                        {% endfor %}
                     </tbody>
-                </table>  
+                </table>
             </div>
         </div>
-
         <div class="tab-pane fade" id="holiday" role="tabpanel" aria-labelledby="holiday-tab">
             <div class="table table-responsive">
                 <table id="holiday_table" style="font-size:14px" class="table w-100 table-striped table-bordered">
@@ -201,23 +226,24 @@
                             <th>Month & Date</th>
                             <th>Day of the Week</th>
                             <th>Action</th>
-                            </tr>
+                        </tr>
                     </thead>
-        
+
                     <tbody>
-                     {%for h in holiday %}
+                        {%for h in holiday %}
                         <tr class="text-capitalize text-center">
                             <td>{{h.id}}</td>
                             <td>{{h.name}}</td>
                             <td>{{h.monthanddate}}</td>
                             <td>{{h.dayoftheweek}}</td>
                             <td>
-                            <a href="#deletemodal" title="delete this row" data-toggle="modal" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
+                                <a href="#deletemodal" title="delete this row" data-toggle="modal"
+                                    class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
                             </td>
                         </tr>
-                         {%endfor%}
+                        {%endfor%}
                     </tbody>
-                </table>  
+                </table>
             </div>
         </div>
 
@@ -227,414 +253,407 @@
 
 </div>
 
-  <script>
-      $('.delete_task').on('click', function(e){
-            action = confirm('Are you sure to remove...!')
-            if (action == false){
-                e.preventDefault();
-            }else{
-                location.reload();
-            }
-      })
-     
-     $(function () {
-  $('[data-toggle="tooltip"]').tooltip()
-})
-  </script>
+<!-- <script>
+    $('.delete_task').on('click', function (e) {
+        action = confirm('Are you sure to remove...!')
+        if (action == false) {
+            e.preventDefault();
+        } else {
+            location.reload();
+        }
+    })
+
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+</script> -->
 
 <script>
-    $(document).ready(function() {
-   $('#leave_table').DataTable( {
-        dom: 'Blfrtip',
-       // buttons: [
-        //    'copy', 'csv', 'excel', 'pdf', 'print'
-       // ]
-    } );
-    
-    $('#attendance_table').DataTable( {
-         dom: 'Blfrtip',
-       // buttons: [
-        //    'copy', 'csv', 'excel', 'pdf', 'print'
-       // ]
-    } );
-    $('#holiday_table').DataTable( {
-         dom: 'Blfrtip',
-       // buttons: [
-        //    'copy', 'csv', 'excel', 'pdf', 'print'
-       // ]
-    } );
-} );
+    $(document).ready(function () {
+        $('#leave_table').DataTable({
+            dom: 'Blfrtip',
+            // buttons: [
+            //    'copy', 'csv', 'excel', 'pdf', 'print'
+            // ]
+        });
+
+        $('#attendance_table').DataTable({
+            dom: 'Blfrtip',
+            // buttons: [
+            //    'copy', 'csv', 'excel', 'pdf', 'print'
+            // ]
+        });
+        $('#holiday_table').DataTable({
+            dom: 'Blfrtip',
+            // buttons: [
+            //    'copy', 'csv', 'excel', 'pdf', 'print'
+            // ]
+        });
+    });
 </script>
 
-<!--<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.2.js"></script>-->
-    <script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
-    <script rel="text/javascript" src="https://cdn.datatables.net/tabletools/2.2.4/js/dataTables.tabletools.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+<script rel="text/javascript"
+    src="https://cdn.datatables.net/tabletools/2.2.4/js/dataTables.tabletools.min.js"></script>
 
-    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.0.1/js/dataTables.buttons.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.html5.min.js"></script>
-    <!-- <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.print.min.js"></script> -->
-
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/2.0.1/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.html5.min.js"></script>
+<!-- <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.print.min.js"></script> -->
 
 <!-------------------------------------The Modal to add attendance---------------------------------- -->
-	<div class="modal" id="new_attendance" >
-		<div class="modal-dialog modal-md">
-			<div class="modal-content">
+<div class="modal" id="new_attendance">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
 
-				<!-- Modal Header -->
-				<div class="modal-header">
-					<h4 class="modal-title">New Attendance <small>(Date)</small></h4>
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-				</div>
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">New Attendance <small>(Date)</small></h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
 
-				<!-- Modal body -->
-				<div class="modal-body">
-					<form action="" method="POST">
-						
-                        <a href="#" id="first_innings_btn">
-                            <div class="row bg-light p-1 pt-2 pb-2 font-weight-bold">
-                                <div class="col-lg-8">Morning Shift</div>
-                                <div class="col-lg-4 text-right"><i class="fa fa-lg">+</i></div>
-                            </div>
-                        </a>
-						<div class="row" id="first_innings_content">
-							<div class="col-lg-6 mb-3">
-								<label>Employee Name*</label>
-								<input type="text" placeholder="" name="title" class="form-control" disabled>
-							</div>
-                            <div class="col-lg-6 mb-3">
-								<label>Attendance Type*</label>
-								<select class="form-control" required>
-                                <option value="">--Please Select--</option>
-                                <option value="inoffice">In-Office</option>
-                                <option value="workfromhome">Work From Home</option>
-                                </select>
-							</div>
-                           
-							<div class="col-md-6 mb-3">
-								<label>In-Time*</label>
-								<div class="input-group">
-									<div class="input-group-prepend">
-										<span class="input-group-text" id="calender_icon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
-									</div>
-									<input type="datetime-local" name="planned_end_date" class="form-control" aria-label="date" aria-describedby="calender_icon" required/>
-								</div>
-							</div>
-                            <div class="col-md-6 mb-3">
-								<label>Out-Time*</label>
-								<div class="input-group">
-									<div class="input-group-prepend">
-										<span class="input-group-text" id="calender_icon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
-									</div>
-									<input type="datetime-local" name="planned_end_date" class="form-control" aria-label="date" aria-describedby="calender_icon" disabled>
-								</div>
-							</div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6 col-lg-6 col-sm-6">
+                        <form action="{% url 'attendance_check_in' %}" method="POST">
+                            {% csrf_token %}
+                            <input type='hidden' name="in_time" class="form-control" id="in_time"/>
+                            <input type="submit" value="CHECK IN" class="btn btn-success w-50" 
+                            {% if in_current_day != 'none' %} disabled {% endif %}/>
+                        </form>
+                    </div>
+                    <div class="col-md-6 col-lg-6 col-sm-6">
+                        <form action="{% url 'attendance_check_out' %}" method="POST">
+                            {% csrf_token %}
+                            <input type='hidden' name="out_time" class="form-control in_time"/>
+                            <input type="submit" class="btn btn-primary w-50" value="CHECK OUT" 
+                            {% if out_current_day != 'none' or in_current_day == 'none' %} disabled {% endif %}/>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- modal footer -->
+    </div>
+</div>
 
-                            
-						</div>
-                        <div class="mt-3"></div>
-                        <a href="#" id="second_innings_btn">
-                            <div class="row bg-light p-1 pt-2 pb-2 font-weight-bold">
-                                <div class="col-lg-8">Evening Shift</div>
-                                <div class="col-lg-4 text-right"><i class="fa fa-lg">+</i></div>
-                            </div>
-                        </a>
-
-                        <div class="row" id="second_innings_content">
-                                <div class="col-lg-6 mb-3">
-                                <label>Employee Name*</label>
-                                <input type="text" placeholder="" name="title" class="form-control" disabled>
-                                </div>
-                                <div class="col-lg-6 mb-3">
-                                    <label>Attendance Type*</label>
-                                    <select class="form-control">
-                                    <option value="">--Please Select--</option>
-                                    <option value="inoffice">In-Office</option>
-                                    <option value="workfromhome">Work From Home</option>
-                                    </select>
-                                </div>
-                            
-                                <div class="col-md-6 mb-3">
-                                    <label>In-Time*</label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text" id="calender_icon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
-                                        </div>
-                                        <input type="datetime-local" name="planned_end_date" class="form-control" aria-label="date" aria-describedby="calender_icon">
-                                    </div>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label>Out-Time*</label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text" id="calender_icon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
-                                        </div>
-                                        <input type="datetime-local" name="planned_end_date" class="form-control" aria-label="date" aria-describedby="calender_icon" disabled>
-                                    </div>
-                                </div>
-                                
-                        </div>
-
-                        <div class="row mt-3">
-                            <div class="col-md-12">
-                                <input type="submit" class="btn btn-primary w-100" value="Submit Attendance">
-                            </div>
-                        </div>
-						</div>
-
-                        <script>
-                            $(document).ready(function(){
-                                $("#second_innings_content").hide();
-
-                                $("#second_innings_btn").click(function(){
-                                $("#first_innings_content").hide();
-                                $("#second_innings_content").toggle();
-                                }); 
-
-                                 $("#first_innings_btn").click(function(){
-                                $("#second_innings_content").hide();
-                                $("#first_innings_content").toggle();
-                                }); 	
-                            })
-                        </script>
-                        
-						
-					</form>
-				</div>
-				<!-- modal footer -->
-			</div>
-		</div>
-	</div>
- 
 <!-------------------------------------The Modal to apply leaves---------------------------------- -->
-	<div class="modal" id="apply_leaves" >
-		<div class="modal-dialog modal-md">
-			<div class="modal-content">
+<div class="modal" id="apply_leaves">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
 
-				<!-- Modal Header -->
-				<div class="modal-header">
-					<h4 class="modal-title">Apply for Leaves <small>(Date)</small></h4>
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-				</div>
-
-				<!-- Modal body -->
-				<div class="modal-body">
-					<form action="" method="POST">
-				
-						<div class="row" id="first_innings_content">
-							<div class="col-lg-6 mb-3">
-								<label>Employee Name*</label>
-								<input type="text" placeholder="" name="employeename" class="form-control" disabled>
-							</div>
-                            <div class="col-lg-6 mb-3">
-								<label>Leave Type*</label>
-								<input type="text" name="leavetype" class="form-control" required>
-							</div>
-
-							<div class="col-md-6 mb-3">
-								<label>From Dt.</label>
-								<div class="input-group">
-									<div class="input-group-prepend">
-										<span class="input-group-text" id="calender_icon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
-									</div>
-									<input type="datetime-local" name="from_date" class="form-control" aria-label="date" aria-describedby="calender_icon" required>
-								</div>
-							</div>
-                            <div class="col-md-6 mb-3">
-								<label>To Dt.*</label>
-								<div class="input-group">
-									<div class="input-group-prepend">
-										<span class="input-group-text" id="calender_icon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
-									</div>
-									<input type="datetime-local" name="to_date" class="form-control" aria-label="date" aria-describedby="calender_icon" required>
-								</div>
-							</div>
-
-                            <div class="col-md-12 mb-3">
-								<label>Reason</label>
-                                <textarea rows="3" name="reason" class="form-control" required></textarea>
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Apply for Leaves <small>(Date)</small></h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form action="{% url 'leave_apply' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-lg-12 mb-3">
+                            <label>Leave Type*</label>
+                            <select name="type" class="form-control" required>
+                                <option value="">Please select</option>
+                                <option value="sick">Sick</option>
+                                <option value="casual">Casual</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label>From Date*</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="calender_icon">
+                                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                                    </span>
+                                </div>
+                                <input type="date" name="from_date" class="form-control" required>
                             </div>
-
-                            <div class="col-md-12">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label>To Date*</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="calender_icon"><i class="fa fa-calendar"
+                                            aria-hidden="true"></i></span>
+                                </div>
+                                <input type="date" name="to_date" class="form-control" aria-label="date"
+                                    aria-describedby="calender_icon" required>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <label>Reason*</label>
+                            <textarea rows="3" name="descritpion" class="form-control" required></textarea>
+                        </div>
+                        <div class="col-md-12">
                             <input type="submit" class="btn btn-primary w-100" value="Apply for Leaves">
-                            </div>
-						</div>
-                        
-					</form>
-				</div>
-				<!-- modal footer -->
-			</div>
-		</div>
-	</div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!-- modal footer -->
+        </div>
+    </div>
+</div>
 
 <!-------------------------------------The Modal to add holidays---------------------------------- -->
-	<div class="modal" id="add_holidays" >
-		<div class="modal-dialog modal-md">
-			<div class="modal-content">
+<div class="modal" id="add_holidays">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Add Holidays <small>(Date)</small></h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
 
-				<!-- Modal Header -->
-				<div class="modal-header">
-					<h4 class="modal-title">Add Holidays <small>(Date)</small></h4>
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-				</div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form action="" method="POST">
 
-				<!-- Modal body -->
-				<div class="modal-body">
-					<form action="" method="POST">
-				
-						<div class="row" id="first_innings_content">
-							<div class="col-lg-12 mb-3">
-								<label>Holiday Name*</label>
-								<input type="text" placeholder="" name="employeename" class="form-control" required>
-							</div>
-                            
-							<div class="col-md-6 mb-3">
-								<label>Month & Date</label>
-								<div class="input-group">
-									<div class="input-group-prepend">
-										<span class="input-group-text" id="calender_icon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
-									</div>
-									<input type="datetime-local" name="from_date" class="form-control" aria-label="date" aria-describedby="calender_icon" required>
-								</div>
-							</div>
-
-                            <div class="col-md-6 mb-3">
-								<label>Day of the week</label>
-                                <input type="text" name="reason" class="form-control" required/>    
-                            </div>
-						</div>
-                        
-						<input type="submit" class="btn btn-primary w-100" value="Add Holiday">
-					</form>
-				</div>
-				<!-- modal footer -->
-			</div>
-		</div>
-	</div>
-
-
-
-
-
-
-
-
-
-
+                    <div class="row" id="first_innings_content">
+                        <div class="col-lg-12 mb-3">
+                            <label>Title*</label>
+                            <input type="text" placeholder="" name="name" class="form-control" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label>Day*</label>
+                            <select class="form-control" name="day" required>
+                                <option value="">Please select</option>
+                                <option value="01">01</option>
+                                <option value="02">02</option>
+                                <option value="03">03</option>
+                                <option value="04">04</option>
+                                <option value="05">05</option>
+                                <option value="06">06</option>
+                                <option value="07">07</option>
+                                <option value="08">08</option>
+                                <option value="09">09</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                                <option value="13">13</option>
+                                <option value="14">14</option>
+                                <option value="15">15</option>
+                                <option value="16">16</option>
+                                <option value="17">17</option>
+                                <option value="18">18</option>
+                                <option value="19">19</option>
+                                <option value="20">20</option>
+                                <option value="21">21</option>
+                                <option value="22">22</option>
+                                <option value="23">23</option>
+                                <option value="24">24</option>
+                                <option value="25">25</option>
+                                <option value="26">26</option>
+                                <option value="27">27</option>
+                                <option value="28">28</option>
+                                <option value="29">29</option>
+                                <option value="30">30</option>
+                                <option value="31">31</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label>Month*</label>
+                            <select class="form-control" name="month" required>
+                                <option value="">Please select</option>
+                                <option value="jan">January</option>
+                                <option value="feb">February</option>
+                                <option value="mar">March</option>
+                                <option value="apr">April</option>
+                                <option value="may">May</option>
+                                <option value="june">June</option>
+                                <option value="july">July</option>
+                                <option value="aug">August</option>
+                                <option value="sep">September</option>
+                                <option value="oct">October</option>
+                                <option value="nov">November</option>
+                                <option value="dec">December</option>
+                            </select>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <label for="">Plannings/description</label>
+                            <textarea name="description" rows="2" class="form-control"></textarea>
+                        </div>
+                    </div>
+                    <input type="submit" class="btn btn-primary w-100" value="Add Holiday">
+                </form>
+            </div>
+            <!-- modal footer -->
+        </div>
+    </div>
+</div>
 
 <!-- Modal HTML to delete -->
-    <style>
-        body {
-            font-family: 'Varela Round', sans-serif;
-        }
-        .modal-confirm {		
-            color: #636363;
-            width: 400px;
-            margin: 30px auto;
-        }
-        .modal-confirm .modal-content {
-            padding: 20px;
-            border-radius: 5px;
-            border: none;
-            text-align: center;
-            font-size: 14px;
-        }
-        .modal-confirm .modal-header {
-            border-bottom: none;   
-            position: relative;
-        }
-        .modal-confirm h4 {
-            text-align: center;
-            font-size: 26px;
-            margin: 30px 0 -10px;
-        }
-        .modal-confirm .close {
-            position: absolute;
-            top: -5px;
-            right: -2px;
-        }
-        .modal-confirm .modal-body {
-            color: #999;
-        }
-        .modal-confirm .modal-footer {
-            border: none;
-            text-align: center;		
-            border-radius: 5px;
-            font-size: 13px;
-            padding: 10px 15px 25px;
-        }
-        .modal-confirm .modal-footer a {
-            color: #999;
-        }		
-        .modal-confirm .icon-box {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto;
-            border-radius: 50%;
-            z-index: 9;
-            text-align: center;
-            border: 3px solid #f15e5e;
-        }
-        .modal-confirm .icon-box i {
-            color: #f15e5e;
-            font-size: 46px;
-            display: inline-block;
-            margin-top: 13px;
-        }
-        .modal-confirm .btn {
-            color: #fff;
-            border-radius: 4px;
-            background: #60c7c1;
-            text-decoration: none;
-            transition: all 0.4s;
-            line-height: normal;
-            min-width: 120px;
-            border: none;
-            min-height: 40px;
-            border-radius: 3px;
-            margin: 0 5px;
-            outline: none !important;
-        }
-        .modal-confirm .btn-info {
-            background: #c1c1c1;
-        }
-        .modal-confirm .btn-info:hover, .modal-confirm .btn-info:focus {
-            background: #a8a8a8;
-        }
-        .modal-confirm .btn-danger {
-            background: #f15e5e;
-        }
-        .modal-confirm .btn-danger:hover, .modal-confirm .btn-danger:focus {
-            background: #ee3535;
-        }
-        .trigger-btn {
-            display: inline-block;
-            margin: 100px auto;
-        }
-     </style>
+<style>
+    body {
+        font-family: 'Varela Round', sans-serif;
+    }
+
+    .modal-confirm {
+        color: #636363;
+        width: 400px;
+        margin: 30px auto;
+    }
+
+    .modal-confirm .modal-content {
+        padding: 20px;
+        border-radius: 5px;
+        border: none;
+        text-align: center;
+        font-size: 14px;
+    }
+
+    .modal-confirm .modal-header {
+        border-bottom: none;
+        position: relative;
+    }
+
+    .modal-confirm h4 {
+        text-align: center;
+        font-size: 26px;
+        margin: 30px 0 -10px;
+    }
+
+    .modal-confirm .close {
+        position: absolute;
+        top: -5px;
+        right: -2px;
+    }
+
+    .modal-confirm .modal-body {
+        color: #999;
+    }
+
+    .modal-confirm .modal-footer {
+        border: none;
+        text-align: center;
+        border-radius: 5px;
+        font-size: 13px;
+        padding: 10px 15px 25px;
+    }
+
+    .modal-confirm .modal-footer a {
+        color: #999;
+    }
+
+    .modal-confirm .icon-box {
+        width: 80px;
+        height: 80px;
+        margin: 0 auto;
+        border-radius: 50%;
+        z-index: 9;
+        text-align: center;
+        border: 3px solid #f15e5e;
+    }
+
+    .modal-confirm .icon-box i {
+        color: #f15e5e;
+        font-size: 46px;
+        display: inline-block;
+        margin-top: 13px;
+    }
+
+    .modal-confirm .btn {
+        color: #fff;
+        border-radius: 4px;
+        background: #60c7c1;
+        text-decoration: none;
+        transition: all 0.4s;
+        line-height: normal;
+        min-width: 120px;
+        border: none;
+        min-height: 40px;
+        border-radius: 3px;
+        margin: 0 5px;
+        outline: none !important;
+    }
+
+    .modal-confirm .btn-info {
+        background: #c1c1c1;
+    }
+
+    .modal-confirm .btn-info:hover,
+    .modal-confirm .btn-info:focus {
+        background: #a8a8a8;
+    }
+
+    .modal-confirm .btn-danger {
+        background: #f15e5e;
+    }
+
+    .modal-confirm .btn-danger:hover,
+    .modal-confirm .btn-danger:focus {
+        background: #ee3535;
+    }
+
+    .trigger-btn {
+        display: inline-block;
+        margin: 100px auto;
+    }
+</style>
 
 
 <div id="deletemodal" class="modal fade">
-	<div class="modal-dialog modal-confirm">
-		<div class="modal-content">
-			<div class="modal-header">
-				<div class="icon-box">
-					<i class="material-icons">&#xE5CD;</i>
-				</div>		<br>		
-				<h4 class="modal-title">Are you sure?</h4>	
+    <div class="modal-dialog modal-confirm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="icon-box">
+                    <i class="material-icons">&#xE5CD;</i>
+                </div> <br>
+                <h4 class="modal-title">Are you sure?</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-			</div>
-			<div class="modal-body">
-				<p>Do you really want to delete these records? This process cannot be undone.</p>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-info" data-dismiss="modal">Cancel</button>
-				<button type="button" class="btn btn-danger">Delete</button>
-			</div>
-		</div>
-	</div>
-</div> 
+            </div>
+            <div class="modal-body">
+                <p>Do you really want to delete these records? This process cannot be undone.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    // to pass date time into input field of attendace fields.
+    var todaydate = new Date();
+    var day = todaydate.getDate();
+    var month = todaydate.getMonth() + 1;
+    var year = todaydate.getFullYear();
+    var datestring = year + "-" + month + "-" + day + "T" + todaydate.getHours() + ":" + todaydate.getMinutes();
+    document.getElementById("in_time").value = datestring;
 
+</script>
+
+<script>
+    function leave_status_change(id) {
+    var leave_status = $("#leave_status_" + id).val()
+    console.log('-----id-------', id)
+    console.log('-----leave status-------', leave_status)
+    var action = confirm("Are you sure to change the status...?")
+    console.log('----action status----', action)
+    if (action == true) {
+        console.log('----console ok------')
+        $.ajax({
+            type: "GET",
+            url: `/leave-status`,
+            data: {'id': id, 'leave_status': leave_status},
+            success: function (data) {
+                console.log('----data-----', data)
+                console.log('----url----', url)
+                location.reload();
+            },
+            error: function () {
+                alert('error')
+            }
+        });
+    } else {
+        id.preventDefault();
+        location.reload();
+    }
+}
+</script>
 </html>

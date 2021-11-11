@@ -15,8 +15,9 @@ def login(request):
 
     login_obj = ''
     login_check = ''
-
+    
     if request.method == 'POST':
+        e = ''
         email_input = request.POST.get('email_temp')
         pwd = request.POST.get('pass_temp')
 
@@ -25,10 +26,11 @@ def login(request):
                 login_obj = StaffUser.objects.get(name=email_input).email
             except:
                 login_obj = StaffUser.objects.get(email=email_input)
-        except:    
+        except Exception as e:
             pass
 
         if login_obj != '':
+            e = ''
             try:
                 try:
                     login_check = StaffUser.objects.get(name=email_input, password=pwd)
