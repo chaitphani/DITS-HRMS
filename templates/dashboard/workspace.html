@@ -3,10 +3,17 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+    integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+    integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"
+    integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF"
+    crossorigin="anonymous"></script>
 
 <!-- data tables cdn-->
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
@@ -14,36 +21,36 @@
 
 <link rel="stylesheet" href="{%static 'css/style.css'%}">
 <link rel="stylesheet" href="{% static 'css/base.css' %}">
-	<!-- jQuery library -->
+<!-- jQuery library -->
 
 <!-- font awesome cdn -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
- <style>
-  .lesschar  {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 150px;
-}
- </style> 
-  
+<style>
+    .lesschar {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 150px;
+    }
+</style>
+
 
 
 <!-- Page Wrapper -->
 <div id="wrapper">
-        <!-- Main Content -->
+    <!-- Main Content -->
     <div id="content">
         <!-- Topbar -->
         <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
             <!-- back button -->
-            
+
             <div class="text-center d-md-inline">
                 <a href="/" class="button-33">
                     <i class="fa fa-chevron-left"></i>&nbsp; back
                 </a>
             </div>
-            
+
             <!-- Topbar Navbar -->
             <ul class="navbar-nav ml-auto">
                 <div class="topbar-divider d-none d-sm-block"></div>
@@ -62,7 +69,8 @@
                             <i class="fa fa-tasks fa-sm fa-fw mr-2 text-gray-400"></i>
                             New Task
                         </a>
-                        <a class="dropdown-item" style="display:none" href="#" data-toggle="modal" data-target="#createmeeting">
+                        <a class="dropdown-item" style="display:none" href="#" data-toggle="modal"
+                            data-target="#createmeeting">
                             <i class="fa fa-calendar fa-sm fa-fw mr-2 text-gray-400"></i>
                             New Meeting
                         </a>
@@ -85,24 +93,23 @@
 </a>-->
 
 <div class="container-fluid">
-   
+
     <ul class="nav nav-tabs" id="myTab" role="tablist">
-    <li class="nav-item" role="presentation">
-        <a class="nav-link active" id="task-tab" data-toggle="tab" href="#task" role="tab" aria-controls="task" aria-selected="true">Task</a>
-    </li>
-    <li class="nav-item" role="presentation">
-        <a class="nav-link" id="issue-tab" data-toggle="tab" href="#issue" role="tab" aria-controls="issue" aria-selected="false">Issue</a>
-    </li>
-    <li class="nav-item" role="presentation">
-        <a class="nav-link" id="settings-tab" data-toggle="tab" href="#settings" role="tab" aria-controls="settings" aria-selected="false">Settings</a>
-    </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link active" id="task-tab" data-toggle="tab" href="#task" role="tab" aria-controls="task"
+                aria-selected="true">Task</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="issue-tab" data-toggle="tab" href="#issue" role="tab" aria-controls="issue"
+                aria-selected="false">Issue</a>
+        </li>
     </ul>
 
     <div class="tab-content mt-3" id="myTabContent">
 
         <div class="tab-pane fade show active" id="task" role="tabpanel" aria-labelledby="task-tab">
-            
-                <div class="table table-responsive">
+
+            <div class="table table-responsive">
                 <table id="task_table" style="font-size:14px" class="table w-100 table-striped table-bordered">
                     <thead>
                         <tr class="text-uppercase text-center">
@@ -115,14 +122,20 @@
                             <th>Action</th>
                         </tr>
                     </thead>
-        
+
                     <tbody>
                         {% for task in tasks %}
                         <tr class="text-capitalize text-center">
-                            <td><p class="text-white" style="background-color:rgba(67, 115, 223, .4);">{{task.task_id}}</p></td>
-                            <td title="{{task.title}}"><p class="lesschar">{{task.title}}</p></td>
                             <td>
-                                <input type='button' style="height:30px;font-size:12px;cursor:default;" value="{{task.get_task_status_display}}"
+                                <p class="text-white" style="background-color:rgba(67, 115, 223, .4);">{{task.task_id}}
+                                </p>
+                            </td>
+                            <td title="{{task.title}}">
+                                <p class="lesschar">{{task.title}}</p>
+                            </td>
+                            <td>
+                                <input type='button' style="height:30px;font-size:12px;cursor:default;"
+                                    value="{{task.get_task_status_display}}"
                                     class="btn btn-sm w-100 font-weight-bold {% if task.task_status == '1' %} btn-danger {% elif task.task_status == '2' %} btn-warning text-dark {% else %} btn-info {% endif %}">
                             </td>
                             <td>{% if task.planned_start_date %} {{task.planned_start_date|date:'d-m-Y'}}
@@ -130,7 +143,8 @@
                                 {{task.planned_end_date|date:'d-m-Y'}} {% else %} End {% endif %}
                             </td>
                             <td>
-                                <select name="priority" id="priority_{{task.id}}" class="form-control" style="height:30px;width:90px;font-size:12px;cursor: pointer;"
+                                <select name="priority" id="priority_{{task.id}}" class="form-control"
+                                    style="height:30px;width:90px;font-size:12px;cursor: pointer;"
                                     onchange="priority_status_change({{task.id}})">
                                     <option value="4" {% if task.priority == '4' %}selected{% endif %}>Critical</option>
                                     <option value="1" {% if task.priority == '1' %}selected{% endif %}>High</option>
@@ -141,828 +155,333 @@
                             <td>{{task.assigned_to.name}}</td>
                             <td>
                                 <div class="btn-group" role="group" aria-label="Action buttons">
-                                    <a type="button" title="View Ticket #{{task.task_id}}" href="{% url 'task-edit' task.workspace.slug task.id %}" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i></a>
-                                        {% if request.session.is_admin == True %}
-                                    <a type="button" title="Delete Ticket #{{task.task_id}}" href="{% url 'task-delete' task.id %}" class="btn btn-danger delete_task btn-sm"><i class="fa fa-trash"></i></a>
-                                        {% endif %}
+                                    <a type="button" title="View Ticket #{{task.task_id}}"
+                                        href="{% url 'task-edit' task.workspace.slug task.id %}"
+                                        class="btn btn-primary btn-sm"><i class="fa fa-eye"></i></a>
+                                    {% if request.session.is_admin == True %}
+                                    <a type="button" title="Delete Ticket #{{task.task_id}}"
+                                        href="{% url 'task-delete' task.id %}"
+                                        class="btn btn-danger delete_task btn-sm"><i class="fa fa-trash"></i></a>
+                                    {% endif %}
                                 </div>
                             </td>
                         </tr>
                         {% endfor %}
                     </tbody>
                 </table>
-                </div>
+            </div>
         </div>
 
         <div class="tab-pane fade" id="issue" role="tabpanel" aria-labelledby="issue-tab">
-    
-                    <div class="table table-responsive">
-                    <table id="issue_table" class="table w-100 table-striped table-bordered" style="font-size:14px">
-                        <thead>
-                            <tr class="text-uppercase text-center">
-                                <th>TICKET ID</th>
-                                <th>Issue</th>
-                                <th>Status</th>
-                                <th>Planned Start/End</th>
-                                <th>Priority</th>
-                                <th>User</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for issue in issues %}
-                            <tr class="text-capitalize text-center">
-                                <td><p class="text-white" style="background-color:rgba(67, 115, 223, .4);">{{issue.issue_id}}</p></td>
-                            <td title="{{issue.title}}"><p class="lesschar">{{issue.title}}</p></td>
-                                <td>
-                                    <input type='button' style="height:30px;font-size:12px;cursor: default;" value="{{issue.get_issue_status_display}}"
-                                        class="btn w-100 font-weight-bold {% if issue.issue_status == '1' %} btn-danger {% elif issue.issue_status == '2' %} btn-warning text-dark {% else %} btn-info {% endif %}">
-                                </td>
-                                <td>{% if issue.planned_start_date %} {{issue.planned_start_date|date:'d-m-Y'}}
-                                    {% else %} Start {% endif %} - {% if issue.planned_end_date %}
-                                    {{issue.planned_end_date|date:'d-m-Y'}} {% else %} End {% endif %}
-                                </td>
-                                <td>
-                                    <select style="height:32px;width:90px;font-size:12px;cursor: pointer;" name="priority" id="modify_{{issue.id}}" class="form-control"
-                                        onchange="priority_status_modify({{issue.id}})">
-                                        <option value="4" {% if issue.priority == '4' %}selected{% endif %}>Critical</option>
-                                        <option value="1" {% if issue.priority == '1' %}selected{% endif %}>High</option>
-                                        <option value="2" {% if issue.priority == '2' %}selected{% endif %}>Medium</option>
-                                        <option value="3" {% if issue.priority == '3' %}selected{% endif %}>Low</option>
-                                    </select>
-                                </td>
-                                <td>{{issue.assigned_to.name}}</td>
-                                <td>
+
+            <div class="table table-responsive">
+                <table id="issue_table" class="table w-100 table-striped table-bordered" style="font-size:14px">
+                    <thead>
+                        <tr class="text-uppercase text-center">
+                            <th>TICKET ID</th>
+                            <th>Issue</th>
+                            <th>Status</th>
+                            <th>Planned Start/End</th>
+                            <th>Priority</th>
+                            <th>User</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for issue in issues %}
+                        <tr class="text-capitalize text-center">
+                            <td>
+                                <p class="text-white" style="background-color:rgba(67, 115, 223, .4);">
+                                    {{issue.issue_id}}</p>
+                            </td>
+                            <td title="{{issue.title}}">
+                                <p class="lesschar">{{issue.title}}</p>
+                            </td>
+                            <td>
+                                <input type='button' style="height:30px;font-size:12px;cursor: default;"
+                                    value="{{issue.get_issue_status_display}}"
+                                    class="btn w-100 font-weight-bold {% if issue.issue_status == '1' %} btn-danger {% elif issue.issue_status == '2' %} btn-warning text-dark {% else %} btn-info {% endif %}">
+                            </td>
+                            <td>{% if issue.planned_start_date %} {{issue.planned_start_date|date:'d-m-Y'}}
+                                {% else %} Start {% endif %} - {% if issue.planned_end_date %}
+                                {{issue.planned_end_date|date:'d-m-Y'}} {% else %} End {% endif %}
+                            </td>
+                            <td>
+                                <select style="height:32px;width:90px;font-size:12px;cursor: pointer;" name="priority"
+                                    id="modify_{{issue.id}}" class="form-control"
+                                    onchange="priority_status_modify({{issue.id}})">
+                                    <option value="4" {% if issue.priority == '4' %}selected{% endif %}>Critical</option>
+                                    <option value="1" {% if issue.priority == '1' %}selected{% endif %}>High</option>
+                                    <option value="2" {% if issue.priority == '2' %}selected{% endif %}>Medium</option>
+                                    <option value="3" {% if issue.priority == '3' %}selected{% endif %}>Low</option>
+                                </select>
+                            </td>
+                            <td>{{issue.assigned_to.name}}</td>
+                            <td>
                                 <div class="btn-group btn-sm" role="group" aria-label="actionbutton">
-                                    <a type="button" data-toggle="tooltip" data-placement="top" title="View Ticket #{{issue.issue_id}}" href="{% url 'issue-edit' issue.workspace.slug issue.id %}"
+                                    <a type="button" data-toggle="tooltip" data-placement="top"
+                                        title="View Ticket #{{issue.issue_id}}"
+                                        href="{% url 'issue-edit' issue.workspace.slug issue.id %}"
                                         class="btn btn-primary btn-sm detail_task"><i class="fa fa-eye"></i></a>
                                     {% if request.session.is_admin == True %}
-                                    <a type="button" data-toggle="tooltip" data-placement="top" title="Delete Ticket #{{issue.issue_id}}" href="{% url 'issue-delete' issue.id %}"
+                                    <a type="button" data-toggle="tooltip" data-placement="top"
+                                        title="Delete Ticket #{{issue.issue_id}}"
+                                        href="{% url 'issue-delete' issue.id %}"
                                         class="btn btn-danger btn-sm delete_task"><i class="fa fa-trash"></i></a>
                                     {% endif %}
                                 </div>
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                    </div>
-        </div>
-
-        <div class="tab-pane fade" id="settings" role="tabpanel" aria-labelledby="settings-tab">
-            
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-12" style="border-bottom: 1px solid #ccc;">
-                                <h5>Workspace Settings</h5>
-                            </div>
-                            <div class="settingtab">
-                                <button class="settingtablinks" onclick="opensettingtab_section(event, 'general_info')">General Information</button>
-                                <button class="settingtablinks active" onclick="opensettingtab_section(event, 'user_management')"
-                                    id="defaultOpen">User Management</button>
-                                <button class="settingtablinks" onclick="opensettingtab_section(event, 'roles_permissions')">Roles & Permissions</button>
-                            </div>
-                            <!-- General info section -->
-                            <div id="general_info" class="settingtabcontent" style="display: none;">
-                                <br>
-
-                                <div class="row">
-                                    <div style="width:30%;padding: 10px;">
-                                        <img src="" alt="" style="width: 80px;height:80px;"><br>
-                                        <a href="#"><i class="fa fa-cloud-upload"></i> Upload Photo</a>
-                                    </div>
-                                    <div style="width:70%;padding: 10px;">
-                                        <a href="#" data-target="#editworkspace" data-toggle="modal"><b>Workspace
-                                                Name <i class="fa fa-pencil-alt"></i></b></a><br>
-                                        <small>https://DITSManagement.com</small><br>
-                                        <input type="button" class="btn btn-primary" value="Delete Workspace">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- User management section -->
-                            <div id="user_management" class="settingtabcontent">
-                                <br>
-                                <h4>Add Team Members to CRM</h4>
-                                <form action="" method="POST">
-                                    {% csrf_token %}
-                                    <input type="email" name="member_email" class="form-control" placeholder="Enter member email..">
-                                    <br>
-                                    <div class="row">
-                                        <div class="col-lg-9">
-                                            <span
-                                                style="background-color: whitesmoke;padding:8px;font-size: 12px;border-radius:3px">
-                                                <i class="fa fa-fw fa-info-circle"></i>
-                                                &nbsp; Adding a workspace member will give access to all projects within
-                                                this workspace.
-                                            </span>
-                                        </div>
-                                        <div class="col-lg-3 pull-right">
-                                            <input type="submit" class="btn btn-secondary btn-sm pull-right"
-                                                value="Add to Workspace">
-                                        </div>
-                                    </div>
-                                </form>
-                                <hr>
-                                <div class="row">
-                                    <div class="col-lg-8">
-                                        <input type="text" class="form-control" placeholder="Search">
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <select name=" " id="" class="form-control">
-                                            <option value="allusers">All Users</option>
-                                            <option value="admin">Admin</option>
-                                            <option value="member">Member</option>
-                                            <option value="limited member">Limited Member</option>
-                                            <option value="disableduser">Disabled User</option>
-                                            <option value="enableduser">Enabled User</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <br>
-                                <div class="row">
-                                    <div class="col-lg-8">
-                                        <b>Sandeep yadav</b><br>
-                                        <small>sandeepyadavjnp01@gmail.com</small>
-                                    </div>
-                                    <div class="col-lg-4 text-right">
-                                        <b>Team Owner</b>
-                                    </div>
-                                </div>
-                                <hr>
-                                <div class="row">
-                                    <div class="col-lg-8">
-                                        <b>Sandeep yadav</b><br>
-                                        <small>sandeepyadavjnp01@gmail.com</small>
-                                    </div>
-                                    <div class="col-lg-4 text-right">
-                                        <br>
-                                        <b>Team Admin</b>
-                                    </div>
-                                </div>
-                                <hr>
-                                <div class="row">
-                                    <div class="col-lg-8">
-                                        <b>Sandeep yadav</b><br>
-                                        <small>sandeepyadavjnp01@gmail.com</small>
-                                    </div>
-                                    <div class="col-lg-4 text-right">
-                                        <select name="" id="" class="form-control">
-                                            <option value="Admin">Admin</option>
-                                            <option value="Admin">Member</option>
-                                            <option value="Admin">Limited Member</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Roles permissions section -->
-                            <div id="roles_permissions" class="settingtabcontent" style="display: none;">
-                                <br>
-                                <div class="col-xs-10 col-sm-6 col-md-3 col-lg-3">
-                                    <select name="" id="" class="form-control">
-                                        <option value="Admin">Admin</option>
-                                        <option value="Member">Member</option>
-                                        <option value="LimitedMember">LimitedMember</option>
-                                    </select>
-                                </div>
-                                <br><br>
-                                <!-- accordion section -->
-                                <div id="accordion">
-
-                                    <!-- Workspaces -->
-                                    <div class="card">
-                                        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne"
-                                            aria-expanded="true" aria-controls="collapseOne">
-                                            <div class="card-header bg-ard" id="headingOne">
-                                                <div class="text-left">
-                                                    <span class="bg-gradient-primary text-white round_icon"><i
-                                                            class="fa fa-fw fa-border-all"></i></span> Workspaces
-                                                    <span class="option_right"><i class="fa fa-angle-right"></i></span>
-                                                </div>
-                                            </div>
-                                        </button>
-                                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
-                                            data-parent="#accordion">
-                                            <div class="card-body">
-                                                <ul>
-                                                    <li><span>Workspace Setting</span> <span class="option_right">Allow</span>
-                                                        <ul>
-                                                            <li><span>General Information </span> <span
-                                                                    class="option_right">Allow</span>
-                                                                <ul>
-                                                                    <li><span>Workspace Image</span> <span class="option_right">Add
-                                                                            Delete</span>
-                                                                    </li>
-                                                                    <li><span>Delete Workspace</span> <span
-                                                                            class="option_right">Allow</span></li>
-                                                                    <li><span>Workspace Name</span> <span
-                                                                            class="option_right">Edit</span></li>
-                                                                    <li><span>Workspce Url</span> <span
-                                                                            class="option_right">Edit</span></li>
-                                                                </ul>
-                                                            </li>
-
-                                                            <li><span>Delete Workspace</span> <span
-                                                                    class="option_right">Allow</span>
-                                                                <ul>
-                                                                    <li><span>Add Members to Workspace</span> <span
-                                                                            class="option_right">Allow</span>
-                                                                    </li>
-                                                                    <li><span>Remove Members from Workspace</span>
-                                                                        <span class="option_right">Allow</span>
-                                                                    </li>
-                                                                    <li><span>Enable Members from Workspace</span>
-                                                                        <span class="option_right">Allow</span>
-                                                                    </li>
-                                                                    <li><span>Disable Members in Workspace</span>
-                                                                        <span class="option_right">Allow</span>
-                                                                    </li>
-                                                                    <li><span>Update Role in Workspace</span> <span
-                                                                            class="option_right">Allow</span>
-                                                                    </li>
-                                                                </ul>
-                                                            </li>
-
-                                                            <li>Roles & Permission <span class="option_right">Allow</span>
-                                                                <ul>
-                                                                    <li>Custom Role <a href="#">Add</a> Edit Delete
-                                                                    </li>
-                                                                    <li>Rename Custom Role <span class="option_right">Allow</span>
-                                                                    </li>
-                                                                </ul>
-                                                            </li>
-
-                                                            <li>Task Status <span class="option_right">Allow</span>
-                                                                <ul>
-                                                                    <li>Create/Rename Template <span
-                                                                            class="option_right">Allow</span></li>
-                                                                    <li>Set Template as Workspace Default <span
-                                                                            class="option_right">Allow</span></li>
-                                                                    <li>Save as New Template <span class="option_right">Allow</span>
-                                                                    </li>
-                                                                    <li>Change Default Staus <span class="option_right">Allow</span>
-                                                                    </li>
-                                                                    <li>Change Done Status <span class="option_right">Allow</span>
-                                                                    </li>
-                                                                    <li>Delete Saved Template <span
-                                                                            class="option_right">Allow</span></li>
-                                                                    <li><span class="col-6">Template
-                                                                            Status</span><span class="option_right">Add Edit
-                                                                            Delete</span></li>
-                                                                </ul>
-                                                            </li>
-
-                                                        </ul>
-                                                    </li>
-
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Tasks -->
-                                    <div class="card">
-                                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo"
-                                            aria-expanded="false" aria-controls="collapseTwo">
-                                            <div class="card-header" id="headingTwo">
-                                                <div class="text-left">
-                                                    <span class="bg-gradient-primary text-white round_icon"><i
-                                                            class="fa fa-fw fa-tasks"></i></span> Tasks
-                                                    <span class="option_right"><i class="fa fa-angle-right"></i></span>
-                                                </div>
-                                            </div>
-                                        </button>
-                                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
-                                            data-parent="#accordion">
-                                            <div class="card-body">
-                                                <ul>
-                                                    <li>Task Details <span class="option_right">Allow</span>
-                                                        <ul>
-                                                            <li>Task Project <span class="option_right">Edit</span>
-                                                            </li>
-                                                            <li>Task Planned start/end date <span class="option_right">Edit</span>
-                                                            </li>
-                                                            <li>Task Actual start/end date <span class="option_right">Edit</span>
-                                                            </li>
-                                                            <li>Task Description <span class="option_right">Edit</span></li>
-                                                            <li>ToDo List <span class="option_right">Add Edit
-                                                                    Delete</span></li>
-                                                            <li>Task Effort <span class="option_right">Add
-                                                                    Delete</span></li>
-                                                            <li>Task Estimation <span class="option_right">Add
-                                                                    Delete</span></li>
-                                                            <li>Repeat Task <span class="option_right">Add Edit
-                                                                    Delete</span></li>
-                                                            <li>Task Assignee <span class="option_right">Add
-                                                                    Delete</span></li>
-                                                            <li>Add Custom Fields <span class="option_right">Add
-                                                                    Edit Delete</span></li>
-                                                            <li>Task Documents <span class="option_right">Allow</span>
-                                                                <ul>
-                                                                    <li>Delete Document <span class="option_right">Allow</span>
-                                                                    <li>Open Folder <span class="option_right">Allow</span>
-                                                                    <li>Rename Folder <span class="option_right">Allow</span>
-                                                                    <li>View Document <span class="option_right">Allow</span>
-                                                                    <li>Add Folder<span class="option_right">Allow</span>
-                                                                    <li>Upload Document <span class="option_right">Allow</span>
-                                                                    <li>Download Document <span class="option_right">Edit</span>
-                                                                </ul>
-                                                            </li>
-                                                            <li>Task Comments <span class="option_right">Allow</span>
-                                                                <ul>
-                                                                    <li>Task Attachments <span class="option_right">Add
-                                                                            Delete</span>
-                                                                    </li>
-                                                                    <li>Add Comments <span class="option_right">Add
-                                                                            Edit Delete</span></li>
-                                                                    <li>Convert Comment to Task <span
-                                                                            class="option_right">Allow</span></li>
-                                                                    <li>Show Receipt <span class="option_right">Allow</span>
-                                                                    </li>
-                                                                    <li>Clear all Replies <span class="option_right">Allow</span>
-                                                                    </li>
-                                                                    <li>Clear Reply <span class="option_right">Allow</span></li>
-                                                                    <li>View Attachment <span class="option_right">Allow</span>
-                                                                    </li>
-                                                                    <li>Download Attachment <span class="option_right">Allow</span>
-                                                                    </li>
-                                                                    <li>Reply Later <span class="option_right">Allow</span></li>
-                                                                    <li>Reply <span class="option_right">Allow</span></li>
-                                                                </ul>
-                                                            </li>
-
-                                                            <li>Task Name <span class="option_right">Edit</span>
-                                                            </li>
-                                                            <li>Task Priority <span class="option_right">Edit</span>
-                                                            </li>
-                                                            <li>Create repeat task occurrences <span
-                                                                    class="option_right">Allow</span></li>
-                                                            <li>Task Staus <span class="option_right">Edit</span>
-                                                            </li>
-                                                        </ul>
-                                                    </li>
-                                                    <li>Create Task <span class="option_right">Allow</span>
-                                                    <li>View all Tasks <span class="option_right">Allow</span>
-                                                    <li>Import Tasks <span class="option_right">Allow</span>
-                                                    <li>Export Tasks <span class="option_right">Allow</span>
-                                                    <li>Archive Tasks <span class="option_right">Allow</span>
-                                                    <li>Unarchived Tasks <span class="option_right">Allow</span>
-                                                    <li>Delete Tasks <span class="option_right">Allow</span>
-                                                    <li>Copy Task within Workspace <span class="option_right">Allow</span>
-                                                    <li>Set color <span class="option_right">Allow</span></li>
-                                                    <li>Create public link of task <span class="option_right">Allow</span></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Meetings -->
-                                    <div class="card">
-                                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree"
-                                            aria-expanded="false" aria-controls="collapseThree">
-                                            <div class="card-header" id="headingThree">
-                                                <div class="text-left">
-                                                    <span class="bg-gradient-primary text-white round_icon"><i
-                                                            class="fa fa-fw fa-calendar"></i></span> Meetings
-                                                    <span class="option_right"><i class="fa fa-angle-right"></i></span>
-                                                </div>
-                                            </div>
-                                        </button>
-                                        <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
-                                            data-parent="#accordion">
-                                            <div class="card-body">
-                                                <ul>
-                                                    <li>Meeting Details <span class="option_right">Allow</span>
-                                                        <ul>
-                                                            <li>Meeting Agenda <span class="option_right">Add Edit
-                                                                    Delete</span></li>
-                                                            <li>Meeting discussion notes <span class="option_right">Add
-                                                                    Delete</span></li>
-                                                            <li>Meeting followyp actions <span class="option_right">Add Edit
-                                                                    Delete</span></li>
-                                                            <li>Meeting key decisions <span class="option_right">Add
-                                                                    Edit Delete</span></li>
-                                                            <li>Repeat Meeting <span class="option_right">Add Edit
-                                                                    Delete</span></li>
-                                                            <li>Meeting date <span class="option_right">Edit</span>
-                                                            </li>
-                                                            <li>Meeting task <span class="option_right">Edit</span>
-                                                            </li>
-                                                            <li>Meeting duration <span class="option_right">Edit</span></li>
-                                                            <li>Meeting location <span class="option_right">Edit</span></li>
-                                                            <li>Meeting attendee <span class="option_right">Add
-                                                                    Delete</span></li>
-                                                            <li>Add custom fields<span class="option_right">Add Edit
-                                                                    Delete</span></li>
-                                                            <li>Meeting name<span class="option_right">Edit</span>
-                                                            </li>
-                                                            <li>meeting submit for review<span class="option_right">Allow</span>
-                                                            </li>
-                                                            <li>Publish meeting<span class="option_right">Allow</span></li>
-                                                            <li>Create repeat meeting occurrences<span
-                                                                    class="option_right">Allow</span></li>
-                                                            <li>Meeting time<span class="option_right">Edit</span>
-                                                            </li>
-                                                        </ul>
-                                                    </li>
-                                                    <li>Create meeting<span class="option_right">Allow</span></li>
-                                                    <li>View all meetings<span class="option_right">Allow</span>
-                                                    </li>
-                                                    <li>Import meeting<span class="option_right">Allow</span></li>
-                                                    <li>Export meeting<span class="option_right">Allow</span></li>
-                                                    <li>Archive meeting<span class="option_right">Allow</span></li>
-                                                    <li>Unarchive meeting<span class="option_right">Allow</span>
-                                                    </li>
-                                                    <li>Delete meeting<span class="option_right">Allow</span></li>
-                                                    <li>Cancel meeting<span class="option_right">Allow</span></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Issues -->
-                                    <div class="card">
-                                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour"
-                                            aria-expanded="false" aria-controls="collapseFour">
-                                            <div class="card-header" id="headingThree">
-                                                <div class="text-left">
-                                                    <span class="bg-gradient-primary text-white round_icon"><i
-                                                            class="fa fa-fw fa-receipt"></i></span> Issues
-                                                    <span class="option_right"><i class="fa fa-angle-right"></i></span>
-                                                </div>
-                                            </div>
-                                        </button>
-                                        <div id="collapseFour" class="collapse" aria-labelledby="headingThree"
-                                            data-parent="#accordion">
-                                            <div class="card-body">
-                                                <ul>
-                                                    <li>Issue Details <span class="option_right">Allow</span>
-                                                        <ul>
-                                                            <li>Issue task <span class="option_right">Add
-                                                                    Edit</span></li>
-                                                            <li>Issue planned start/end date <span class="option_right">Edit</span>
-                                                            </li>
-                                                            <li>Issue actual start/end date <span class="option_right">Edit</span>
-                                                            </li>
-                                                            <li>Issue Description <span class="option_right">Edit</span></li>
-                                                            <li>Issue Type <span class="option_right">Edit</span>
-                                                            </li>
-                                                            <li>Issue assignee <span class="option_right">Add
-                                                                    Delete</span></li>
-                                                    </li>
-                                                    <li>Add Custom fields <span class="option_right">Add Edit
-                                                            Delete</span></li>
-                                                    </li>
-
-                                                    <li>Issue comments/updates <span class="option_right">Allow</span></li>
-                                                    <ul>
-                                                        <li>Issue Attachment <span class="option_right">Add
-                                                                Delete</span></li>
-                                                        <li>Add comments<span class="option_right">Add Edit
-                                                                Delete</span></li>
-                                                        </li>
-                                                        <li>COnvert comment to task<span class="option_right">Allow</span></li>
-                                                        </li>
-                                                        <li>Show receipt<span class="option_right">Allow</span></li>
-                                                        </li>
-                                                        <li>Clear all replies<span class="option_right">Allow</span>
-                                                        </li>
-                                                        </li>
-                                                        <li>Clear reply<span class="option_right">Allow</span></li>
-                                                        </li>
-                                                        <li>View attachment<span class="option_right">Allow</span>
-                                                        </li>
-                                                        </li>
-                                                        <li>Download attachment<span class="option_right">Allow</span></li>
-                                                        </li>
-                                                        <li>Reply later<span class="option_right">Allow</span></li>
-                                                        </li>
-                                                        <li>Reply<span class="option_right">Allow</span></li>
-                                                        </li>
-                                                    </ul>
-                                                    </li>
-                                                    <li>Issue Documents <span class="option_right">Allow</span></li>
-                                                    <ul>
-                                                        <li>Delete document<span class="option_right">Allow</span>
-                                                        </li>
-                                                        <li>Open folder<span class="option_right">Allow</span></li>
-                                                        <li>Rename folder<span class="option_right">Allow</span>
-                                                        </li>
-                                                        <li>View document<span class="option_right">Allow</span>
-                                                        </li>
-                                                        <li>Add folder<span class="option_right">Allow</span></li>
-                                                        <li>Upload document<span class="option_right">Allow</span>
-                                                        </li>
-                                                        <li>Download document<span class="option_right">Allow</span>
-                                                        </li>
-                                                    </ul>
-                                                    </li>
-                                                    <li>Issue name <span class="option_right">Edit</span></li>
-                                                    <li>Issue status <span class="option_right">Edit</span></li>
-                                                    <li>Issue priority <span class="option_right">Edit</span></li>
-                                                    <li>Issue severity <span class="option_right">Edit</span></li>
-                                                </ul>
-                                                </li>
-
-                                                <li>Create issue <span class="option_right">Allow</span></li>
-                                                <li>View all issues <span class="option_right">Allow</span></li>
-                                                <li>Import issues <span class="option_right">Allow</span></li>
-                                                <li>Export issues <span class="option_right">Allow</span></li>
-                                                <li>Archive issues <span class="option_right">Allow</span></li>
-                                                <li>Unarchive issues <span class="option_right">Allow</span></li>
-                                                <li>Delete issues <span class="option_right">Allow</span></li>
-                                                <li>Set color <span class="option_right">Allow</span></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Timesheet -->
-                                    <div class="card">
-                                        <button class="btn btn-link collapsed" style="text-decoration-style: none;"
-                                            data-toggle="collapse" data-target="#collapseFive" aria-expanded="false"
-                                            aria-controls="collapseFive">
-                                            <div class="card-header" id="headingThree">
-                                                <div class="text-left">
-                                                    <span class="bg-gradient-primary text-white round_icon"><i
-                                                            class="fa fa-fw fa-clock"></i></span> Timesheet
-                                                    <span class="option_right"><i class="fa fa-angle-right"></i></span>
-                                                </div>
-                                            </div>
-                                        </button>
-                                        <div id="collapseFive" class="collapse" aria-labelledby="headingThree"
-                                            data-parent="#accordion">
-                                            <div class="card-body">
-                                                <ul>
-                                                    <li>Add task <span class="option_right">Allow</span></li>
-                                                    <li>Add time entry <span class="option_right">Allow</span></li>
-                                                    <li>Delete time entry <span class="option_right">Allow</span>
-                                                    </li>
-                                                    <li>Delete timesheet <span class="option_right">Allow</span>
-                                                    </li>
-                                                    <li>Sunmit timesheet for approval <span class="option_right">Allow</span>
-                                                    </li>
-                                                    <li>send timesheet <span class="option_right">Allow</span></li>
-                                                    <li>Add notes <span class="option_right">Allow</span></li>
-                                                    <li>Accept timesheet <span class="option_right">Allow</span>
-                                                    </li>
-                                                    <li>Reject timesheet <span class="option_right">Allow</span>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
-
         </div>
 
     </div>
 
 </div>
 
-  <script>
-      $('.delete_task').on('click', function(e){
-            action = confirm('Are you sure to remove...!')
-            if (action == false){
-                e.preventDefault();
-            }else{
-                location.reload();
-            }
-      })
-     
-     $(function () {
-  $('[data-toggle="tooltip"]').tooltip()
-})
-  </script>
+</div>
 
 <script>
-    $(document).ready(function() {
-   $('#issue_table').DataTable( {
-        dom: 'Blfrtip',
-       // buttons: [
-        //    'copy', 'csv', 'excel', 'pdf', 'print'
-       // ]
-    } );
-    
-    $('#task_table').DataTable( {
-         dom: 'Blfrtip',
-       // buttons: [
-        //    'copy', 'csv', 'excel', 'pdf', 'print'
-       // ]
-    } );
-} );
+    $('.delete_task').on('click', function (e) {
+        action = confirm('Are you sure to remove...!')
+        if (action == false) {
+            e.preventDefault();
+        } else {
+            location.reload();
+        }
+    })
+
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+</script>
+
+<script>
+    $(document).ready(function () {
+        $('#issue_table').DataTable({
+            dom: 'Blfrtip',
+            // buttons: [
+            //    'copy', 'csv', 'excel', 'pdf', 'print'
+            // ]
+        });
+
+        $('#task_table').DataTable({
+            dom: 'Blfrtip',
+            // buttons: [
+            //    'copy', 'csv', 'excel', 'pdf', 'print'
+            // ]
+        });
+    });
 </script>
 
 <!--<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.2.js"></script>-->
-    <script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
-    <script rel="text/javascript" src="https://cdn.datatables.net/tabletools/2.2.4/js/dataTables.tabletools.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+<script rel="text/javascript"
+    src="https://cdn.datatables.net/tabletools/2.2.4/js/dataTables.tabletools.min.js"></script>
 
-    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.0.1/js/dataTables.buttons.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.html5.min.js"></script>
-    <!-- <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.print.min.js"></script> -->
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/2.0.1/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.html5.min.js"></script>
+<!-- <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.print.min.js"></script> -->
 
 
 
 <!-------------------------------------The Modal to create New Task---------------------------------- -->
-	<div class="modal" id="createtask">
-		<div class="modal-dialog modal-lg">
-			<div class="modal-content">
+<div class="modal" id="createtask">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
 
-				<!-- Modal Header -->
-				<div class="modal-header">
-					<h4 class="modal-title">Create Task</h4>
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-				</div>
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Create Task</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
 
-				<!-- Modal body -->
-				<div class="modal-body">
-					<form action="{% url 'task-add' %}" method="POST">
-						{% csrf_token %}
-						<div class="row">
-							<div class="col-lg-12">
-								<small>Title*</small>
-								<input type="text" placeholder="Title" name="title" class="form-control" required><br>
-							</div>
-							<div class="col-lg-12">
-								<small>Assign To*</small>
-								<select name="assigned_to" id="" class="form-control">
-									<option value="">Please select</option>
-									{% for employee in employees %}
-									<option value="{{employee.id}}">{{employee.name}}</option>
-									{% endfor %}
-								</select>
-								<br>
-							</div>
-							<div class="col-md-6">
-								<small>Priority</small>
-								<select name="priority" id="" class="form-control">
-									<!-- <option value="">Please select</option> -->
-									<option value="3">Low</option>
-									<option value="2" selected>Medium</option>
-									<option value="1">High</option>
-									<option value="4">Critical</option>
-								</select>
-								<br>
-							</div>
-							<div class="col-md-6">
-								<small>Workspace</small>
-								<select name="workspace" id="" class="form-control">
-									<!-- <option value="">Please select</option> -->
-									{% for space in workspace %}
-									<option value="{{space.id}}" selected>{{space.name}}</option>
-									{% endfor %}
-								</select>
-								<br>
-							</div>
-							<div class="col-md-4">
-								<small>Status</small>
-								<select name="task_status" id="" class="form-control">
-									<option value="1" selected>Not Started</option>
-									<option value="2">In Progress</option>
-									<option value="3">In Review</option>
-									<option value="4">Completed</option>
-									<option value="5">Cancelled</option>
-								</select><br>
-							</div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form action="{% url 'task-add' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <small>Title*</small>
+                            <input type="text" placeholder="Title" name="title" class="form-control" required><br>
+                        </div>
+                        <div class="col-lg-12">
+                            <small>Assign To*</small>
+                            <select name="assigned_to" id="" class="form-control">
+                                <option value="">Please select</option>
+                                {% for employee in employees %}
+                                <option value="{{employee.id}}">{{employee.name}}</option>
+                                {% endfor %}
+                            </select>
+                            <br>
+                        </div>
+                        <div class="col-md-6">
+                            <small>Priority</small>
+                            <select name="priority" id="" class="form-control">
+                                <!-- <option value="">Please select</option> -->
+                                <option value="3">Low</option>
+                                <option value="2" selected>Medium</option>
+                                <option value="1">High</option>
+                                <option value="4">Critical</option>
+                            </select>
+                            <br>
+                        </div>
+                        <div class="col-md-6">
+                            <small>Workspace</small>
+                            <select name="workspace" id="" class="form-control">
+                                <!-- <option value="">Please select</option> -->
+                                {% for space in workspace %}
+                                <option value="{{space.id}}" selected>{{space.name}}</option>
+                                {% endfor %}
+                            </select>
+                            <br>
+                        </div>
+                        <div class="col-md-4">
+                            <small>Status</small>
+                            <select name="task_status" id="" class="form-control">
+                                <option value="1" selected>Not Started</option>
+                                <option value="2">In Progress</option>
+                                <option value="3">In Review</option>
+                                <option value="4">Completed</option>
+                                <option value="5">Cancelled</option>
+                            </select><br>
+                        </div>
 
-							<div class="col-md-4">
-								<small>Start Date*</small>
-								<div class="input-group mb-3">
-									<div class="input-group-prepend">
-										<span class="input-group-text" id="calender_icon"><i class="fa fa-calendar"
-												aria-hidden="true"></i></span>
-									</div>
-									<input type="datetime-local" name="planned_start_date" class="form-control"
-										aria-label="date" aria-describedby="calender_icon" required>
-								</div>
-								<br>
-							</div>
-							<div class="col-md-4">
-								<small>End Date*</small>
-								<div class="input-group mb-3">
-									<div class="input-group-prepend">
-										<span class="input-group-text" id="calender_icon"><i class="fa fa-calendar"
-												aria-hidden="true"></i></span>
-									</div>
-									<input type="datetime-local" name="planned_end_date" class="form-control"
-										aria-label="date" aria-describedby="calender_icon">
-								</div>
-								<br>
-							</div>
-							<div class="col-md-12">
-								<small>Description</small>
-								<textarea name="description" placeholder="Type Something" cols="30" class="form-control"
-									rows="2"></textarea><br>
-							</div>
-						</div>
-						<input type="submit" class="btn btn-primary w-100" value="Add/Assign">
-					</form>
-				</div>
-				<!-- modal footer -->
-			</div>
-		</div>
-	</div>
+                        <div class="col-md-4">
+                            <small>Start Date*</small>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="calender_icon"><i class="fa fa-calendar"
+                                            aria-hidden="true"></i></span>
+                                </div>
+                                <input type="datetime-local" name="planned_start_date" class="form-control"
+                                    aria-label="date" aria-describedby="calender_icon" required>
+                            </div>
+                            <br>
+                        </div>
+                        <div class="col-md-4">
+                            <small>End Date*</small>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="calender_icon"><i class="fa fa-calendar"
+                                            aria-hidden="true"></i></span>
+                                </div>
+                                <input type="datetime-local" name="planned_end_date" class="form-control"
+                                    aria-label="date" aria-describedby="calender_icon">
+                            </div>
+                            <br>
+                        </div>
+                        <div class="col-md-12">
+                            <small>Description</small>
+                            <textarea name="description" placeholder="Type Something" cols="30" class="form-control"
+                                rows="2"></textarea><br>
+                        </div>
+                    </div>
+                    <input type="submit" class="btn btn-primary w-100" value="Add/Assign">
+                </form>
+            </div>
+            <!-- modal footer -->
+        </div>
+    </div>
+</div>
 
 <!-------------------------------------The Modal to create Issue---------------------------------- -->
-	<div class="modal" id="createissue">
-		<div class="modal-dialog modal-lg">
-			<div class="modal-content">
-				<!-- Modal Header -->
-				<div class="modal-header">
-					<h4 class="modal-title">Create Issue</h4>
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-				</div>
-				<!-- Modal body -->
-				<div class="modal-body">
-					<form action="{% url 'issue-add' %}" method="POST">
-						{% csrf_token %}
-						<div class="row">
-							<div class="col-lg-12">
-								<small>Issue Title*</small>
-								<input type="text" name="title" placeholder="Add Issue Title" class="form-control"
-									required><br>
-							</div>
-							<div class="col-lg-12">
-								<small>Assigned To*</small>
-								<select name="assigned_to" id="" class="form-control">
-									<option value="">Please select</option>
-									{% for employee in employees %}
-									<option value="{{employee.id}}">{{employee.name}}</option>
-									{% endfor %}
-								</select>
-								<br>
-							</div>
-							<div class="col-md-6">
-								<small>Issue Type</small>
-								<select name="issue_type" id="" class="form-control">
-									<option value="Bug">Bug</option>
-									<option value="Feature" selected>Feature</option>
-									<option value="Improvement">Improvement</option>
-								</select><br>
-							</div>
-							<div class="col-md-6">
-								<small>Priority</small>
-								<select name="priority" id="" class="form-control">
-									<option value="1">Critical</option>
-									<option value="2">High</option>
-									<option value="3" selected>Medium</option>
-									<option value="4">Low</option>
-								</select><br>
-							</div>
-							<div class="col-md-6">
-								<small>Workspace</small>
-								<select name="workspace" id="" class="form-control">
-									<!-- <option value="">Please select</option> -->
-									{% for space in workspace %}
-									<option value="{{space.id}}" selected>{{space.name}}</option>
-									{% endfor %}
-								</select>
-								<br>
-							</div>
-							<div class="col-md-6">
-								<small>Status</small>
-								<select name="issue_status" id="" class="form-control">
-									<option value="1" selected>Not Started</option>
-									<option value="2">In Progress</option>
-									<option value="3">In Review</option>
-									<option value="4">Completed</option>
-									<option value="5">Cancelled</option>
-								</select><br>
-							</div>
-							<div class="col-md-4">
-								<small>Start Date*</small>
-								<div class="input-group mb-3">
-									<div class="input-group-prepend">
-										<span class="input-group-text" id="calender_icon"><i class="fa fa-calendar"
-												aria-hidden="true"></i></span>
-									</div>
-									<input type="datetime-local" name="planned_start_date" class="form-control"
-										aria-label="date" aria-describedby="calender_icon" required>
-								</div>
-								<br>
-							</div>
-							<div class="col-md-4">
-								<small>End Date*</small>
-								<div class="input-group mb-3">
-									<div class="input-group-prepend">
-										<span class="input-group-text" id="calender_icon"><i class="fa fa-calendar"
-												aria-hidden="true"></i></span>
-									</div>
-									<input type="datetime-local" name="planned_end_date" class="form-control"
-										aria-label="date" aria-describedby="calender_icon">
-								</div>
-								<br>
-							</div>
-							<!-- <script>
+<div class="modal" id="createissue">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Create Issue</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form action="{% url 'issue-add' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <small>Issue Title*</small>
+                            <input type="text" name="title" placeholder="Add Issue Title" class="form-control"
+                                required><br>
+                        </div>
+                        <div class="col-lg-12">
+                            <small>Assigned To*</small>
+                            <select name="assigned_to" id="" class="form-control">
+                                <option value="">Please select</option>
+                                {% for employee in employees %}
+                                <option value="{{employee.id}}">{{employee.name}}</option>
+                                {% endfor %}
+                            </select>
+                            <br>
+                        </div>
+                        <div class="col-md-6">
+                            <small>Issue Type</small>
+                            <select name="issue_type" id="" class="form-control">
+                                <option value="Bug">Bug</option>
+                                <option value="Feature" selected>Feature</option>
+                                <option value="Improvement">Improvement</option>
+                            </select><br>
+                        </div>
+                        <div class="col-md-6">
+                            <small>Priority</small>
+                            <select name="priority" id="" class="form-control">
+                                <option value="1">Critical</option>
+                                <option value="2">High</option>
+                                <option value="3" selected>Medium</option>
+                                <option value="4">Low</option>
+                            </select><br>
+                        </div>
+                        <div class="col-md-6">
+                            <small>Workspace</small>
+                            <select name="workspace" id="" class="form-control">
+                                <!-- <option value="">Please select</option> -->
+                                {% for space in workspace %}
+                                <option value="{{space.id}}" selected>{{space.name}}</option>
+                                {% endfor %}
+                            </select>
+                            <br>
+                        </div>
+                        <div class="col-md-6">
+                            <small>Status</small>
+                            <select name="issue_status" id="" class="form-control">
+                                <option value="1" selected>Not Started</option>
+                                <option value="2">In Progress</option>
+                                <option value="3">In Review</option>
+                                <option value="4">Completed</option>
+                                <option value="5">Cancelled</option>
+                            </select><br>
+                        </div>
+                        <div class="col-md-4">
+                            <small>Start Date*</small>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="calender_icon"><i class="fa fa-calendar"
+                                            aria-hidden="true"></i></span>
+                                </div>
+                                <input type="datetime-local" name="planned_start_date" class="form-control"
+                                    aria-label="date" aria-describedby="calender_icon" required>
+                            </div>
+                            <br>
+                        </div>
+                        <div class="col-md-4">
+                            <small>End Date*</small>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="calender_icon"><i class="fa fa-calendar"
+                                            aria-hidden="true"></i></span>
+                                </div>
+                                <input type="datetime-local" name="planned_end_date" class="form-control"
+                                    aria-label="date" aria-describedby="calender_icon">
+                            </div>
+                            <br>
+                        </div>
+                        <!-- <script>
 								$(function () {
 									$('input[name="issuedatetime"]').daterangepicker({
 										timePicker: true,
@@ -974,19 +493,19 @@
 									});
 								});
 							</script> -->
-							<div class="col-md-12">
-								<small>Description</small>
-								<textarea name="description" placeholder="Type Something" cols="30" class="form-control"
-									rows="2"></textarea>
-								<br>
-							</div>
-						</div>
-						<input type="submit" class="btn btn-primary w-100" value="Create Issue">
-					</form>
-				</div>
-				<!-- modal footer -->
-			</div>
-		</div>
-	</div>
+                        <div class="col-md-12">
+                            <small>Description</small>
+                            <textarea name="description" placeholder="Type Something" cols="30" class="form-control"
+                                rows="2"></textarea>
+                            <br>
+                        </div>
+                    </div>
+                    <input type="submit" class="btn btn-primary w-100" value="Create Issue">
+                </form>
+            </div>
+            <!-- modal footer -->
+        </div>
+    </div>
+</div>
 
 </html>
