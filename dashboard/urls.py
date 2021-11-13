@@ -38,4 +38,5 @@ urlpatterns = (
     path('attendace/check-out', api_views.AttendaceOutView.as_view(), name='attendance_check_out'),
 
     path('leave/apply', api_views.LeaveView.as_view(), name='leave_apply'),
+    path('holiday/', api_views.HolidayView.as_view(), name='holiday'),
 )

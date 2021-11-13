@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.db.models import Avg, Count, Min, Sum
 
 from dashboard.models import *
 from dashboard.forms import *
 from dashboard.serializers import *
-
 from django.conf import settings
+import datetime
 
 from django.template.loader import render_to_string
 from django.core.mail import EmailMultiAlternatives
@@ -36,13 +37,24 @@ def home(request):
         main_user_obj = ''
         staff_obj = ''
         workspace_obj = ''
+        today = datetime.datetime.now()
 
         user_obj = StaffUser.objects.get(id=request.session.get('id'))
         employees = StaffUser.objects.filter(active_status=True, is_employee=True)
+        days_in_current_month = Attendance.objects.filter(in_time__month=today.month, in_time__year=today.year).filter(staff_user=user_obj, status=True)   
+
+        leaves_taken = Leave.objects.filter(user=user_obj, leave_status='Approved', from_date__year=today.year, status=True).aggregate(total_days=Sum('number_of_days'))['total_days']
+        bal_leaves = int(user_obj.leaves_provided) - int(leaves_taken)
 
         if request.session.get('is_admin') == False:
             workspace = WorkSpace.objects.filter(status=True, staff=user_obj)
+            aproved_leaves = Leave.objects.filter(user=user_obj, leave_status='Approved', status=True).count()
+            pending_leaves = Leave.objects.filter(user=user_obj, leave_status='Pending', status=True).count()
+            rejected_leaves = Leave.objects.filter(user=user_obj, leave_status='Rejected', status=True).count()
         else:
+            aproved_leaves = Leave.objects.filter(leave_status='Approved', status=True).count()
+            pending_leaves = Leave.objects.filter(leave_status='Pending', status=True).count()
+            rejected_leaves = Leave.objects.filter(leave_status='Rejected', status=True).count()
             workspace = WorkSpace.objects.filter(status=True)
 
         if request.method == 'POST':
@@ -99,13 +111,18 @@ def home(request):
                 messages.success(request, 'Issue prority changed successfully...')
 
     except Exception as e:
-        # print('---exception as error------', e)
         user_obj = ''
         employees = ''
         workspace = ''
+        days_in_current_month = ''
+        bal_leaves = ''
+        aproved_leaves = ''
+        pending_leaves = ''
+        rejected_leaves = ''
     return render(request,'dashboard/home.html', {
                         'obj': user_obj, 'employees':employees, 'workspace': workspace, 
-                        'len_work':len(workspace),
+                        'len_work':len(workspace), 'days_in_current_month':len(days_in_current_month),
+                        'bal_leaves':bal_leaves, 'aproved_leaves':aproved_leaves, 'pending_leaves':pending_leaves, 'rejected_leaves':rejected_leaves,
     })
 
 

@@ -163,13 +163,14 @@ class Attendance(models.Model):
 
 class Leave(models.Model):
 
-    type_choices = (('sick', 'sick'), ('casual', 'casual'))
+    type_choices = (('sick', 'sick'), ('casual', 'casual') ,('other', 'other'), ('compensatory', 'compensatory'))
     status_choices = (('Pending', 'Pending'), ('Approved', 'Approved'), ('Rejected', 'Rejected'))
 
     user = models.ForeignKey(StaffUser, on_delete=models.SET_NULL, null=True)
-    type = models.CharField(max_length=10, choices=type_choices, default='casual')
+    type = models.CharField(max_length=12, choices=type_choices, default='casual')
     from_date = models.DateField()
     to_date = models.DateField()
+    number_of_days = models.IntegerField()
     descritpion = models.TextField()
     leave_status = models.CharField(max_length=10, choices=status_choices, default='Pending')
     status = models.BooleanField(default=True)

@@ -113,7 +113,7 @@
                                     <div class="col-lg-12">
                                         <span class="user_txticon text-capitalize bg-primary"><i class="fa fa-calendar-plus-o"></i></span><br><br>
                                         <h5 class="text-capitalize font-weight-bold">Attendance</h5>
-                                        <small class="font-weight-bold">This Month: <span class="text-success">08</span></small>
+                                        <small class="font-weight-bold">This Month: <span class="text-success">{% if days_in_current_month %}{{days_in_current_month|stringformat:"02d"}}{% else %}00{% endif %}</span></small>
                                     </div>
                                 </div>
                             </a>
@@ -124,33 +124,42 @@
                                     <div class="col-lg-12">
                                         <span class="user_txticon text-capitalize bg-primary"><i class="fa fa-leaf"></i></span><br><br>
                                         <h5 class="text-capitalize font-weight-bold">Leave Balance</h5>
-                                        <small><span class="text-success font-weight-bold" title="Remained Leaves">10</span> / <span class="text-dark font-weight-bold" title="Total leaves">35</span></small>
+                                        <small><span class="text-success font-weight-bold" title="Remained Leaves">
+                                            {% if bal_leaves %}{{bal_leaves|stringformat:"02d"}}{% else %}00{% endif %}</span> / <span class="text-dark font-weight-bold" title="Total leaves">24</span></small>
                                     </div>
                                 </div>
                             </a>
                         </div>
-                        {% if request.session.is_admin == True %}
-                            <div class="wrapper">
-                                <a class="box" href="{% url 'attendance_home' %}" style="height:250px">
-                                    <div class="box_insidediv">
-                                        <div class="col-lg-12">
-                                        <span class="user_txticon text-capitalize bg-primary"><i class="fa fa-list-alt"></i></span><br><br>
-                                            <h5 class="text-capitalize font-weight-bold">Leave Requests</h5>
-                                        </div>
+                        <div class="wrapper">
+                            <a class="box" href="{% url 'attendance_home' %}" style="height:250px">
+                                <div class="box_insidediv">
+                                    <div class="col-lg-12">
+                                    <span class="user_txticon text-capitalize bg-primary"><i class="fa fa-list-alt"></i></span><br><br>
+                                        <h5 class="text-capitalize font-weight-bold">Leave Requests</h5>
+                                    </div>
                                     <div class="row">
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-4">
                                             <small class="text-capitalize font-weight-bold">Approved</small><br>
-                                            <small class="text-success font-weight-bold">25</small>
+                                            <small class="text-success font-weight-bold">
+                                                {% if aproved_leaves %}{{aproved_leaves|stringformat:"02d"}}{% else %} 00 {% endif %}
+                                            </small>
                                         </div>
-                                        <div class="col-lg-6">
-                                            <small class="text-capitalize font-weight-bold">UnApproved</small><br>
-                                            <small class="text-danger font-weight-bold">10</small>
+                                        <div class="col-lg-4">
+                                            <small class="text-capitalize font-weight-bold">Pending</small><br>
+                                            <small class="text-warning font-weight-bold">
+                                                {% if pending_leaves %}{{pending_leaves|stringformat:"02d"}}{% else %} 00 {% endif %}
+                                            </small>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <small class="text-capitalize font-weight-bold">Rejected</small><br>
+                                            <small class="text-danger font-weight-bold">
+                                                {% if rejected_leaves %}{{rejected_leaves|stringformat:"02d"}}{% else %} 00 {% endif %}
+                                            </small>
                                         </div>
                                     </div>
-                                    </div>
-                                </a>
-                            </div>
-                        {% endif %}
+                                </div>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>

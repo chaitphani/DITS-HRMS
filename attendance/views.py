@@ -28,4 +28,6 @@ def home(request):
     else:
         leaves = Leave.objects.filter(status=True)
 
-    return render(request,'attendance/home.html', {'obj':att_obj, 'in_current_day':in_current_day, 'out_current_day':out_current_day, 'leaves':leaves})
+    holidays = Holidays.objects.filter(status=True)
+
+    return render(request,'attendance/home.html', {'obj':att_obj, 'in_current_day':in_current_day, 'out_current_day':out_current_day, 'leaves':leaves, 'holidays':holidays})

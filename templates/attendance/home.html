@@ -175,7 +175,7 @@
                             <th>Applied on</th>
                             <!-- <th>EmpName</th> -->
                             <th>Leave-Type</th>
-                            <!-- <th>Approved-By</th> -->
+                            <th>No.of Days</th>
                             <th>From</th>
                             <th>To</th>
                             <th>Reason</th>
@@ -190,7 +190,7 @@
                             <td>{{leave.created_on|date:'d-M-Y'}}</td>
                             <!-- <td>Sandeep yadav</td> -->
                             <td>{{leave.type}}</td>
-                            <!-- <td>Manager</td> -->
+                            <td>{{leave.number_of_days|stringformat:"02d"}}</td>
                             <td>{{leave.from_date}}</td>
                             <td>{{leave.to_date}}</td>
                             <td>{{leave.descritpion}}</td>
@@ -219,27 +219,31 @@
         <div class="tab-pane fade" id="holiday" role="tabpanel" aria-labelledby="holiday-tab">
             <div class="table table-responsive">
                 <table id="holiday_table" style="font-size:14px" class="table w-100 table-striped table-bordered">
+                    <col width="30">
+                    <col width="120">
+                    <col width="100">
+                    <col width="100">
                     <thead>
                         <tr class="text-uppercase text-center bg-success" style="font-size:12px">
                             <th>S.NO.</th>
-                            <th>Holidays</th>
-                            <th>Month & Date</th>
-                            <th>Day of the Week</th>
-                            <th>Action</th>
+                            <th>Title</th>
+                            <th>Day & Month</th>
+                            <th>Description</th>
+                            <!-- <th>Action</th> -->
                         </tr>
                     </thead>
 
                     <tbody>
-                        {%for h in holiday %}
+                        {% for holi in holidays %}
                         <tr class="text-capitalize text-center">
-                            <td>{{h.id}}</td>
-                            <td>{{h.name}}</td>
-                            <td>{{h.monthanddate}}</td>
-                            <td>{{h.dayoftheweek}}</td>
-                            <td>
+                            <td>{{forloop.counter}}</td>
+                            <td>{{holi.name}}</td>
+                            <td>{{holi.day}}th {{holi.month}}</td>
+                            <td>{{holi.description}}</td>
+                            <!-- <td>
                                 <a href="#deletemodal" title="delete this row" data-toggle="modal"
                                     class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
-                            </td>
+                            </td> -->
                         </tr>
                         {%endfor%}
                     </tbody>
@@ -328,7 +332,7 @@
                     <div class="col-md-6 col-lg-6 col-sm-6">
                         <form action="{% url 'attendance_check_out' %}" method="POST">
                             {% csrf_token %}
-                            <input type='hidden' name="out_time" class="form-control in_time"/>
+                            <input type='hidden' name="out_time" class="form-control" id="out_time"/>
                             <input type="submit" class="btn btn-primary w-50" value="CHECK OUT" 
                             {% if out_current_day != 'none' or in_current_day == 'none' %} disabled {% endif %}/>
                         </form>
@@ -355,13 +359,19 @@
                 <form action="{% url 'leave_apply' %}" method="POST">
                     {% csrf_token %}
                     <div class="row">
-                        <div class="col-lg-12 mb-3">
+                        <div class="col-lg-6 mb-3">
                             <label>Leave Type*</label>
                             <select name="type" class="form-control" required>
                                 <option value="">Please select</option>
                                 <option value="sick">Sick</option>
                                 <option value="casual">Casual</option>
+                                <option value="compensatory">Compensatory</option>
+                                <option value="other">Other</option>
                             </select>
+                        </div>
+                        <div class="col-lg-6 mb-3">
+                            <label>No. of Days*</label>
+                            <input type="text" name="number_of_days" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" required>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label>From Date*</label>
@@ -412,8 +422,8 @@
 
             <!-- Modal body -->
             <div class="modal-body">
-                <form action="" method="POST">
-
+                <form action="{% url 'holiday' %}" method="POST">
+                    {% csrf_token %}
                     <div class="row" id="first_innings_content">
                         <div class="col-lg-12 mb-3">
                             <label>Title*</label>
@@ -460,18 +470,18 @@
                             <label>Month*</label>
                             <select class="form-control" name="month" required>
                                 <option value="">Please select</option>
-                                <option value="jan">January</option>
-                                <option value="feb">February</option>
-                                <option value="mar">March</option>
-                                <option value="apr">April</option>
+                                <option value="january">January</option>
+                                <option value="february">February</option>
+                                <option value="march">March</option>
+                                <option value="april">April</option>
                                 <option value="may">May</option>
                                 <option value="june">June</option>
                                 <option value="july">July</option>
-                                <option value="aug">August</option>
-                                <option value="sep">September</option>
-                                <option value="oct">October</option>
-                                <option value="nov">November</option>
-                                <option value="dec">December</option>
+                                <option value="august">August</option>
+                                <option value="september">September</option>
+                                <option value="october">October</option>
+                                <option value="november">November</option>
+                                <option value="december">December</option>
                             </select>
                         </div>
                         <div class="col-md-12 mb-3">
@@ -618,32 +628,33 @@
     </div>
 </div>
 <script>
-    // to pass date time into input field of attendace fields.
+    // to pass date time into input field of in_time of attendace field.
     var todaydate = new Date();
     var day = todaydate.getDate();
     var month = todaydate.getMonth() + 1;
     var year = todaydate.getFullYear();
     var datestring = year + "-" + month + "-" + day + "T" + todaydate.getHours() + ":" + todaydate.getMinutes();
     document.getElementById("in_time").value = datestring;
-
 </script>
-
+<script>
+    // to pass date time into input field of  out_time of attendace field.
+    var todaydate = new Date();
+    var day = todaydate.getDate();
+    var month = todaydate.getMonth() + 1;
+    var year = todaydate.getFullYear();
+    var datestring = year + "-" + month + "-" + day + "T" + todaydate.getHours() + ":" + todaydate.getMinutes();
+    document.getElementById("out_time").value = datestring;
+</script>
 <script>
     function leave_status_change(id) {
     var leave_status = $("#leave_status_" + id).val()
-    console.log('-----id-------', id)
-    console.log('-----leave status-------', leave_status)
     var action = confirm("Are you sure to change the status...?")
-    console.log('----action status----', action)
     if (action == true) {
-        console.log('----console ok------')
         $.ajax({
             type: "GET",
             url: `/leave-status`,
             data: {'id': id, 'leave_status': leave_status},
             success: function (data) {
-                console.log('----data-----', data)
-                console.log('----url----', url)
                 location.reload();
             },
             error: function () {
@@ -651,7 +662,7 @@
             }
         });
     } else {
-        id.preventDefault();
+        // id.preventDefault();
         location.reload();
     }
 }

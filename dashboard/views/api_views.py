@@ -13,7 +13,7 @@ from dashboard.views.dashboard_views import is_authenticated
 from django.conf import settings
 import re
 from django.template.loader import render_to_string
-from django.core.mail import EmailMultiAlternatives
+from django.core.mail import EmailMultiAlternatives, message
 import datetime
 
 
@@ -188,22 +188,22 @@ class IssueCommentView(APIView):
 class AttendanceInView(APIView):
 
     serializer_class = AttendaceInSerializer
-
     def post(self, request):
-
         user_obj = StaffUser.objects.get(id=request.session.get('id'))
+        check_in_time = request.data.get('in_time').split('T')[1]
         Attendance.objects.create(staff_user=user_obj, in_time=request.data.get('in_time'), status=True)
+
+        messages.success(request, 'You are checked-in@ '+ str(check_in_time))
         return redirect('/attendance/')
 
 
 class AttendaceOutView(APIView):
 
     serializer_class = AttendaceOutSerializer
-
-    def put(self, request):
+    def post(self, request):
         user_obj = StaffUser.objects.get(id=request.session.get('id'))
         today_date = datetime.date.today()
-
+        checkout_time = request.data.get('out_time').split('T')[1]
         attendace_obj = Attendance.objects.filter(staff_user=user_obj, in_time__day=today_date.day, in_time__month=today_date.month, in_time__year=today_date.year, status=True)
 
         if len(attendace_obj) > 0:
@@ -213,9 +213,9 @@ class AttendaceOutView(APIView):
             att_obj.save()
             # else:
             #     messages.error(request, 'check-out date should match with the check-in date..')
+            messages.success(request, 'You are checked-out@ '+ str(checkout_time))
         else:
             messages.error(request, "You haven't check-in to provide check-out..\nPlease contact manager..")
-
         return redirect('/attendance/')
 
 
@@ -239,7 +239,7 @@ class HolidayView(APIView):
 
         messages.success(request, 'Holiday create success...')
         return redirect('/attendance/')
-        
+
 
 # class LoginView(APIView):
 
@@ -307,4 +307,5 @@ class HolidayView(APIView):
 #             messages.success(request, 'Member ' + serializer.data['name'] + ' add success...!')
 #             return redirect('login')
 #         return Response({'msg':'error'}, status=status.HTTP_400_BAD_REQUEST)
+
 
