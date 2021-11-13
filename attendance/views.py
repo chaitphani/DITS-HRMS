@@ -1,4 +1,6 @@
-from django.shortcuts import render
+from django.contrib import messages
+from django.shortcuts import redirect, render
+import attendance
 from dashboard.models import *
 import datetime
 
@@ -31,3 +33,12 @@ def home(request):
     holidays = Holidays.objects.filter(status=True)
 
     return render(request,'attendance/home.html', {'obj':att_obj, 'in_current_day':in_current_day, 'out_current_day':out_current_day, 'leaves':leaves, 'holidays':holidays})
+
+
+def holiday_delete(request, id):
+    holida_obj = Holidays.objects.get(id=id, status=True)
+    holida_obj.status = False
+    holida_obj.save()
+    
+    messages.success(request, 'Record deleted....')
+    return redirect('/attendance/')

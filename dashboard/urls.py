@@ -4,6 +4,7 @@ from dashboard.views import api_views
 from dashboard import helpers as helper_views
 from dashboard.views import auth_views
 from dashboard.views import workspace_views
+from attendance import views as attendance_views
 
 
 urlpatterns = (
@@ -39,4 +40,6 @@ urlpatterns = (
 
     path('leave/apply', api_views.LeaveView.as_view(), name='leave_apply'),
     path('holiday/', api_views.HolidayView.as_view(), name='holiday'),
+
+    path('holiday/<int:id>/delete', attendance_views.holiday_delete, name='holiday_delete'),
 )
