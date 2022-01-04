@@ -189,7 +189,7 @@ class Holidays(models.Model):
     
     name = models.CharField(max_length=120)
     day = models.CharField(max_length=2)
-    month = models.CharField(max_length=5)
+    month = models.CharField(max_length=10)
     status = models.BooleanField(default=True)
     description = models.TextField(null=True, blank=True)
     created_on = models.DateTimeField(auto_now_add=True)

@@ -183,6 +183,7 @@ class IssueCommentView(APIView):
             
             comment_obj = IssueComment.objects.create(user=user_obj, issue=issue_obj, comment=request.data.get('comment'), status=True)
             comment_obj.save()
+            Notification.objects.create(staff_mem=user_obj)
             return redirect('/' + issue_obj.workspace.slug + '/' + str(issue_obj.id) + '/issue')
         except Exception as e:
             return Response({'error':'Issue obj not found with the id..'}, status=status.HTTP_404_NOT_FOUND)
@@ -237,7 +238,7 @@ class LeaveView(APIView):
         user_obj = StaffUser.objects.get(id=request.session.get('id'))
         Leave.objects.create(user=user_obj, type=request.data.get('type'), from_date=request.data.get('from_date'), to_date=request.data.get('to_date'), descritpion=request.data.get('descritpion'), status=True, leave_status='Pending', number_of_days=request.data.get('number_of_days'))
 
-        messages.success(request, 'Leave applied success...')
+        messages.success(request, 'Leave application submitted...')
         return redirect('/attendance/')
 
 

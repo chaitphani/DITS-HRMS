@@ -398,7 +398,7 @@
                         <tr class="text-capitalize text-center">
                             <td style="display: none;">{{holi.created_on}}</td>
                             <td>{{holi.name}}</td>
-                            <td>{{holi.day}}th {{holi.month}}</td>
+                            <td>{{holi.day}}th of {{holi.month}}</td>
                             <td>{{holi.description}}</td>
                             {% if request.session.is_admin == True %}
                             <td>
@@ -672,18 +672,18 @@
                             <label>Month*</label>
                             <select class="form-control" name="month" required>
                                 <option value="">Please select</option>
-                                <option value="january">January</option>
-                                <option value="february">February</option>
-                                <option value="march">March</option>
-                                <option value="april">April</option>
-                                <option value="may">May</option>
-                                <option value="june">June</option>
-                                <option value="july">July</option>
-                                <option value="august">August</option>
-                                <option value="september">September</option>
-                                <option value="october">October</option>
-                                <option value="november">November</option>
-                                <option value="december">December</option>
+                                <option value="January">January</option>
+                                <option value="February">February</option>
+                                <option value="March">March</option>
+                                <option value="April">April</option>
+                                <option value="May">May</option>
+                                <option value="June">June</option>
+                                <option value="July">July</option>
+                                <option value="August">August</option>
+                                <option value="September">September</option>
+                                <option value="October">October</option>
+                                <option value="November">November</option>
+                                <option value="December">December</option>
                             </select>
                         </div>
                         <div class="col-md-12 mb-3">
