@@ -106,14 +106,15 @@
                 <div class="col-lg-12">
                     <div class="row">
                         <!-- box n -->
-                      
                         <div class="wrapper">
                             <a class="box" href="{% url 'attendance_home'%}" style="height:250px">
                                 <div class="box_insidediv">
                                     <div class="col-lg-12">
                                         <span class="user_txticon text-capitalize bg-primary"><i class="fa fa-calendar-plus-o"></i></span><br><br>
                                         <h5 class="text-capitalize font-weight-bold">Attendance</h5>
-                                        <small class="font-weight-bold">This Month: <span class="text-success">{% if days_in_current_month %}{{days_in_current_month|stringformat:"02d"}}{% else %}00{% endif %}</span></small>
+                                        <small class="font-weight-bold">This Month: <span class="text-success">{% if days_in_current_month != 0 %}
+                                            {{days_in_current_month}}{% else %}00
+                                            {% endif %}</span></small>
                                     </div>
                                 </div>
                             </a>

@@ -193,7 +193,7 @@ class AttendanceInView(APIView):
 
             messages.success(request, 'You are checked-in @ '+ str(check_in_time))
         else:
-            messages.error(request, 'Wrong ip found, unable to check in..')
+            messages.error(request, 'Wrong location, unable to check in..')
         return redirect('/attendance/')
 
 
@@ -218,7 +218,7 @@ class AttendaceOutView(APIView):
             else:
                 messages.error(request, "You haven't check-in to provide check-out..\nPlease contact manager..")
         else:
-            messages.error(request, 'Wrong ip found, unable to check out..')
+            messages.error(request, 'Wrong location, unable to check out..')
         return redirect('/attendance/')
 
 

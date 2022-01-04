@@ -41,10 +41,15 @@ def home(request):
 
         user_obj = StaffUser.objects.get(id=request.session.get('id'))
         employees = StaffUser.objects.filter(active_status=True, is_employee=True)
-        days_in_current_month = Attendance.objects.filter(in_time__month=today.month, in_time__year=today.year).filter(staff_user=user_obj, status=True)   
+        
+        days_in_current_month = Attendance.objects.filter(in_time__month=today.month, in_time__year=today.year).filter(staff_user=user_obj, status=True)
 
         leaves_taken = Leave.objects.filter(user=user_obj, leave_status='Approved', from_date__year=today.year, status=True).aggregate(total_days=Sum('number_of_days'))['total_days']
-        bal_leaves = int(user_obj.leaves_provided) - int(leaves_taken)
+
+        if leaves_taken == None:
+            bal_leaves = int(user_obj.leaves_provided)
+        else:
+            bal_leaves = int(user_obj.leaves_provided) - int(leaves_taken)
 
         if request.session.get('is_admin') == False:
             workspace = WorkSpace.objects.filter(status=True, staff=user_obj)
@@ -111,6 +116,7 @@ def home(request):
                 messages.success(request, 'Issue prority changed successfully...')
 
     except Exception as e:
+        print('-----e----', e)
         user_obj = ''
         employees = ''
         workspace = ''
