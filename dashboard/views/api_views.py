@@ -225,7 +225,7 @@ class LeaveView(APIView):
 
     def post(self, request):
         user_obj = StaffUser.objects.get(id=request.session.get('id'))
-        Leave.objects.create(user=user_obj, type=request.data.get('type'), from_date=request.data.get('from_date'), to_date=request.data.get('to_date'), descritpion=request.data.get('descritpion'), status=True, leave_status='Pending')
+        Leave.objects.create(user=user_obj, type=request.data.get('type'), from_date=request.data.get('from_date'), to_date=request.data.get('to_date'), descritpion=request.data.get('descritpion'), status=True, leave_status='Pending', number_of_days=request.data.get('number_of_days'))
 
         messages.success(request, 'Leave applied success...')
         return redirect('/attendance/')
