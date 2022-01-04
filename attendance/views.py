@@ -17,6 +17,8 @@ def home(request):
 
     today = datetime.datetime.now()
     user_obj = StaffUser.objects.get(id=request.session.get('id'))
+
+    # for query pass in tables
     att_obj = Attendance.objects.filter(staff_user=user_obj, status=True)
 
     today_in_obj = att_obj.filter(in_time__day=today.day, in_time__month=today.month, in_time__year=today.year)
@@ -28,25 +30,27 @@ def home(request):
 
     today_out_obj = att_obj.filter(out_time__day=today.day, out_time__month=today.month, out_time__year=today.year)
 
-    if len(today_out_obj)>0:
+    if len(today_out_obj) > 0:
         out_current_day = today_out_obj.first()
     else:
         out_current_day = 'none'
         
+    # for query pass in tables
     if not user_obj.is_admin == True:
         leaves = Leave.objects.filter(user=user_obj, status=True)
     else:
         leaves = Leave.objects.filter(status=True)
 
+    # for query pass in tables
     holidays = Holidays.objects.filter(status=True)
 
     return render(request,'attendance/home.html', {'obj':att_obj, 'in_current_day':in_current_day, 'out_current_day':out_current_day, 'leaves':leaves, 'holidays':holidays})
 
 
 def holiday_delete(request, id):
-    holida_obj = Holidays.objects.get(id=id, status=True)
-    holida_obj.status = False
-    holida_obj.save()
+    holiday_obj = Holidays.objects.get(id=id, status=True)
+    holiday_obj.status = False
+    holiday_obj.save()
     
     messages.success(request, 'Record deleted....')
     return redirect('/attendance/')

@@ -1,3 +1,4 @@
+import datetime
 from django.db import models
 from django.db.models.base import Model, ModelStateFieldsCacheDescriptor
 from django.contrib.auth.models import User
@@ -187,6 +188,7 @@ class Holidays(models.Model):
     month = models.CharField(max_length=5)
     status = models.BooleanField(default=True)
     description = models.TextField(null=True, blank=True)
-
+    created_on = models.DateTimeField(auto_now_add=True)
+    
     def __str__(self):
         return '{}'.format(self.name)
