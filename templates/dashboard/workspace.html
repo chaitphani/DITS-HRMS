@@ -33,9 +33,28 @@
         text-overflow: ellipsis;
         max-width: 150px;
     }
+    .dt-buttons{
+        margin-bottom: 10px;
+    }
+    .buttons-csv{
+        text-align: center!important;
+        color: white!important;
+        width: 90px;
+        height: 40px;
+        background: #5d9c53!important;
+        border: 1px solid #5d9c53!important;
+        box-shadow: 0 3px 9px 0 rgb(13 69 61);
+    }
+    .buttons-pdf{
+        text-align: center!important;
+        color: white!important;
+        width: 90px;
+        height: 40px;
+        background: #17a2b8!important;
+        border: 1px solid #17a2b8!important;
+        box-shadow: 0 3px 9px 0 rgb(13 69 61);
+    }
 </style>
-
-
 
 <!-- Page Wrapper -->
 <div id="wrapper">
@@ -263,16 +282,16 @@
     $(document).ready(function () {
         $('#issue_table').DataTable({
             dom: 'Blfrtip',
-            // buttons: [
-            //    'copy', 'csv', 'excel', 'pdf', 'print'
-            // ]
+            buttons: [
+               'csv', 'pdf'
+            ]
         });
 
         $('#task_table').DataTable({
             dom: 'Blfrtip',
-            // buttons: [
-            //    'copy', 'csv', 'excel', 'pdf', 'print'
-            // ]
+            buttons: [
+               'csv', 'pdf'
+            ]
         });
     });
 </script>
