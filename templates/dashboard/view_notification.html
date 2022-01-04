@@ -1,0 +1,15 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container-fluid">
+    {{obj.staff_mem}}
+    <h4>{{obj.title}}</h4>
+
+    <p>{{obj.content}}</p>
+
+    <small>{{obj.created_at|date:'M d, Y'}}</small>
+</div>
+
+
+{% endblock %}

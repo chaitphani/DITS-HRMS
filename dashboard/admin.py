@@ -41,6 +41,11 @@ class LeaveAdmin(admin.ModelAdmin):
     date_hierarchy = 'from_date'
 
 
+class NotificationAdmin(admin.ModelAdmin):
+    list_display = ('title', 'status')
+    search_fields = ('title',)
+
+
 admin.site.register(Attendance, AttendaceAdmin)
 admin.site.register(Leave, LeaveAdmin)
 admin.site.register(StaffUser, StaffUserAdmin)
@@ -50,3 +55,4 @@ admin.site.register(Task, TaskAdmin)
 admin.site.register(Issue, IssueAdmin)
 admin.site.register(TaskComment)
 admin.site.register(Holidays)
+admin.site.register(Notification, NotificationAdmin)

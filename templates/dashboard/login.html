@@ -2,7 +2,6 @@
 <!DOCTYPE html>
 
 <head>
-
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -102,11 +101,31 @@
             justify-content: center;
             align-items: center;
         }
+        #loading {
+            position: fixed;
+            display: block;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            text-align: center;
+            background-color: rgb(255, 255, 255);
+            z-index: 99;
+        }
+
+        #loading-image {
+            position: absolute;
+            top: 6%;
+            left: 20%;
+            z-index: 100;
+        }        
     </style>
 </head>
 
 <body>
-
+    <div id="loading">
+        <img id="loading-image" src="https://i.pinimg.com/originals/ac/14/0a/ac140a627af854f14c7f653efd7d53ae.gif" alt="Loading..." />
+    </div>	
     <!-- registration form -->
     <div class="container mt-3 ">
         <h3 class="text-center">Welcome To DITS Management</h3>
@@ -173,6 +192,11 @@
             $("#register_window").hide();
         });
     </script>
+    <script>
+        $(window).on('load', function () {
+          $('#loading').delay(800).fadeOut();
+        })
+    </script>    
 </body>
 
 </html>

@@ -32,11 +32,13 @@ class TaskView(APIView):
                 serialize.task_id = 'DIVT1-' + str(serialize.id)
                 serialize.assigned_by = logged_in_mem
                 serialize.save()
+
+                staff_mem = StaffUser.objects.get(id=serializer.data['assigned_to'])
+                workspace_obj = WorkSpace.objects.get(id=serializer.data.get('workspace'))
+                task_new_obj = Task.objects.get(id=serializer.data.get('id'))
+
                 if serializer.data['assigned_to'] != '' or serializer.data['assigned_to'] != None\
                         and serializer.data['priority'] != '' or serializer.data['priority'] != None:
-                    staff_mem = StaffUser.objects.get(id=serializer.data['assigned_to'])
-                    workspace_obj = WorkSpace.objects.get(id=serializer.data.get('workspace'))
-                    task_new_obj = Task.objects.get(id=serializer.data.get('id'))
                     end_date = serializer.data.get('planned_end_date').split('T')[0]
 
                     from_mail = settings.EMAIL_HOST_USER
@@ -55,6 +57,8 @@ class TaskView(APIView):
 
                     msg.attach_alternative(message, 'text/html')
                     msg.send(fail_silently=False)
+                
+                Notification.objects.create(staff_mem=staff_mem, title='Hey, you have a new task', content='hey you have a new task assigned..')
                 messages.success(request, 'Task add success...!')
                 return redirect('/' + workspace_obj.slug) 
             else:
@@ -123,11 +127,13 @@ class IssueView(APIView):
                 serialize.issue_id = 'DIVI-1' + str(serialize.id)
                 serialize.assigned_by = logged_in
                 serialize.save()
+
+                staff_mem = StaffUser.objects.get(id=serializer.data['assigned_to'])
+                workspace_obj = WorkSpace.objects.get(id=serializer.data.get('workspace'))
+                issue_new_obj = Issue.objects.get(id=serializer.data.get('id'))                
+
                 if serializer.data['assigned_to'] != '' or serializer.data['assigned_to'] != None\
                         and serializer.data['priority'] != '' or serializer.data['priority'] != None:
-                    staff_mem = StaffUser.objects.get(id=serializer.data['assigned_to'])
-                    workspace_obj = WorkSpace.objects.get(id=serializer.data.get('workspace'))
-                    issue_new_obj = Issue.objects.get(id=serializer.data.get('id'))
 
                     end_date = serializer.data.get('planned_end_date').split('T')[0]
 
@@ -144,6 +150,7 @@ class IssueView(APIView):
                     message = render_to_string('{0}/templates/mail_templates/issue_assigned.html'.format(settings.BASE_DIR),{'name':staff_mem.name, 'workspace':workspace_obj.name, 'team':workspace_obj.team.name, 'task':issue_new_obj.title, 'status':issue_new_obj.get_issue_status_display(), 'priority':issue_new_obj.get_priority_display(), 'end_date':end_date, 'url':settings.BASE_DOMAIN + '/' + workspace_obj.slug + '/' + str(issue_new_obj.id) + '/issue'})
                     msg = EmailMultiAlternatives(subject, message, from_mail, [to_email])
 
+                    Notification.objects.create(staff_mem=staff_mem, title='Hey, new issue raised for you..', content='new issue raised',)
                     msg.attach_alternative(message, 'text/html')
                     msg.send(fail_silently=False)
                 messages.success(request, 'Issue add success...')

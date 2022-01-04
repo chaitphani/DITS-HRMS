@@ -205,13 +205,16 @@
 								</form>
 							</div>
 						</li>
+
 						<!-- Nav Item - Alerts -->
 						<li class="nav-item dropdown no-arrow mx-1" style="display:block">
 							<a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
 								data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 								<i class="fas fa-bell fa-fw"></i>
 								<!-- Counter - Alerts -->
-								<span class="badge badge-danger badge-counter">3+</span>
+								<span class="badge badge-danger badge-counter">
+									{% if notifi_count > 10 %}10+{% else %}{{notifi_count}}{% endif %}
+								</span>
 							</a>
 							<!-- Dropdown - Alerts -->
 							<div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -220,59 +223,32 @@
 									Alerts Center
 								</h6>
 								<div style="height:200px;overflow:auto;">
-								<a class="dropdown-item d-flex align-items-center" href="#">
-									<div class="mr-3">
-										<div class="icon-circle bg-primary">
-											<i class="fas fa-file-alt text-white"></i>
-										</div>
-									</div>
-									<div>
-										<div class="small text-gray-500">September 12, 2021</div>
-										<span class="font-weight-bold">alert notification text here</span>
-									</div>
-								</a>
-								<a class="dropdown-item d-flex align-items-center" href="#">
-									<div class="mr-3">
-										<div class="icon-circle bg-success">
-											<i class="fas fa-donate text-white"></i>
-										</div>
-									</div>
-									<div>
-										<div class="small text-gray-500">September 7, 2021</div>
-										alert notification text here
-									</div>
-								</a>
-								<a class="dropdown-item d-flex align-items-center" href="#">
-									<div class="mr-3">
-										<div class="icon-circle bg-warning">
-											<i class="fas fa-exclamation-triangle text-white"></i>
-										</div>
-									</div>
-									<div>
-										<div class="small text-gray-500">September 2, 2021</div>
-										alert notification text here
-									</div>
-								</a>
-								<a class="dropdown-item d-flex align-items-center" href="#">
-									<div class="mr-3">
-										<div class="icon-circle bg-warning">
-											<i class="fas fa-exclamation-triangle text-white"></i>
-										</div>
-									</div>
-									<div>
-										<div class="small text-gray-500">September 2, 2021</div>
-										alert notification text here
-									</div>
-								</a>
+									{% if notifications %}
+										{% for notification in notifications %}
+											<a class="dropdown-item d-flex align-items-center" href="{% url 'notification_detailed_view' notification.id %}">
+												<div class="mr-3">
+													<div class="icon-circle bg-primary">
+														<i class="fas fa-file-alt text-white"></i>
+													</div>
+												</div>
+												<div>
+													<div class="small text-gray-500">{{notification.created_at|date:'M d, Y'}}</div>
+													<span class="font-weight-bold">{{notification.title}}</span>
+												</div>
+											</a>
+										{% endfor %}
+									{% else %}
+										<p class="text-center">No data</p>
+									{% endif %}
 								</div>
-
-								<a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+								<a class="dropdown-item text-center small text-gray-500" href="{% if notifications %}{% url 'user_notofications_view' %}{% else %}#{% endif %}">Show All Alerts</a>
 							</div>
 						</li>
 						<style>
-						.mx-1 ::-webkit-scrollbar {
-						width: 0px;
-						}</style>
+							.mx-1 ::-webkit-scrollbar {
+								width: 0px;
+							}
+						</style>
 						<!-- Nav Item - Messages -->
 						<!-- <li style="display:none;" class="nav-item dropdown no-arrow mx-1">
 							<a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
@@ -347,7 +323,7 @@
 							<!-- Dropdown - User Information -->
 							<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
 								aria-labelledby="userDropdown">
-								{% comment %} <a class="dropdown-item" href="#">
+								<!-- <a class="dropdown-item" href="#">
 									<i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
 									Profile Settings
 								</a>
@@ -355,7 +331,7 @@
 									<i class="fas fa-envelope fa-sm fa-fw mr-2 text-gray-400"></i>
 									Invitations
 								</a>
-								<div class="dropdown-divider"></div> {% endcomment %}
+								<div class="dropdown-divider"></div> -->
 								<a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
 									<i class="fas fa-power-off fa-sm fa-fw mr-2 text-gray-400"></i>
 									Logout

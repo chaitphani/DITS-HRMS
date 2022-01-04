@@ -144,3 +144,23 @@ def workspace_edit(request, id):
     else:
         form = WorkspaceUpdateForm(instance=workspace_obj)
     return render(request, 'dashboard/workspace_update.html', {'object':workspace_obj})
+
+
+@is_authenticated
+def notification_detailed_view(request, id):
+
+    if Notification.objects.filter(id=id, status=False).exists():
+        messages.info(request, 'Notification not found..')
+        pass
+
+    notified_obj = Notification.objects.get(id=id, status=True)
+    return render(request, 'dashboard/view_notification.html', {'obj':notified_obj})
+
+
+@is_authenticated
+def user_notofications_view(request):
+
+    user_obj = StaffUser.objects.get(id=request.session.get('id'))
+    notified_objs = Notification.objects.filter(staff_mem=user_obj, status=True)
+    return render(request, 'dashboard/user_notifications.html', {'objs':notified_objs, 'user_obj':user_obj.name})
+

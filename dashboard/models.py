@@ -161,6 +161,10 @@ class Attendance(models.Model):
     def __str__(self):
         return '{}'.format(self.staff_user.name)
 
+    class Meta: 
+        verbose_name = "Attendance"
+        verbose_name_plural = "Attendance"
+
 
 class Leave(models.Model):
 
@@ -176,7 +180,7 @@ class Leave(models.Model):
     leave_status = models.CharField(max_length=10, choices=status_choices, default='Pending')
     status = models.BooleanField(default=True)
     created_on = models.DateTimeField(auto_now_add=True)
-    
+
     def __str__(self):
         return '{}'.format(self.user.name)
 
@@ -192,3 +196,17 @@ class Holidays(models.Model):
     
     def __str__(self):
         return '{}'.format(self.name)
+
+    class Meta: 
+        verbose_name = "Holiday"
+        verbose_name_plural = "Holidays"
+
+class Notification(models.Model):
+
+    staff_mem = models.ForeignKey(StaffUser, on_delete=models.SET_NULL, null=True)
+    title = models.CharField(max_length=120)
+    content = models.CharField(max_length=550, null=True, blank=True)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    status = models.BooleanField(default=True)

@@ -1,18 +1,20 @@
-from dashboard.models import StaffUser, Team, WorkSpace
+from dashboard.models import Notification, StaffUser, Team, WorkSpace
 
 
 def get_members(request):
 
     try:
-        members = StaffUser.objects.filter(active_status=True, is_employee=True, is_admin=False)
-        all_staff = StaffUser.objects.filter(active_status=True, is_employee=True)
-        teams = Team.objects.filter(status=True)
         user_obj = StaffUser.objects.get(id=request.session.get('id'))
-        workspaces = WorkSpace.objects.all()
+        members = StaffUser.objects.filter(active_status=True, is_employee=True, is_admin=False).order_by('name')
+        all_staff = StaffUser.objects.filter(active_status=True, is_employee=True).order_by('name')
+        teams = Team.objects.filter(status=True).order_by('name')
+        workspaces = WorkSpace.objects.all().order_by('name')
+        notifications = Notification.objects.filter(staff_mem=user_obj)
     except:
         members = ''
         teams = ''
         user_obj= ''
         workspaces = ''
         all_staff = ''
-    return {'obj': user_obj, 'members':members, 'teams':teams, 'all_staff':all_staff, 'workspaces':workspaces}
+        notifications = ''
+    return {'obj': user_obj, 'members':members, 'teams':teams, 'all_staff':all_staff, 'workspaces':workspaces, 'notifications':notifications, 'notifi_count':len(notifications)}

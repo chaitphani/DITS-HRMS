@@ -42,4 +42,7 @@ urlpatterns = (
     path('holiday/', api_views.HolidayView.as_view(), name='holiday'),
 
     path('holiday/<int:id>/delete', attendance_views.holiday_delete, name='holiday_delete'),
+
+    path('notification/<int:id>', dash_views.notification_detailed_view, name='notification_detailed_view'),
+    path('notifications/', dash_views.user_notofications_view, name='user_notofications_view'),
 )
