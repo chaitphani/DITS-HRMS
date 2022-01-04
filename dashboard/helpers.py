@@ -73,12 +73,8 @@ def issue_status_change(request):
 def leave_status_change(request):
 
     if request.method == "GET" and request.is_ajax():
-        print('---inside method call------')
         leave_obj = Leave.objects.get(id=request.GET.get('id'),)
         leave_obj.leave_status = request.GET.get('leave_status',)
         leave_obj.save()
-        print('-----leave obj-----', leave_obj)
-        print('-----leave obj-----', leave_obj.leave_status)
-        print('-----leave obj-----', leave_obj.leave_status)
         messages.success(request, 'Leave status changed...')
         return redirect('/attendance/')

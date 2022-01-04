@@ -8,6 +8,7 @@ from rest_framework import status
 from dashboard.models import *
 from dashboard.serializers import *
 from dashboard.views.dashboard_views import is_authenticated
+from attendance.views import get_client_ip
 
 # from django.core.mail import send_mail
 from django.conf import settings
@@ -61,7 +62,6 @@ class TaskView(APIView):
                 return redirect('home')
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
 class WorkSpaceView(APIView):
 
     serializer_class = WorkSpaceSerializer
@@ -92,7 +92,6 @@ class WorkSpaceView(APIView):
             return redirect('home')
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
 class TeamView(APIView):
 
     serializer_class = TeamSerializer
@@ -109,7 +108,6 @@ class TeamView(APIView):
             messages.success(request, 'Team add success...')
             return redirect('home')
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 
 class IssueView(APIView):
 
@@ -155,7 +153,6 @@ class IssueView(APIView):
                 return redirect('home')
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
 class TaskCommentView(APIView):
 
     def post(self, request, task_id):
@@ -170,7 +167,6 @@ class TaskCommentView(APIView):
             # print('----error as e----', e)
             return Response({'error':'Task obj not found with the id..'}, status=status.HTTP_404_NOT_FOUND)
 
-
 class IssueCommentView(APIView):
 
     def post(self, request, issue_id):
@@ -184,16 +180,20 @@ class IssueCommentView(APIView):
         except Exception as e:
             return Response({'error':'Issue obj not found with the id..'}, status=status.HTTP_404_NOT_FOUND)
 
-
 class AttendanceInView(APIView):
 
     serializer_class = AttendaceInSerializer
+
     def post(self, request):
+
         user_obj = StaffUser.objects.get(id=request.session.get('id'))
         check_in_time = request.data.get('in_time').split('T')[1]
-        Attendance.objects.create(staff_user=user_obj, in_time=request.data.get('in_time'), status=True)
+        if get_client_ip(request) == '122.175.8.22':
+            Attendance.objects.create(staff_user=user_obj, in_time=request.data.get('in_time'), status=True)
 
-        messages.success(request, 'You are checked-in@ '+ str(check_in_time))
+            messages.success(request, 'You are checked-in @ '+ str(check_in_time))
+        else:
+            messages.error(request, 'Wrong ip found, unable to check in..')
         return redirect('/attendance/')
 
 
@@ -206,16 +206,19 @@ class AttendaceOutView(APIView):
         checkout_time = request.data.get('out_time').split('T')[1]
         attendace_obj = Attendance.objects.filter(staff_user=user_obj, in_time__day=today_date.day, in_time__month=today_date.month, in_time__year=today_date.year, status=True)
 
-        if len(attendace_obj) > 0:
-            # if request.data.get('out_time') == today_date:
-            att_obj = attendace_obj.first()
-            att_obj.out_time = request.data.get('out_time')
-            att_obj.save()
-            # else:
-            #     messages.error(request, 'check-out date should match with the check-in date..')
-            messages.success(request, 'You are checked-out@ '+ str(checkout_time))
+        if get_client_ip(request) == '122.175.8.22':
+            if len(attendace_obj) > 0:
+                # if request.data.get('out_time') == today_date:
+                att_obj = attendace_obj.first()
+                att_obj.out_time = request.data.get('out_time')
+                att_obj.save()
+                # else:
+                #     messages.error(request, 'check-out date should match with the check-in date..')
+                messages.success(request, 'You are checked-out @ '+ str(checkout_time))
+            else:
+                messages.error(request, "You haven't check-in to provide check-out..\nPlease contact manager..")
         else:
-            messages.error(request, "You haven't check-in to provide check-out..\nPlease contact manager..")
+            messages.error(request, 'Wrong ip found, unable to check out..')
         return redirect('/attendance/')
 
 
