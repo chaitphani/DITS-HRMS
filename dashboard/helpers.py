@@ -79,7 +79,7 @@ def leave_status_change(request):
     if request.method == "GET" and request.is_ajax():
         leave_obj = Leave.objects.get(id=request.GET.get('id'),)
         leave_obj.leave_status = request.GET.get('leave_status',)
-        Notification.objects.create(staff_mem=leave_obj.user, title='leave status has been updated', content=leave_obj.descritpion+' has been ' + request.GET.get('leave_status',)+ 'which is applied on '+ leave_obj.created_on)
+        Notification.objects.create(staff_mem=leave_obj.user, title='leave status has been updated', content=leave_obj.descritpion + ' has been ' + request.GET.get('leave_status',) + 'which is applied on '+ leave_obj.created_on)
         
         leave_obj.save()
         messages.success(request, 'Leave status changed...')

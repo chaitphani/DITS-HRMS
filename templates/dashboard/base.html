@@ -241,7 +241,7 @@
 										<p class="text-center">No data</p>
 									{% endif %}
 								</div>
-								<a class="dropdown-item text-center small text-gray-500" href="{% if notifications %}{% url 'user_notofications_view' %}{% else %}#{% endif %}">Show All Alerts</a>
+								<a class="dropdown-item text-center small text-gray-500" href="{% if obj %}{% url 'user_notofications_view' %}{% else %}#{% endif %}">Show All Alerts</a>
 							</div>
 						</li>
 						<style>

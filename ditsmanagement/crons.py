@@ -14,5 +14,5 @@ def holiday_notify_users():
             # print('-----inside today create holiday notifications-----')
             for user in user_obj:
                 # print('-------for every user---')
-                Notification.objects.create(staff_mem=user, title="Tomorrow will be declared as holiday..", content=holiday.description)    
+                Notification.objects.create(staff_mem=user, title="Tomorrow will be declared as holiday, on behalf of " + holiday.name, content=holiday.description)    
     

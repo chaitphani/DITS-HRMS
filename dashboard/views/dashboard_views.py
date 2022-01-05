@@ -94,7 +94,8 @@ def home(request):
 
             workspace_obj.staff.add(staff_obj)
             workspace_obj.save()
-            Notification.objects.create(staff_mem=staff_obj, title='you were added to a new workspace', content=workspace_obj+ ' you were added to this workspace.')
+            Notification.objects.create(staff_mem=staff_obj, title='you were added to a new workspace', content=workspace_obj.name + ' you were added to this workspace.')
+
             from_mail = settings.EMAIL_HOST_USER
             subject = "You've been invited to the new Workspace..."
             message = render_to_string('{0}/templates/mail_templates/join_team_invitation.html'.format(settings.BASE_DIR),{'url':settings.BASE_DOMAIN + '/' + workspace_obj.slug})
@@ -107,7 +108,8 @@ def home(request):
                 task_obj = Task.objects.get(id=request.GET.get('id'))
                 task_obj.priority = request.GET.get('priority')
                 task_obj.save()
-                Notification.objects.create(staff_mem=task_obj.assigned_to, title='change in priority of a task', content=task_obj.name+' priority has been changed to - '+task_obj.priority)
+
+                Notification.objects.create(staff_mem=task_obj.assigned_to, title='change in priority of a task', content=task_obj.name +' priority has been changed to - ' + task_obj.priority)
                 messages.success(request, 'Task priority changed successfully...')
 
         elif request.GET.get('iss_id'):
@@ -115,7 +117,8 @@ def home(request):
                 issue_obj = Issue.objects.get(id=request.GET.get('iss_id'))
                 issue_obj.priority = request.GET.get('issu_priority')
                 issue_obj.save()
-                Notification.objects.create(staff_mem=issue_obj.assigned_to, title='change in priority of a task', content=issue_obj.name+' priority has been changed to - '+issue_obj.priority)
+
+                Notification.objects.create(staff_mem=issue_obj.assigned_to, title='change in priority of a task', content=issue_obj.name + ' priority has been changed to - ' + issue_obj.priority)
                 messages.success(request, 'Issue prority changed successfully...')
 
     except Exception as e:

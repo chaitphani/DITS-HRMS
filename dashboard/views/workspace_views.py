@@ -92,7 +92,7 @@ def task_detail_update_view(request, id, workspace_slug):
         task_obj.assigned_to = staff_mem
         task_obj.save()
         
-        Notification.objects.create(staff_mem=task_obj.assigned_to, title='There is an update with the task', content=task_obj.name+' task has been updated...')
+        Notification.objects.create(staff_mem=task_obj.assigned_to, title='There is an update with the task', content=task_obj.name + ' task has been updated...')
         if prev_assigned_user != staff_mem.name:
             from_mail = settings.EMAIL_HOST_USER
             to_mail = staff_mem.email
@@ -143,7 +143,7 @@ def issue_detail_update_view(request, id, workspace_slug):
         issue_obj.assigned_to = staff_mem
         issue_obj.save()
 
-        Notification.objects.create(staff_mem=issue_obj.assigned_to, title='There is an update with the task', content=issue_obj.name+' task has been updated...')
+        Notification.objects.create(staff_mem=issue_obj.assigned_to, title='There is an update with the task', content=issue_obj.name + ' issue has been updated...')
 
         if prev_assigned_user != staff_mem.name:
             from_mail = settings.EMAIL_HOST_USER
@@ -169,7 +169,7 @@ def task_delete(request, id):
     task_obj = Task.objects.get(status=True, id=id)
     task_obj.status=False
     task_obj.save()
-    Notification.objects.create(staff_mem=task_obj.assigned_to, title='task has been removed from workspace', content=task_obj.name+' has been removed from '+task_obj.workspace.name)
+    Notification.objects.create(staff_mem=task_obj.assigned_to, title='task has been removed from workspace', content=task_obj.name + ' has been removed from ' + task_obj.workspace.name)
     messages.success(request, task_obj.task_id + ' delete success...')
     return redirect('/'+task_obj.workspace.slug)
 
@@ -180,6 +180,6 @@ def issue_delete(request, id):
     issue_obj = Issue.objects.get(id=id, status=True)
     issue_obj.status=False
     issue_obj.save()
-    Notification.objects.create(staff_mem=issue_obj.assigned_to, title='task has been removed from workspace', content=issue_obj.name+' has been removed from '+issue_obj.workspace.name)
+    Notification.objects.create(staff_mem=issue_obj.assigned_to, title='Issue has been removed from workspace', content=issue_obj.name + ' has been removed from ' + issue_obj.workspace.name)
     messages.success(request, issue_obj.issue_id + ' delete success...')
     return redirect('/'+issue_obj.workspace.slug)

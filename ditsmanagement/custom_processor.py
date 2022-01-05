@@ -11,6 +11,7 @@ def get_members(request):
         teams = Team.objects.filter(status=True).order_by('name')
         workspaces = WorkSpace.objects.all().order_by('name')
         notifications = Notification.objects.filter(staff_mem=user_obj, open_status=False)
+        notification_obj = Notification.objects.filter(staff_mem=user_obj)
     except:
         members = ''
         teams = ''
@@ -18,4 +19,5 @@ def get_members(request):
         workspaces = ''
         all_staff = ''
         notifications = ''
-    return {'obj': user_obj, 'members':members, 'teams':teams, 'all_staff':all_staff, 'workspaces':workspaces, 'notifications':notifications, 'notifi_count':len(notifications)}
+        notification_obj = ''
+    return {'obj': user_obj, 'members':members, 'teams':teams, 'all_staff':all_staff, 'workspaces':workspaces, 'notifications':notifications, 'notifi_count':len(notifications), 'obj':notification_obj}

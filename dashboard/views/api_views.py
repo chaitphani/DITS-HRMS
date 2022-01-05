@@ -58,7 +58,7 @@ class TaskView(APIView):
                     msg.attach_alternative(message, 'text/html')
                     msg.send(fail_silently=False)
                 
-                Notification.objects.create(staff_mem=staff_mem, title='Hey, you have a new task', content='hey you have a new task assigned..')
+                Notification.objects.create(staff_mem=staff_mem, title='Hey, you have a new task', content=serializer.data.get('title') + 'in ' + serializer.data.get('workspace') + 'with ' +serializer.data.get('task_status') + 'and ' + serializer.data.get('priority'))
                 messages.success(request, 'Task add success...!')
                 return redirect('/' + workspace_obj.slug) 
             else:
@@ -151,10 +151,12 @@ class IssueView(APIView):
                     message = render_to_string('{0}/templates/mail_templates/issue_assigned.html'.format(settings.BASE_DIR),{'name':staff_mem.name, 'workspace':workspace_obj.name, 'team':workspace_obj.team.name, 'task':issue_new_obj.title, 'status':issue_new_obj.get_issue_status_display(), 'priority':issue_new_obj.get_priority_display(), 'end_date':end_date, 'url':settings.BASE_DOMAIN + '/' + workspace_obj.slug + '/' + str(issue_new_obj.id) + '/issue'})
                     msg = EmailMultiAlternatives(subject, message, from_mail, [to_email])
 
-                    Notification.objects.create(staff_mem=staff_mem, title='Hey, new issue raised for you..', content='new issue raised',)
                     msg.attach_alternative(message, 'text/html')
                     msg.send(fail_silently=False)
+
+                Notification.objects.create(staff_mem=staff_mem, title='Hey, you have a new Issue', content=serializer.data.get('title') + 'in ' + serializer.data.get('workspace') + 'with ' +serializer.data.get('task_status') + 'and ' + serializer.data.get('priority'))
                 messages.success(request, 'Issue add success...')
+
                 return redirect('/' + workspace_obj.slug)
             else:
                 messages.error(request, 'No workspace to assign issue...!')
@@ -170,7 +172,8 @@ class TaskCommentView(APIView):
 
             comment_obj = TaskComment.objects.create(user=user_obj, task=task_obj, comment=request.data.get('comment'), status=True)
             comment_obj.save()
-            Notification.objects.create(staff_mem=user_obj, title='You have a new comment for task', content='You have a comment in task' + task_obj.title + ' ' + comment_obj.comment)            
+
+            Notification.objects.create(staff_mem=user_obj, title='You have a new comment for task', content='You have a comment in task ' + task_obj.title + ' like ' + comment_obj.comment)            
             return redirect('/' + task_obj.workspace.slug + '/' + str(task_obj.id)+'/task')
         except Exception as e:
             # print('----error as e----', e)
@@ -185,7 +188,7 @@ class IssueCommentView(APIView):
             
             comment_obj = IssueComment.objects.create(user=user_obj, issue=issue_obj, comment=request.data.get('comment'), status=True)
             comment_obj.save()
-            Notification.objects.create(staff_mem=user_obj, title='You have a new comment for Issue', content='You have a comment in issue' + issue_obj.title + ' ' + comment_obj.comment)
+            Notification.objects.create(staff_mem=user_obj, title='You have a new comment for Issue', content='You have a comment in issue ' + issue_obj.title + ' like ' + comment_obj.comment)
             return redirect('/' + issue_obj.workspace.slug + '/' + str(issue_obj.id) + '/issue')
         except Exception as e:
             return Response({'error':'Issue obj not found with the id..'}, status=status.HTTP_404_NOT_FOUND)
