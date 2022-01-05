@@ -84,7 +84,8 @@ class WorkSpaceView(APIView):
             for mem in serializer.data.get('staff'):
                 staff_mem = StaffUser.objects.get(id=mem)
                 workspace_mem_list_email.append(staff_mem.email)
-
+                Notification.objects.create(staff_mem=staff_mem, title='you were added in a new workspace', content='you were added in a workspace named - ' + serializer.data.get('name'))
+                
             from_mail = settings.EMAIL_HOST_USER
             subject = "You've been invited to the new Workspace..."
             message = render_to_string('{0}/templates/mail_templates/join_team_invitation.html'.format(settings.BASE_DIR),{'url':settings.BASE_DOMAIN + '/' + slug})
@@ -169,6 +170,7 @@ class TaskCommentView(APIView):
 
             comment_obj = TaskComment.objects.create(user=user_obj, task=task_obj, comment=request.data.get('comment'), status=True)
             comment_obj.save()
+            Notification.objects.create(staff_mem=user_obj, title='You have a new comment for task', content='You have a comment in task' + task_obj.title + ' ' + comment_obj.comment)            
             return redirect('/' + task_obj.workspace.slug + '/' + str(task_obj.id)+'/task')
         except Exception as e:
             # print('----error as e----', e)
@@ -183,7 +185,7 @@ class IssueCommentView(APIView):
             
             comment_obj = IssueComment.objects.create(user=user_obj, issue=issue_obj, comment=request.data.get('comment'), status=True)
             comment_obj.save()
-            Notification.objects.create(staff_mem=user_obj)
+            Notification.objects.create(staff_mem=user_obj, title='You have a new comment for Issue', content='You have a comment in issue' + issue_obj.title + ' ' + comment_obj.comment)
             return redirect('/' + issue_obj.workspace.slug + '/' + str(issue_obj.id) + '/issue')
         except Exception as e:
             return Response({'error':'Issue obj not found with the id..'}, status=status.HTTP_404_NOT_FOUND)

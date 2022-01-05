@@ -131,15 +131,16 @@
         <h3 class="text-center">Welcome To DITS Management</h3>
         <p class="text-center">Complete your account details</p>
         <hr>
-         {% if messages %}
-        <ul class="messages list-unstyled">
-            {% for message in messages %}
-            <li{% if message.tags %} class="{{ message.tags }} text-center font-weight-bold p-2 h6" {% endif %}>
-                {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
-                {{ message }}
-                </li>
+        {% if messages %}
+            <ul class="messages list-unstyled" id="msg_display">
+                {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }} font-weight-bold p-3 rounded" {% endif %}>
+                        {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
+                        <button type="button" class="close mr-3 mb-2 text-danger font-weight-bold" onclick="dismissFunction()">&times;</button>
+                        <span class="ml-3">{{ message }}</span>
+                    </li>
                 {% endfor %}
-        </ul>
+            </ul>
         {% endif %}
 
         <!-- signup part here -->
@@ -172,13 +173,17 @@
             <form method="POST" action="{% url 'login' %}">
                 {% csrf_token %}
                 <label for="id_email">Email/User Name:*</label>
-                <input type="text" name="email_temp" class="form-control" maxlength="100" required id="id_email">
+                <input type="text" name="email_temp" class="form-control" maxlength="100" required id="id_email" value="{% if request.GET.name %}{{request.GET.name}}{% endif %}">
                 <label for="id_password" class="mt-3">Password:*</label>
-                <input type="password" name="pass_temp" class="form-control" maxlength="100" required id="id_password">
+                <input type="password" name="pass_temp" class="form-control" maxlength="100" required id="id_password" value="{% if request.GET.pwd %}{{request.GET.pwd}}{% endif %}">
                 <br>
                 <input type="submit" class="btn btn-primary w-100" value="LOGIN">
             </form>
-            <p class="text-left mt-4">Don't have an account ?<a id="signup_btn" href="#" class="btn btn-outline-primary btn-sm ml-1">Sign up</a></p>
+            <p class="text-left mt-4">Don't have an account ?
+                <a id="signup_btn" href="#" class="btn btn-outline-primary btn-sm ml-1">Sign up</a>
+            </p>
+            <a href="{% url 'forget_password' %}" class="text-primary">Forgot password ?</a>
+            
         </div>
     </div>
     <script>
@@ -197,6 +202,11 @@
           $('#loading').delay(800).fadeOut();
         })
     </script>    
+<script>
+	function dismissFunction() {
+	  document.getElementById("msg_display").style.display = "none";
+	}
+</script>    
 </body>
 
 </html>

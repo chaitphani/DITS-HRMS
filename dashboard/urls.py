@@ -16,6 +16,11 @@ urlpatterns = (
     path('signup', auth_views.signup, name='signup'),
     path('logout', auth_views.logout, name='logout'),
 
+    path('forgot/password', auth_views.forget_password, name='forget_password'),
+    path('otp', auth_views.otp, name='otp'),
+    path('reset/password', auth_views.reset_password, name='reset_password'),
+
+
     path('task-status', helper_views.tasK_status_change, name='task-status'),
     path('issue-status', helper_views.issue_status_change, name='issue-status'),
     path('leave-status', helper_views.leave_status_change, name='leave-status'),

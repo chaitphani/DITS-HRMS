@@ -206,7 +206,9 @@ class Notification(models.Model):
     staff_mem = models.ForeignKey(StaffUser, on_delete=models.SET_NULL, null=True)
     title = models.CharField(max_length=120)
     content = models.CharField(max_length=550, null=True, blank=True)
-
+    
+    open_status = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     status = models.BooleanField(default=True)
+

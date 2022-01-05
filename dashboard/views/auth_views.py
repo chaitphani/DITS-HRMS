@@ -9,6 +9,7 @@ from dashboard.views.dashboard_views import is_authenticated
 
 from django.core.mail import send_mail
 from django.conf import settings
+import random
 
 
 def login(request):
@@ -41,7 +42,7 @@ def login(request):
                     request.session['id'] = login_check.id
                     request.session['user_name'] = login_check.name
                     request.session['is_admin'] = login_check.is_admin
-                    messages.success(request, 'Login Success...!')
+                    messages.success(request, 'You are successfully logged-in.')
                     return redirect('home')
             except Exception as e:
                 print('-exception as error in login---', e)
@@ -87,7 +88,8 @@ def signup(request):
                     body = "DITS staff acccount has been created: \n\n"\
                             "User Name : {} ".format(form_save.name)+'\n'+\
                             "Email: {} ".format(form_save.email)+'\n'+\
-                            "Password: {} ".format(form_save.password)
+                            "Password: {} ".format(form_save.password)+'\n'+\
+                            "link: {} ".format('https://management.divsolution.com/login?name='+form_save.name+'&pwd='+form_save.password)
 
                     send_mail(
                         'Welcome to DITS Task Management App',
@@ -105,3 +107,84 @@ def signup(request):
         form = StaffUserForm()
     return render(request, 'dashboard/login.html')
     
+
+def forget_password(request):
+
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        users = StaffUser.objects.filter(email=email)
+        if len(users):
+            user = users.last()
+            request.session['email'] = user.email
+            request.session['username'] = user.name
+            otp = random.randint(10000, 99999)
+            request.session['otp'] = otp
+            request.session.set_expiry(300)
+            subject = 'OTP Requested for forgot password'
+            message = "We received a forgot password request from your account.\nMake sure not to share your OTP with anyone.\nOTP :{}.\nlink: {}. \n\n\nplease verify your account if it's not you".format(str(otp), 'https://management.divsolution.com/otp?otp='+str(otp))
+            from_email = 'info@divsolution.com'
+
+            send_mail(subject, message, from_email,
+                      [email], fail_silently=False)
+            return redirect('otp')
+        else:
+            messages.error(request, 'Enter a valid Registered Email..!')
+            message = 'Enter a valid Registered Email..!'
+
+    return render(request,'dashboard/forget_password.html')
+
+
+def otp(request):
+
+    session_otp = request.session.get('otp')
+    if request.method == 'POST':
+        otp = request.POST['otp']
+        if int(session_otp) == int(otp):
+            del request.session['otp']
+            return redirect('reset_password')
+        else:
+            messages.error(request, 'Invalid OTP, try again')
+    return render(request, 'dashboard/otp.html')
+
+
+
+def reset_password(request):
+
+    try:
+        user_obj = User.objects.get(email=request.session['email'])
+        staff_obj = StaffUser.objects.get(email=request.session.get('email'))
+    except:
+        # messages.error(request, 'Your session timed out....!')
+        response = '<script>alert("Your session times out...!");window.location.replace("https://management.divsolution.com/login")</script>'
+        return HttpResponse(response)
+
+    if request.method == 'POST':
+        email = user_obj.email
+        password = request.POST.get('password')
+        confirm_password = request.POST.get('confirm_password')
+
+        if password == confirm_password:
+            user_obj.set_password(password)
+            user_obj.save()
+            staff_obj.password = password
+            staff_obj.save()
+
+            subject = request.session['username'].capitalize(
+            ) + "Your Password reset"
+            
+            message = 'Please find your account details below with credentials after password reset \nEmail :{}\nUser Name :{}\nPassword :{}\nLink: {}'.format(
+                email.lower(), request.session['username'], str(password), 'https://management.divsolution.com/login')
+            from_email = 'ditstaskmanager@gmail.com'
+            send_mail(
+                subject,
+                message,
+                from_email,
+                [email],
+                fail_silently=False,
+            )
+            del request.session['username']
+            return redirect('login')
+        else:
+            messages.error(request, 'passwords mis-match')
+
+    return render(request,'dashboard/reset_password.html')

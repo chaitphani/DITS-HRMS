@@ -93,7 +93,8 @@ def home(request):
                 )
 
             workspace_obj.staff.add(staff_obj)
-
+            workspace_obj.save()
+            Notification.objects.create(staff_mem=staff_obj, title='you were added to a new workspace', content=workspace_obj+ ' you were added to this workspace.')
             from_mail = settings.EMAIL_HOST_USER
             subject = "You've been invited to the new Workspace..."
             message = render_to_string('{0}/templates/mail_templates/join_team_invitation.html'.format(settings.BASE_DIR),{'url':settings.BASE_DOMAIN + '/' + workspace_obj.slug})
@@ -106,6 +107,7 @@ def home(request):
                 task_obj = Task.objects.get(id=request.GET.get('id'))
                 task_obj.priority = request.GET.get('priority')
                 task_obj.save()
+                Notification.objects.create(staff_mem=task_obj.assigned_to, title='change in priority of a task', content=task_obj.name+' priority has been changed to - '+task_obj.priority)
                 messages.success(request, 'Task priority changed successfully...')
 
         elif request.GET.get('iss_id'):
@@ -113,6 +115,7 @@ def home(request):
                 issue_obj = Issue.objects.get(id=request.GET.get('iss_id'))
                 issue_obj.priority = request.GET.get('issu_priority')
                 issue_obj.save()
+                Notification.objects.create(staff_mem=issue_obj.assigned_to, title='change in priority of a task', content=issue_obj.name+' priority has been changed to - '+issue_obj.priority)
                 messages.success(request, 'Issue prority changed successfully...')
 
     except Exception as e:
@@ -140,6 +143,8 @@ def workspace_edit(request, id):
         form = WorkspaceUpdateForm(request.POST, instance=workspace_obj)
         if form.is_valid():
             form.save()
+            for user in workspace_obj.staff.all():
+                Notification.objects.create(staff_mem=user, title=str(workspace_obj.name)+' workspace has new update', content='Workspace is updated with the new data ' + str(workspace_obj.name) + str(workspace_obj.slug) + str(workspace_obj.team.name) + str(workspace_obj.staff.all()))
             return redirect('/')
     else:
         form = WorkspaceUpdateForm(instance=workspace_obj)
@@ -154,6 +159,8 @@ def notification_detailed_view(request, id):
         pass
 
     notified_obj = Notification.objects.get(id=id, status=True)
+    notified_obj.open_status = True
+    notified_obj.save()
     return render(request, 'dashboard/view_notification.html', {'obj':notified_obj})
 
 

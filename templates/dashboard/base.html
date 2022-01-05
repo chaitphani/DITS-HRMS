@@ -90,15 +90,15 @@
 			{% if request.session.is_admin == True %}
 				
 				<!-- Heading -->
-				<!-- <div class="sidebar-heading">
+				<div class="sidebar-heading">
 					Team
-				</div> -->
+				</div>
 				<!-- Nav Item - Team -->
-				<!-- <li class="nav-item active">
+				<li class="nav-item active">
 					<a class="nav-link" href="#" data-toggle="modal" data-target="#createteam">
 						<i class="fas fa-fw fa-user-friends"></i>
 						<span>+ Team</span></a>
-				</li> -->
+				</li>
 				
 				<div class="sidebar-heading">
 					Workspace
@@ -861,7 +861,11 @@
           $('#loading').delay(1000).fadeOut();
         })
     </script>
-
+<script>
+	function dismissFunction() {
+	  document.getElementById("msg_display").style.display = "none";
+	}
+	</script>
 <!-- hide sidenavbar on small screen using jquery -->
 <script type="text/javascript">
     /* Check width on page load*/

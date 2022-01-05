@@ -10,7 +10,7 @@ def get_members(request):
         all_staff = StaffUser.objects.filter(active_status=True, is_employee=True).order_by('name')
         teams = Team.objects.filter(status=True).order_by('name')
         workspaces = WorkSpace.objects.all().order_by('name')
-        notifications = Notification.objects.filter(staff_mem=user_obj)
+        notifications = Notification.objects.filter(staff_mem=user_obj, open_status=False)
     except:
         members = ''
         teams = ''

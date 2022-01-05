@@ -16,6 +16,8 @@ def tasK_status_change(request):
         aftr_status = task_obj.get_task_status_display()
         task_obj.save()
 
+        Notification.objects.create(staff_mem=task_obj, title='task status had been updated', content=task_obj.name + ' task status has been updated to ' + aftr_status)
+
         id = request.GET.get('id')
         from_mail = settings.EMAIL_HOST_USER
         to_email = task_obj.assigned_to.email
@@ -48,6 +50,8 @@ def issue_status_change(request):
         aftr_status = issue_obj.get_issue_status_display()
         issue_obj.save()
 
+        Notification.objects.create(staff_mem=issue_obj, title='task status had been updated', content=issue_obj.name + ' task status has been updated to ' + aftr_status)
+
         from_mail = settings.EMAIL_HOST_USER
         to_email = issue_obj.assigned_to.email
         subject = "Issue Status Changed - " + issue_obj.assigned_to.name
@@ -75,6 +79,8 @@ def leave_status_change(request):
     if request.method == "GET" and request.is_ajax():
         leave_obj = Leave.objects.get(id=request.GET.get('id'),)
         leave_obj.leave_status = request.GET.get('leave_status',)
+        Notification.objects.create(staff_mem=leave_obj.user, title='leave status has been updated', content=leave_obj.descritpion+' has been ' + request.GET.get('leave_status',)+ 'which is applied on '+ leave_obj.created_on)
+        
         leave_obj.save()
         messages.success(request, 'Leave status changed...')
         return redirect('/attendance/')
