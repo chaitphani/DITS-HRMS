@@ -184,13 +184,13 @@ class AttendanceInView(APIView):
     def post(self, request):
 
         user_obj = StaffUser.objects.get(id=request.session.get('id'))
-        check_in_time = request.data.get('in_time').split('T')[1]
-        ip_list = ['122.175.8.22', '183.82.144.190']
+        ip_list = ['122.175.8.22', '183.82.144.190', '127.0.0.1']
+        in_time = datetime.datetime.strptime(request.data.get('in_time'), '%Y-%m-%dT%H:%M')
+        split_date = str(in_time).split(' ')[1].split(':')
 
         if get_client_ip(request) in ip_list:
             Attendance.objects.create(staff_user=user_obj, in_time=request.data.get('in_time'), status=True)
-
-            messages.success(request, 'You are checked-in @ '+ str(check_in_time))
+            messages.success(request, 'You are checked-in @ '+ str(split_date[0])+':'+str(split_date[1]))
         else:
             messages.error(request, 'Wrong location, unable to check in..')
         return redirect('/attendance/')
@@ -203,8 +203,10 @@ class AttendaceOutView(APIView):
 
         user_obj = StaffUser.objects.get(id=request.session.get('id'))
         today_date = datetime.date.today()
-        checkout_time = request.data.get('out_time').split('T')[1]
-
+        # checkout_time = request.data.get('out_time').split('T')[1]
+        out_time = datetime.datetime.strptime(request.data.get('out_time'), '%Y-%m-%dT%H:%M')
+        split_date = out_time.split(' ')[1].split(':')
+        
         attendace_obj = Attendance.objects.filter(staff_user=user_obj, in_time__day=today_date.day, in_time__month=today_date.month, in_time__year=today_date.year, status=True)
 
         ip_list = ['122.175.8.22', '183.82.144.190', '127.0.0.1']
@@ -212,13 +214,12 @@ class AttendaceOutView(APIView):
             if len(attendace_obj) > 0:
                 att_obj = attendace_obj.first()
                 # in_time = att_obj.in_time
-                # out_time = datetime.datetime.strptime(request.data.get('out_time'), '%Y-%m-%dT%H:%M')
                 # working_hours_cal = in_time - out_time
                 # print('---diff time--', working_hours_cal)
                 # print('----woring hours-----', working_hours_cal/3600)
                 att_obj.out_time = request.data.get('out_time')
                 att_obj.save()
-                messages.success(request, 'You are checked-out @ '+ str(checkout_time))
+                messages.success(request, 'You are checked-out @ '+ str(split_date[0])+':'+str(split_date[1]))
             else:
                 messages.error(request, "You haven't check-in to provide check-out..\nPlease contact manager..")
         else:

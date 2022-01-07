@@ -40,6 +40,22 @@ def home(request):
         workspace_obj = ''
         today = datetime.datetime.now()
 
+        ''' testing starts'''
+
+        # staff_obj_1 = StaffUser.objects.get(name='chaitu')
+        # workspace = WorkSpace.objects.get(slug='crm')
+
+        # print('------staff obj 1-----', staff_obj_1)
+        # print('------workspace-----', workspace)
+
+        # print('-----check staff--------', workspace.staff.all())
+        # if staff_obj_1 in workspace.staff.all():
+        #     print('-----exist----')
+        # else:
+        #     print('------not exits-------')
+
+        ''' testing ends'''
+
         user_obj = StaffUser.objects.get(id=request.session.get('id'))
         employees = StaffUser.objects.filter(active_status=True, is_employee=True)
         
@@ -67,10 +83,14 @@ def home(request):
             invite_email = request.POST.get('email')
             workspace_id = request.POST.get('workspace')
             workspace_obj = WorkSpace.objects.get(id=workspace_id)
+            print('------invite email-----', invite_email)
+            print('------invite email-----', workspace_id)
 
             try:
                 main_user_obj = User.objects.get(email=invite_email)
                 staff_obj = StaffUser.objects.get(email=invite_email)
+                print('----main user obj-----', main_user_obj)
+                print('----main user obj-----', staff_obj)
             except Exception as e:
                 # print('----exception error in invite----', e)
                 name = invite_email.split('@')[0]
@@ -92,11 +112,13 @@ def home(request):
                     [to_email],
                     fail_silently=False,
                 )
-
-            workspace_obj.staff.add(staff_obj)
-            workspace_obj.save()
-            if not staff_obj.name == user_obj:
+            if not staff_obj in workspace_obj.staff.all():
+                workspace_obj.staff.add(staff_obj)
+                workspace_obj.save()
+                # if not staff_obj.name == user_obj.name:
                 Notification.objects.create(staff_mem=staff_obj, title='you were added to a new workspace', content=workspace_obj.name + ' you were added to this workspace.')
+            else:
+                messages.error(request, 'Member already exist in the provided workspace..')
 
             from_mail = settings.EMAIL_HOST_USER
             subject = "You've been invited to the new Workspace..."
