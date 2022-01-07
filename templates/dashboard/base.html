@@ -9,8 +9,8 @@
 	<meta name="description" content="">
 	<meta name="author" content="">
 	<title>DITS Management</title>
-	
-	<!--favicon-->  
+
+	<!--favicon-->
 	<link rel="apple-touch-icon" sizes="57x57" href="/static/img/favicon/apple-icon-57x57.png">
 	<link rel="apple-touch-icon" sizes="60x60" href="/static/img/favicon/apple-icon-60x60.png">
 	<link rel="apple-touch-icon" sizes="72x72" href="/static/img/favicon/apple-icon-72x72.png">
@@ -20,7 +20,7 @@
 	<link rel="apple-touch-icon" sizes="144x144" href="/static/img/favicon/apple-icon-144x144.png">
 	<link rel="apple-touch-icon" sizes="152x152" href="/static/img/favicon/apple-icon-152x152.png">
 	<link rel="apple-touch-icon" sizes="180x180" href="/static/img/favicon/apple-icon-180x180.png">
-	<link rel="icon" type="image/png" sizes="192x192"  href="/static/img/favicon/android-icon-192x192.png">
+	<link rel="icon" type="image/png" sizes="192x192" href="/static/img/favicon/android-icon-192x192.png">
 	<link rel="icon" type="image/png" sizes="32x32" href="/static/img/favicon/favicon-32x32.png">
 	<link rel="icon" type="image/png" sizes="96x96" href="/static/img/favicon/favicon-96x96.png">
 	<link rel="icon" type="image/png" sizes="16x16" href="/static/img/favicon/favicon-16x16.png">
@@ -31,8 +31,10 @@
 
 	<!-- Custom fonts for this project-->
 	<link href="/static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-	<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+	<link
+		href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+		rel="stylesheet">
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
@@ -40,38 +42,40 @@
 	<!-- font awesome cdn -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-	<!--  jquery data tables --> 
+	<!--  jquery data tables -->
 	<!-- Custom styles for this project-->
 	<link href="{% static 'css/dits_management_style.min.css' %}" rel="stylesheet">
 
 	<link rel="stylesheet" href="{%static 'css/style.css'%}">
 	<link rel="stylesheet" href="{% static 'css/base.css' %}">
-    <style>
-        #loading {
-            position: fixed;
-            display: block;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            text-align: center;
-            background-color: rgb(255, 255, 255);
-            z-index: 99;
-        }
+	
+	<style>
+		#loading {
+			position: fixed;
+			display: block;
+			width: 100%;
+			height: 100%;
+			top: 0;
+			left: 0;
+			text-align: center;
+			background-color: rgb(255, 255, 255);
+			z-index: 99;
+		}
 
-        #loading-image {
-            position: absolute;
-            top: 6%;
-            left: 20%;
-            z-index: 100;
-        }
-    </style>		
+		#loading-image {
+			position: absolute;
+			top: 6%;
+			left: 20%;
+			z-index: 100;
+		}
+	</style>
 </head>
 
 <body id="page-top">
-    <div id="loading">
-        <img id="loading-image" src="https://i.pinimg.com/originals/ac/14/0a/ac140a627af854f14c7f653efd7d53ae.gif" alt="Loading..." />
-    </div>	
+	<div id="loading">
+		<img id="loading-image" src="https://i.pinimg.com/originals/ac/14/0a/ac140a627af854f14c7f653efd7d53ae.gif"
+			alt="Loading..." />
+	</div>
 	<!-- Page Wrapper -->
 	<div id="wrapper">
 		<!-- Sidebar -->
@@ -88,44 +92,34 @@
 
 			<!-- Divider -->
 			{% if request.session.is_admin == True %}
-				
-				<!-- Heading -->
-				<div class="sidebar-heading">
-					Team
-				</div>
-				<!-- Nav Item - Team -->
-				<li class="nav-item active">
-					<a class="nav-link" href="#" data-toggle="modal" data-target="#createteam">
-						<i class="fas fa-fw fa-user-friends"></i>
-						<span>+ Team</span></a>
-				</li>
-				
-				<div class="sidebar-heading">
-					Workspace
-				</div>
-				<!-- Nav Item - workspace -->
-				<li class="nav-item active">
-					<a class="nav-link" href="#" data-toggle="modal" data-target="#createworkspace">
-						<i class="fas fa-fw fa-warehouse"></i>
-						<span>+ Workspace</span></a>
-				</li>
-				<div class="sidebar-heading pb-3">
-					All Workspaces
-				</div>
-				{% for work in workspaces %}
-					<li class="nav-item text-capitalize pb-0">
-						<span class="nav-link pb-1 pt-1">
-							<i class="fas fa-warehouse fa-fw"></i>
-							<!-- <img class="img-profile rounded-circle"
+
+			<div class="sidebar-heading">
+				Workspace
+			</div>
+			<!-- Nav Item - workspace -->
+			<li class="nav-item active">
+				<a class="nav-link" href="#" data-toggle="modal" data-target="#createworkspace">
+					<i class="fas fa-fw fa-warehouse"></i>
+					<span>+ Workspace</span></a>
+			</li>
+			<div class="sidebar-heading pb-3">
+				All Workspaces
+			</div>
+			{% for work in workspaces %}
+			<li class="nav-item text-capitalize pb-0">
+				<span class="nav-link pb-1 pt-1">
+					<i class="fas fa-warehouse fa-fw"></i>
+					<!-- <img class="img-profile rounded-circle"
 								src="/static/img/undraw_profile.svg"> -->
-							<span>
-								<a href="/workspace/{{work.id}}/update" class="{% if work.status == True %}text-white{% else %}text-secondary{% endif %}">
-									{{work.name}}
-								</a>
-							</span>
-						</span>
-						</li>
-				{% endfor %}
+					<span>
+						<a href="/workspace/{{work.id}}/update"
+							class="{% if work.status == True %}text-white{% else %}text-secondary{% endif %}">
+							{{work.name}}
+						</a>
+					</span>
+				</span>
+			</li>
+			{% endfor %}
 			{% endif %}
 			<!-- <li class="nav-item dropdown">
 				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
@@ -146,7 +140,7 @@
 					background-color: transparent
 				}
 			</style>
-			
+
 			<div class="sidebar-heading sidebar-heading pb-3 mt-3">
 				All Members
 			</div>
@@ -154,8 +148,8 @@
 			{% for member in members %}
 			<li class="nav-item text-capitalize pb-0">
 				<span class="nav-link pb-1 pt-1">
-				<img class="img-profile rounded-circle"	src="/static/img/undraw_profile.svg">
-				<span>{{member.name}}</span>
+					<img class="img-profile rounded-circle" src="/static/img/undraw_profile.svg">
+					<span>{{member.name}}</span>
 				</span>
 			</li>
 			{% endfor %}
@@ -224,24 +218,28 @@
 								</h6>
 								<div style="height:200px;overflow:auto;">
 									{% if notifications %}
-										{% for notification in notifications %}
-											<a class="dropdown-item d-flex align-items-center" href="{% url 'notification_detailed_view' notification.id %}">
-												<div class="mr-3">
-													<div class="icon-circle bg-primary">
-														<i class="fas fa-file-alt text-white"></i>
-													</div>
-												</div>
-												<div>
-													<div class="small text-gray-500">{{notification.created_at|date:'M d, Y'}}</div>
-													<span class="font-weight-bold">{{notification.title}}</span>
-												</div>
-											</a>
-										{% endfor %}
+									{% for notification in notifications %}
+									<a class="dropdown-item d-flex align-items-center"
+										href="{% url 'notification_detailed_view' notification.id %}">
+										<div class="mr-3">
+											<div class="icon-circle bg-primary">
+												<i class="fas fa-file-alt text-white"></i>
+											</div>
+										</div>
+										<div>
+											<div class="small text-gray-500">{{notification.created_at|date:'M d, Y'}}
+											</div>
+											<span class="font-weight-bold">{{notification.title}}</span>
+										</div>
+									</a>
+									{% endfor %}
 									{% else %}
-										<p class="text-center">No data</p>
+									<p class="text-center">No data</p>
 									{% endif %}
 								</div>
-								<a class="dropdown-item text-center small text-gray-500" href="{% if obj %}{% url 'user_notofications_view' %}{% else %}#{% endif %}">Show All Alerts</a>
+								<a class="dropdown-item text-center small text-gray-500"
+									href="{% if obj %}{% url 'user_notofications_view' %}{% else %}#{% endif %}">Show
+									All Alerts</a>
 							</div>
 						</li>
 						<style>
@@ -398,51 +396,17 @@
 					<form action="{% url 'work-space-add' %}" method="POST">
 						{% csrf_token %}
 						<small>Workspace Name*</small>
-						<input type="text" placeholder="Enter your workspace name" name="name" class="form-control" required>
-						<!-- <input type="text" name="team" id="" class="form-control" required> -->
-						<small class="mt-2">Team*</small>
-						<select name="team" class="form-control" required='required'>
-							<option value="">Please select</option>
-							{% for team in teams %}
-								<option value="{{team.id}}">{{team}}</option>
-							{% endfor %}
-						</select>
+						<input type="text" placeholder="Enter your workspace name" name="name" class="form-control"
+							required>
 						<small class="mt-2">Member*</small>
 						<select name="staff" id="" class="form-control" multiple>
 							{% for staff in all_staff %}
-								<option value="{{staff.id}}" class="text-capitalize">{{staff.name}}</option>
+							<option value="{{staff.id}}" class="text-capitalize">{{staff.name}}</option>
 							{% endfor %}
 						</select>
 						<br>
 						<input type="submit" class="btn btn-default bg-gradient-success text-white text-right"
 							value="Create Workspace">
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<!-------------------------------------The Modal to create Team --------------------------------------->
-	<div class="modal" id="createteam">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<!-- Modal Header -->
-				<div class="modal-header">
-					<h4 class="modal-title">Create Team</h4>
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-				</div>
-				<!-- Modal body -->
-				<div class="modal-body">
-					<form action="{% url 'team-add' %}" method="POST">
-						{% csrf_token %}
-						<small>Team Name*</small>
-						<input type="text" placeholder="Team Name" name="name" class="form-control" required>
-						<br>
-						<small>Team Description</small>
-						<input type="text" placeholder="Description" name="description" class="form-control">
-						<br>
-						<input type="submit" class="btn btn-default bg-gradient-success text-white pull-right"
-							value="Create New Team">
 					</form>
 				</div>
 			</div>
@@ -841,9 +805,9 @@
 	</script>
 
 	<!-- Bootstrap core JavaScript-->
-<script src="{% static 'vendor/jquery/jquery.min.js'%}"></script>
-	<script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>  
-<!-- 
+	<script src="{% static 'vendor/jquery/jquery.min.js'%}"></script>
+	<script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+	<!-- 
 	 Core plugin JavaScript -->
 	<script src="{% static 'vendor/jquery-easing/jquery.easing.min.js'%}"></script>
 
@@ -856,33 +820,33 @@
 	<script src="{% static 'js/task_info.js'%}"></script>
 	<script src="{% static 'js/base.js' %}"></script>
 
-    <script>
-        $(window).on('load', function () {
-          $('#loading').delay(1000).fadeOut();
-        })
-    </script>
-<script>
-	function dismissFunction() {
-	  document.getElementById("msg_display").style.display = "none";
-	}
+	<script>
+		$(window).on('load', function () {
+			$('#loading').delay(1000).fadeOut();
+		})
 	</script>
-<!-- hide sidenavbar on small screen using jquery -->
-<script type="text/javascript">
-    /* Check width on page load*/
-    if ( $(window).width() < 514) {
-    $(document).ready( function() {
-  $('#page-top').addClass('sidebar-toggled');
-    }
-    else {}
- });
+	<script>
+		function dismissFunction() {
+			document.getElementById("msg_display").style.display = "none";
+		}
+	</script>
+	<!-- hide sidenavbar on small screen using jquery -->
+	<script type="text/javascript">
+		/* Check width on page load*/
+		if ($(window).width() < 514) {
+			$(document).ready(function () {
+				$('#page-top').addClass('sidebar-toggled');
+			}
+		});
 
- $(window).resize(function() {
-    /*If browser resized, check width again */
-    if ($(window).width() < 514) {
-     $('#page-top').addClass('sidebar-toggled');
-    }
-    else {$('#page-top').removeClass('sidebar-toggled');}
- });</script>
+		$(window).resize(function () {
+			/*If browser resized, check width again */
+			if ($(window).width() < 514) {
+				$('#page-top').addClass('sidebar-toggled');
+			}
+			else { $('#page-top').removeClass('sidebar-toggled'); }
+		});
+	</script>
 </body>
 
 </html>

@@ -8,28 +8,12 @@ task_status_choices = (('1', 'Not Started'),('2', 'In Progress'),('3', 'In Revie
 issue_type = (('1','Bug'), ('2', 'Feature'), ('3', 'Improvement'))
 
 
-class Team(models.Model):
-
-    name = models.CharField(max_length=50)
-    slug = models.CharField(max_length=50)
-    
-    description = models.CharField(max_length=50, null=True,blank=True)
-
-    status = models.BooleanField(default=True)
-    created_on = models.DateTimeField(auto_now_add=True)
-    updated_on = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return '{}'.format(self.name)
-
-
 class StaffUser(models.Model):
 
     user_id = models.OneToOneField(User, on_delete=models.SET_NULL, null=True)
     name = models.CharField(max_length=120)
     email = models.EmailField(max_length=100, unique=True)
     password = models.CharField(max_length=100)
-    team = models.ForeignKey(Team, on_delete=models.SET_NULL, null=True, blank=True)
     leaves_provided = models.CharField(max_length=2, default='24')
 
     created_on = models.DateTimeField(auto_now_add=True)
@@ -48,7 +32,6 @@ class WorkSpace(models.Model):
     name = models.CharField(max_length=120)
     slug = models.CharField(max_length=120)
 
-    team = models.ForeignKey(Team, on_delete=models.SET_NULL, null=True)
     staff = models.ManyToManyField(StaffUser)
 
     created_on = models.DateTimeField(auto_now_add=True)

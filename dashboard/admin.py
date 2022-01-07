@@ -1,6 +1,4 @@
 from django.contrib import admin
-from django.contrib.admin.templatetags.admin_list import date_hierarchy
-from django.utils.translation import check_for_language
 from .models import *
 
 
@@ -49,7 +47,6 @@ class NotificationAdmin(admin.ModelAdmin):
 admin.site.register(Attendance, AttendaceAdmin)
 admin.site.register(Leave, LeaveAdmin)
 admin.site.register(StaffUser, StaffUserAdmin)
-admin.site.register(Team)
 admin.site.register(WorkSpace, WorkspaceAdmin)
 admin.site.register(Task, TaskAdmin)
 admin.site.register(Issue, IssueAdmin)

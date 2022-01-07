@@ -11,6 +11,7 @@ import datetime
 from django.template.loader import render_to_string
 from django.core.mail import EmailMultiAlternatives
 from django.core.mail import send_mail
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 def is_authenticated(f):
@@ -42,7 +43,7 @@ def home(request):
         user_obj = StaffUser.objects.get(id=request.session.get('id'))
         employees = StaffUser.objects.filter(active_status=True, is_employee=True)
         
-        days_in_current_month = Attendance.objects.filter(in_time__month=today.month, in_time__year=today.year).filter(staff_user=user_obj, status=True)
+        days_in_current_month = Attendance.objects.filter(in_time__month=today.month, in_time__year=today.year, out_time__month=today.month, out_time__year=today.year).filter(staff_user=user_obj, status=True)
 
         leaves_taken = Leave.objects.filter(user=user_obj, leave_status='Approved', from_date__year=today.year, status=True).aggregate(total_days=Sum('number_of_days'))['total_days']
 
@@ -94,7 +95,8 @@ def home(request):
 
             workspace_obj.staff.add(staff_obj)
             workspace_obj.save()
-            Notification.objects.create(staff_mem=staff_obj, title='you were added to a new workspace', content=workspace_obj.name + ' you were added to this workspace.')
+            if not staff_obj.name == user_obj:
+                Notification.objects.create(staff_mem=staff_obj, title='you were added to a new workspace', content=workspace_obj.name + ' you were added to this workspace.')
 
             from_mail = settings.EMAIL_HOST_USER
             subject = "You've been invited to the new Workspace..."
@@ -131,23 +133,36 @@ def home(request):
         aproved_leaves = ''
         pending_leaves = ''
         rejected_leaves = ''
+
+    page = request.GET.get('page', 1)
+    paginator = Paginator(workspace, 6)
+    try:
+        workspace = paginator.page(page)
+    except PageNotAnInteger:
+        workspace = paginator.page(1)
+    except EmptyPage:
+        workspace = paginator.page(paginator.num_pages)    
     return render(request,'dashboard/home.html', {
                         'obj': user_obj, 'employees':employees, 'workspace': workspace, 
                         'len_work':len(workspace), 'days_in_current_month':len(days_in_current_month),
-                        'bal_leaves':bal_leaves, 'aproved_leaves':aproved_leaves, 'pending_leaves':pending_leaves, 'rejected_leaves':rejected_leaves,
+                        'bal_leaves':bal_leaves, 'aproved_leaves':aproved_leaves, 'pending_leaves':pending_leaves, 'rejected_leaves':rejected_leaves, 
     })
 
 
 @is_authenticated
 def workspace_edit(request, id):
     
+    user_obj = StaffUser.objects.get(id=request.session.get('id'))
     workspace_obj = WorkSpace.objects.get(id=id)
+    val = [val['name'] for val in workspace_obj.staff.values('name')]
+
     if request.method == 'POST':
         form = WorkspaceUpdateForm(request.POST, instance=workspace_obj)
         if form.is_valid():
             form.save()
             for user in workspace_obj.staff.all():
-                Notification.objects.create(staff_mem=user, title=str(workspace_obj.name)+' workspace has new update', content='Workspace is updated with the new data ' + str(workspace_obj.name) + str(workspace_obj.slug) + str(workspace_obj.team.name) + str(workspace_obj.staff.all()))
+                if user.name != user_obj.name:
+                    Notification.objects.create(staff_mem=user, title=str(workspace_obj.name)+' workspace has new update', content='Workspace is updated with the new data - \nName: ' + str(workspace_obj.name) + ', \nSlug: ' +str(workspace_obj.slug) + ', \nMembers: ' + str(val))
             return redirect('/')
     else:
         form = WorkspaceUpdateForm(instance=workspace_obj)
@@ -172,5 +187,6 @@ def user_notofications_view(request):
 
     user_obj = StaffUser.objects.get(id=request.session.get('id'))
     notified_objs = Notification.objects.filter(staff_mem=user_obj, status=True)
+    Notification.objects.filter(staff_mem=user_obj, status=True).update(open_status=True)
     return render(request, 'dashboard/user_notifications.html', {'objs':notified_objs, 'user_obj':user_obj.name})
 

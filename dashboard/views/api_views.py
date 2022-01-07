@@ -51,7 +51,7 @@ class TaskView(APIView):
                     #         "Priority level: {} ".format(serializer.data['priority'])
                     # send_mail('A New Task has been added to your dashboard...',body,from_mail,[to_email],fail_silently=False,)
 
-                    message = render_to_string('{0}/templates/mail_templates/task_assigned.html'.format(settings.BASE_DIR),{'name':staff_mem.name, 'workspace':workspace_obj.name, 'team':workspace_obj.team.name, 'task':task_new_obj.title, 'status':task_new_obj.get_task_status_display(), 'priority':task_new_obj.get_priority_display(), 'end_date':end_date, 'url':settings.BASE_DOMAIN + '/' + workspace_obj.slug + '/' + str(task_new_obj.id) + '/task'})
+                    message = render_to_string('{0}/templates/mail_templates/task_assigned.html'.format(settings.BASE_DIR),{'name':staff_mem.name, 'workspace':workspace_obj.name, 'task':task_new_obj.title, 'status':task_new_obj.get_task_status_display(), 'priority':task_new_obj.get_priority_display(), 'end_date':end_date, 'url':settings.BASE_DOMAIN + '/' + workspace_obj.slug + '/' + str(task_new_obj.id) + '/task'})
                     
                     msg = EmailMultiAlternatives(subject, message, from_mail, [to_email])
 
@@ -97,22 +97,6 @@ class WorkSpaceView(APIView):
             return redirect('home')
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class TeamView(APIView):
-
-    serializer_class = TeamSerializer
-
-    @method_decorator(is_authenticated)
-    def post(self, request):
-        serializer = self.serializer_class(data=request.data)
-        if serializer.is_valid():
-            serialize = serializer.save()
-            slug_name = serialize.name.lower()
-            serialize.slug = re.sub("[$₹%\‘@’+;()/:&!?.'|*^–,`~#]", "", slug_name).replace(" ", "-")
-            serialize.save()
-
-            messages.success(request, 'Team add success...')
-            return redirect('home')
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class IssueView(APIView):
 
@@ -148,7 +132,7 @@ class IssueView(APIView):
                     #         "Priority level: {} ".format(serializer.data['priority'])
                     # send_mail('A New issue has been added to your dashboard...',body,from_mail,[to_email], fail_silently=False,)       
                     
-                    message = render_to_string('{0}/templates/mail_templates/issue_assigned.html'.format(settings.BASE_DIR),{'name':staff_mem.name, 'workspace':workspace_obj.name, 'team':workspace_obj.team.name, 'task':issue_new_obj.title, 'status':issue_new_obj.get_issue_status_display(), 'priority':issue_new_obj.get_priority_display(), 'end_date':end_date, 'url':settings.BASE_DOMAIN + '/' + workspace_obj.slug + '/' + str(issue_new_obj.id) + '/issue'})
+                    message = render_to_string('{0}/templates/mail_templates/issue_assigned.html'.format(settings.BASE_DIR),{'name':staff_mem.name, 'workspace':workspace_obj.name, 'task':issue_new_obj.title, 'status':issue_new_obj.get_issue_status_display(), 'priority':issue_new_obj.get_priority_display(), 'end_date':end_date, 'url':settings.BASE_DOMAIN + '/' + workspace_obj.slug + '/' + str(issue_new_obj.id) + '/issue'})
                     msg = EmailMultiAlternatives(subject, message, from_mail, [to_email])
 
                     msg.attach_alternative(message, 'text/html')
@@ -201,7 +185,9 @@ class AttendanceInView(APIView):
 
         user_obj = StaffUser.objects.get(id=request.session.get('id'))
         check_in_time = request.data.get('in_time').split('T')[1]
-        if get_client_ip(request) == '122.175.8.22':
+        ip_list = ['122.175.8.22', '183.82.144.190']
+
+        if get_client_ip(request) in ip_list:
             Attendance.objects.create(staff_user=user_obj, in_time=request.data.get('in_time'), status=True)
 
             messages.success(request, 'You are checked-in @ '+ str(check_in_time))
@@ -214,25 +200,39 @@ class AttendaceOutView(APIView):
 
     serializer_class = AttendaceOutSerializer
     def post(self, request):
+
         user_obj = StaffUser.objects.get(id=request.session.get('id'))
         today_date = datetime.date.today()
         checkout_time = request.data.get('out_time').split('T')[1]
+
         attendace_obj = Attendance.objects.filter(staff_user=user_obj, in_time__day=today_date.day, in_time__month=today_date.month, in_time__year=today_date.year, status=True)
 
-        if get_client_ip(request) == '122.175.8.22':
+        ip_list = ['122.175.8.22', '183.82.144.190', '127.0.0.1']
+        if get_client_ip(request) in ip_list:
             if len(attendace_obj) > 0:
-                # if request.data.get('out_time') == today_date:
                 att_obj = attendace_obj.first()
+                # in_time = att_obj.in_time
+                # out_time = datetime.datetime.strptime(request.data.get('out_time'), '%Y-%m-%dT%H:%M')
+                # working_hours_cal = in_time - out_time
+                # print('---diff time--', working_hours_cal)
+                # print('----woring hours-----', working_hours_cal/3600)
                 att_obj.out_time = request.data.get('out_time')
                 att_obj.save()
-                # else:
-                #     messages.error(request, 'check-out date should match with the check-in date..')
                 messages.success(request, 'You are checked-out @ '+ str(checkout_time))
             else:
                 messages.error(request, "You haven't check-in to provide check-out..\nPlease contact manager..")
         else:
             messages.error(request, 'Wrong location, unable to check out..')
         return redirect('/attendance/')
+
+class NotificationGetView(APIView):
+
+    serializer_class = NotificationSerializer
+
+    def get(self, request):
+        notifies = Notification.objects.filter(status=True)
+        serializer = self.serializer_class(notifies, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class LeaveView(APIView):

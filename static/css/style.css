@@ -20,7 +20,7 @@ scrollbar start
 /* alert notification */
 .mx-1 ::-webkit-scrollbar {
   width: 0px;
-  }
+}
 
 /* Track */
 ::-webkit-scrollbar-track {

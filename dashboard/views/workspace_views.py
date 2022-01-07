@@ -98,7 +98,7 @@ def task_detail_update_view(request, id, workspace_slug):
             to_mail = staff_mem.email
             subject = 'A new task has been added for you..'
 
-            message = render_to_string('{0}/templates/mail_templates/task_assigned.html'.format(settings.BASE_DIR),{'name':staff_mem.name, 'workspace':task_obj.workspace.name, 'team':task_obj.workspace.team.name, 'task':task_obj.title, 'status':task_obj.get_task_status_display(), 'priority':task_obj.get_priority_display(), 'end_date':task_obj.planned_end_date})
+            message = render_to_string('{0}/templates/mail_templates/task_assigned.html'.format(settings.BASE_DIR),{'name':staff_mem.name, 'workspace':task_obj.workspace.name, 'task':task_obj.title, 'status':task_obj.get_task_status_display(), 'priority':task_obj.get_priority_display(), 'end_date':task_obj.planned_end_date})
             
             msg = EmailMultiAlternatives(subject, message, from_mail, [to_mail])
             msg.attach_alternative(message, 'text/html')
@@ -149,7 +149,7 @@ def issue_detail_update_view(request, id, workspace_slug):
             from_mail = settings.EMAIL_HOST_USER
             to_mail = staff_mem.email
             subject = 'A new task has been added for you..'
-            message = render_to_string('{0}/templates/mail_templates/issue_assigned.html'.format(settings.BASE_DIR),{'name':staff_mem.name, 'workspace':issue_obj.workspace.name, 'team':issue_obj.workspace.team.name, 'task':issue_obj.title, 'status':issue_obj.get_issue_status_display(), 'priority':issue_obj.get_priority_display(), 'end_date':issue_obj.planned_end_date})
+            message = render_to_string('{0}/templates/mail_templates/issue_assigned.html'.format(settings.BASE_DIR),{'name':staff_mem.name, 'workspace':issue_obj.workspace.name, 'task':issue_obj.title, 'status':issue_obj.get_issue_status_display(), 'priority':issue_obj.get_priority_display(), 'end_date':issue_obj.planned_end_date})
             
             msg = EmailMultiAlternatives(subject, message, from_mail, [to_mail])
             msg.attach_alternative(message, 'text/html')
@@ -167,9 +167,8 @@ def issue_detail_update_view(request, id, workspace_slug):
 def task_delete(request, id):
 
     task_obj = Task.objects.get(status=True, id=id)
-    task_obj.status=False
-    task_obj.save()
-    Notification.objects.create(staff_mem=task_obj.assigned_to, title='task has been removed from workspace', content=task_obj.name + ' has been removed from ' + task_obj.workspace.name)
+    Notification.objects.create(staff_mem=task_obj.assigned_to, title='task has been removed from workspace', content=task_obj.title + ' has been removed from ' + task_obj.workspace.name)
+    task_obj.delete()
     messages.success(request, task_obj.task_id + ' delete success...')
     return redirect('/'+task_obj.workspace.slug)
 
@@ -178,8 +177,7 @@ def task_delete(request, id):
 def issue_delete(request, id):
 
     issue_obj = Issue.objects.get(id=id, status=True)
-    issue_obj.status=False
-    issue_obj.save()
-    Notification.objects.create(staff_mem=issue_obj.assigned_to, title='Issue has been removed from workspace', content=issue_obj.name + ' has been removed from ' + issue_obj.workspace.name)
+    Notification.objects.create(staff_mem=issue_obj.assigned_to, title='Issue has been removed from workspace', content=issue_obj.title + ' has been removed from ' + issue_obj.workspace.name)
     messages.success(request, issue_obj.issue_id + ' delete success...')
+    issue_obj.delete()
     return redirect('/'+issue_obj.workspace.slug)

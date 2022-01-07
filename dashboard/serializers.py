@@ -12,23 +12,12 @@ class TaskSerializer(serializers.ModelSerializer):
 class WorkSpaceSerializer(serializers.ModelSerializer):
     class Meta:
         model = WorkSpace
-        fields = ['name', 'team', 'staff', 'slug']
+        fields = ['name', 'staff', 'slug']
         extra_kwargs = {
             'slug':{
                 'read_only':True,
             },
         }
-
-class TeamSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Team
-        fields = ['name', 'description']
-
-
-# class StaffUserSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = StaffUser
-#         fields = ['user_id', 'name', 'email', 'password', 'team']
 
 
 class IssueSerializer(serializers.ModelSerializer):
@@ -59,3 +48,9 @@ class HolidaysSerializer(serializers.ModelSerializer):
     class Meta:
         model = Holidays
         fields = ['name', 'day', 'month', 'description'] 
+
+
+class NotificationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Notification
+        fields = '__all__'

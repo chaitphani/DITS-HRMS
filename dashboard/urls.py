@@ -25,7 +25,6 @@ urlpatterns = (
     path('issue-status', helper_views.issue_status_change, name='issue-status'),
     path('leave-status', helper_views.leave_status_change, name='leave-status'),
 
-    path('api/team', api_views.TeamView.as_view(), name='team-add'),
     path('api/task', api_views.TaskView.as_view(), name='task-add'),
     path('api/issue', api_views.IssueView.as_view(), name='issue-add'),
     path('api/work-space', api_views.WorkSpaceView.as_view(), name='work-space-add'),
@@ -45,6 +44,7 @@ urlpatterns = (
 
     path('leave/apply', api_views.LeaveView.as_view(), name='leave_apply'),
     path('holiday/', api_views.HolidayView.as_view(), name='holiday'),
+    path('notifies/', api_views.NotificationGetView.as_view(), name='notifies'),
 
     path('holiday/<int:id>/delete', attendance_views.holiday_delete, name='holiday_delete'),
 

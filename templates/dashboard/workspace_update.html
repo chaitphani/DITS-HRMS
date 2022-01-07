@@ -44,21 +44,6 @@
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                            <label>Team</label>
-                            <div class="input-group mb-3">
-                                <!-- <div class="input-group-prepend">
-                                    <span class="input-group-text" id="actual_start_end_date"><i
-                                            class="fa fa-calendar"></i></span>
-                                </div> -->
-                                <select name="team" class="form-control">
-                                    {% for team in teams %}
-                                        <option value="{{team.id}}" {% if team.id == object.team.id %}selected{% endif %}>{{team.name}}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                        </div>
-                        
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                             <label>Staff Member</label>&nbsp;<small class="text-light bg-dark">&nbsp;(select multiple members using "Shift" + "arrow button")&nbsp;</small>
                             <div class="input-group mb-3">
                                 <!-- <div class="input-group-prepend">

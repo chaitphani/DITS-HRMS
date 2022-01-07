@@ -49,8 +49,7 @@ def login(request):
                 messages.error(request, 'Invalid Password..!')
         else:
             messages.error(request, 'Please check email or user-name...!')
-    team_list = Team.objects.filter(status=True)
-    return render(request, 'dashboard/login.html', {'teams':team_list})
+    return render(request, 'dashboard/login.html')
 
 
 @is_authenticated
