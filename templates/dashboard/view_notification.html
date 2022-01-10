@@ -1,15 +1,22 @@
 {% extends 'dashboard/base.html' %}
 {% load static %}
 {% block content %}
-
+<style>
+    .card{
+        /* box-shadow: 2px 3px 8px 2px #4a6fdc;*/
+        min-height:400px 
+    }
+</style>
 <div class="container-fluid">
-    {{obj.staff_mem}}
-    <h4>{{obj.title}}</h4>
-
-    <p>{{obj.content}}</p>
-
-    <small>{{obj.created_at|date:'M d, Y'}}</small>
+    <div class="row">
+        <div class="offset-md-1 shadow col-md-10 card p-4 bg-light">
+            <h4 class="text-dark">
+                <span class="text-info text-capitalize">{{obj.title}}</span>
+                <small class="pull-right text-info">{{obj.created_at|date:'M d, Y'}}</small>
+            </h4><hr/>
+            <p class="mt-3">{{obj.content}}</p>
+        </div>
+    </div>
 </div>
-
 
 {% endblock %}

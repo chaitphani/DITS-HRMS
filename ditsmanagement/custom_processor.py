@@ -1,4 +1,6 @@
 from dashboard.models import Notification, StaffUser, WorkSpace
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
 
 def get_members(request):
 
@@ -9,6 +11,7 @@ def get_members(request):
         workspaces = WorkSpace.objects.all().order_by('name')
         notifications = Notification.objects.filter(staff_mem=user_obj, open_status=False)
         notification_obj = Notification.objects.filter(staff_mem=user_obj)
+
     except:
         members = ''
         user_obj= ''
@@ -16,4 +19,14 @@ def get_members(request):
         all_staff = ''
         notifications = ''
         notification_obj = ''
-    return {'obj': user_obj, 'members':members, 'all_staff':all_staff, 'workspaces':workspaces, 'notifications':notifications, 'notifi_count':len(notifications), 'obj':notification_obj}
+
+    page = request.GET.get('page', 1)
+    paginator = Paginator(notification_obj, 5)
+    try:
+        notification_obj = paginator.page(page)
+    except PageNotAnInteger:
+        notification_obj = paginator.page(1)
+    except EmptyPage:
+        notification_obj = paginator.page(paginator.num_pages)
+
+    return {'obj': user_obj, 'members':members, 'all_staff':all_staff, 'workspaces':workspaces, 'notifications':notifications, 'notifi_count':len(notifications), 'not_obj':notification_obj}

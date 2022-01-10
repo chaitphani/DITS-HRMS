@@ -54,3 +54,4 @@ def holiday_delete(request, id):
     
     messages.success(request, 'Record deleted....')
     return redirect('/attendance/')
+

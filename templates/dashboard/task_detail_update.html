@@ -111,11 +111,19 @@
                                 </select>
                             </div>
                         </div>                        
-                        <div class="col-12">
+                        <div class="col-6">
                             <label for="Description">Description</label>
                             <textarea name="description" id="description" placeholder="Type something.." rows="3"
                                 class="form-control">{% if object.description %}{{object.description}}{% endif %}</textarea>
                         </div>
+                        <div class="col-6">
+                            <label>File</label>
+                            {% if object.file %}
+                                <small class="ml-5">A file exist: </small>
+                                <a href="{{object.file.url}}" class="text-danger" target="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>
+                            {% endif %}
+                            <input type="file" class="form-control" name="file">
+                        </div>                        
                     </div>
                    <div class="pull-right mt-2 mb-5"> 
                        <input type="submit" class="btn btn-default button-33 text-right"

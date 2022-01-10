@@ -1,7 +1,9 @@
 import datetime
+from os import truncate
 from django.db import models
 from django.db.models.base import Model, ModelStateFieldsCacheDescriptor
 from django.contrib.auth.models import User
+from django.utils import tree
 
 priority_choices = (('1', 'High'),('2', 'Medium'),('3', 'Low'), ('4', 'Critical'), )
 task_status_choices = (('1', 'Not Started'),('2', 'In Progress'),('3', 'In Review'),('4', 'Completed'),('5', 'Blocked'),)
@@ -15,6 +17,8 @@ class StaffUser(models.Model):
     email = models.EmailField(max_length=100, unique=True)
     password = models.CharField(max_length=100)
     leaves_provided = models.CharField(max_length=2, default='24')
+
+    profile_pic = models.ImageField(upload_to='media/profile', default='static/img/undraw_profile.svg')
 
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
@@ -65,6 +69,7 @@ class Task(models.Model):
     workspace = models.ForeignKey(WorkSpace, on_delete=models.SET_NULL, null=True, blank=True)
     assigned_by = models.ForeignKey(StaffUser, on_delete=models.SET_NULL, null=True, blank=True, related_name='task_assigned_by')
 
+    file = models.FileField(upload_to ='media/task', null=True, blank=True)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
     status = models.BooleanField(default=True)
@@ -88,10 +93,11 @@ class Issue(models.Model):
 
     actual_start_date = models.DateTimeField(null=True, blank=True)
     actual_end_date = models.DateTimeField(null=True, blank=True)
-    assigned_by = models.ForeignKey(StaffUser, on_delete=models.SET_NULL, null=True, blank=True, related_name='issue_assigned_by')
 
     workspace = models.ForeignKey(WorkSpace, on_delete=models.SET_NULL, null=True, blank=True)
+    assigned_by = models.ForeignKey(StaffUser, on_delete=models.SET_NULL, null=True, blank=True, related_name='issue_assigned_by')
 
+    file = models.FileField(upload_to ='media/issue', null=True, blank=True)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
     status = models.BooleanField(default=True)
@@ -131,14 +137,13 @@ class IssueComment(models.Model):
 # attendance related models.
 class Attendance(models.Model):
 
-    # type_choices = (('from-office', 'from-office'), ('from-home', 'from-home'))
-    # shift_type = (('general', 'general'), ('night', 'night'))
-
     staff_user = models.ForeignKey(StaffUser, on_delete=models.SET_NULL, null=True)
-    # type = models.CharField(max_length=20, choices=type_choices, default='from-office')
-    # shift = models.CharField(max_length=15, choices=shift_type, default='general')
     in_time = models.DateTimeField(null=True, blank=True)
     out_time = models.DateTimeField(null=True, blank=True)
+    hours_worked = models.IntegerField(null=True, blank=True)
+    minutes_worked = models.IntegerField(null=True, blank=True)
+    day_type = models.CharField(max_length=50, null=True, blank=True)
+    
     status = models.BooleanField(default=True)
 
     def __str__(self):

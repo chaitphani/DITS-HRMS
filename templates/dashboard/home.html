@@ -28,8 +28,25 @@
         color: black;
         background-color: #494d7c52;
         cursor: auto;
-    }    
+    }
+    .tooltip-inner{
+        background-color: rgb(128, 226, 233)!important;
+        color:  black;
+        font-weight: 800;
+        /* width: 200px; */
+        /* height: 75px; */
+    }
+    .arrow{
+        color: rgb(103, 215, 223);
+    }
 </style>
+<script>
+    $('[data-toggle="tooltip"]').hover(function(){
+    $('.tooltip-inner').css('min-width', '400px');
+    $('.tooltip-inner').css('color', 'red');
+});
+</script>
+
 <!-- Begin Page Content -->
 <div class="container-fluid">
     <!------------------------ multiple tabs with their multiple panels to manage all the data in a single page  -->
@@ -92,8 +109,19 @@
                                         <br>
                                         <div class="row boxinside_div_footer">
                                             <small>Members:</small> &nbsp;
-                                            {% for name in space.staff.all %}
-                                                <span class="member_circle text-capitalize" title="{{name.name|title}}">{{name.name|first}}</span>
+                                            {% for staff in space.staff.all %}
+                                                <span class="member_circle text-capitalize" data-toggle="tooltip" data-html="true" data-placement="top" title="<em>{{staff.name}}</em> {{staff.email}}">
+                                                    {{staff.name|first}}
+                                                </span>
+                                                <!-- <span id="popoverData" class="member_circle text-capitalize" data-content="{{staff.email}}" rel="popover" data-placement="bottom" data-original-title="{{staff.name|title}}le" data-trigger=></span> -->
+                                                <!-- <div class="card shadow p-2 on_hover_show" style="display: none;">
+                                                    <h6>{{staff.name}}</h6>
+                                                    <h6>{{staff.email}}</h6>
+                                                    <h6>
+                                                        <i class="fa fa-check-circle {% if staff.active_status == True %} text-success{% else %} text-danger{% endif %}">
+                                                        </i>
+                                                    </h6>
+                                                </div> -->
                                             {% endfor %}
                                         </div>
                                     </div>
@@ -153,9 +181,24 @@
                                     <div class="col-lg-12">
                                         <span class="user_txticon text-capitalize bg-primary"><i class="fa fa-calendar-plus-o"></i></span><br><br>
                                         <h5 class="text-capitalize font-weight-bold">Attendance</h5>
-                                        <small class="font-weight-bold">This Month: <span class="text-success">{% if days_in_current_month != 0 %}
-                                            {{days_in_current_month|stringformat:"02d"}}{% else %}00
-                                            {% endif %}</span></small>
+                                        <small class="font-weight-bold">This Month <br>
+                                            Full-day:
+                                            <span class="text-success mr-3">
+                                                {% if full_days_in_current_month != 0 %}
+                                                    {{full_days_in_current_month|stringformat:"02d"}}
+                                                {% else %}
+                                                    00
+                                                {% endif %}
+                                            </span>
+                                            Half-a-day:
+                                            <span class="text-success">
+                                                {% if half_days_in_current_month != 0 %}
+                                                    {{half_days_in_current_month|stringformat:"02d"}}
+                                                {% else %}
+                                                    00
+                                                {% endif %}
+                                            </span>                                            
+                                        </small>
                                     </div>
                                 </div>
                             </a>
@@ -166,8 +209,8 @@
                                     <div class="col-lg-12">
                                         <span class="user_txticon text-capitalize bg-primary"><i class="fa fa-leaf"></i></span><br><br>
                                         <h5 class="text-capitalize font-weight-bold">Leave Balance</h5>
-                                        <small><span class="text-success font-weight-bold" title="Remained Leaves">
-                                            {% if bal_leaves %}{{bal_leaves|stringformat:"02d"}}{% else %}00{% endif %}</span> / <span class="text-dark font-weight-bold" title="Total leaves">24</span></small>
+                                        <small><span class="text-success font-weight-bold">
+                                            {% if bal_leaves %}{{bal_leaves|stringformat:"02d"}}{% else %}00{% endif %}</span> / <span class="text-dark font-weight-bold">24</span></small>
                                     </div>
                                 </div>
                             </a>
@@ -740,4 +783,9 @@
         $(".customers").select2();
     });
 </script>
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+</script> 
 {% endblock %}

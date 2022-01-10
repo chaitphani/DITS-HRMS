@@ -92,7 +92,7 @@ def task_detail_update_view(request, id, workspace_slug):
         task_obj.assigned_to = staff_mem
         task_obj.save()
         
-        Notification.objects.create(staff_mem=task_obj.assigned_to, title='There is an update with the task', content=task_obj.name + ' task has been updated...')
+        Notification.objects.create(staff_mem=task_obj.assigned_to, title='There is an update with the task', content=str(task_obj.title) + ' task has been updated...')
         if prev_assigned_user != staff_mem.name:
             from_mail = settings.EMAIL_HOST_USER
             to_mail = staff_mem.email

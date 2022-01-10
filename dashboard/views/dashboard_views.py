@@ -40,26 +40,12 @@ def home(request):
         workspace_obj = ''
         today = datetime.datetime.now()
 
-        ''' testing starts'''
-
-        # staff_obj_1 = StaffUser.objects.get(name='chaitu')
-        # workspace = WorkSpace.objects.get(slug='crm')
-
-        # print('------staff obj 1-----', staff_obj_1)
-        # print('------workspace-----', workspace)
-
-        # print('-----check staff--------', workspace.staff.all())
-        # if staff_obj_1 in workspace.staff.all():
-        #     print('-----exist----')
-        # else:
-        #     print('------not exits-------')
-
-        ''' testing ends'''
-
         user_obj = StaffUser.objects.get(id=request.session.get('id'))
         employees = StaffUser.objects.filter(active_status=True, is_employee=True)
         
-        days_in_current_month = Attendance.objects.filter(in_time__month=today.month, in_time__year=today.year, out_time__month=today.month, out_time__year=today.year).filter(staff_user=user_obj, status=True)
+        full_days_in_current_month = Attendance.objects.filter(in_time__month=today.month, in_time__year=today.year, out_time__month=today.month, out_time__year=today.year, day_type='Full-day').filter(staff_user=user_obj, status=True)
+
+        half_days_in_current_month = Attendance.objects.filter(in_time__month=today.month, in_time__year=today.year, out_time__month=today.month, out_time__year=today.year, day_type='Half-a-day').filter(staff_user=user_obj, status=True)
 
         leaves_taken = Leave.objects.filter(user=user_obj, leave_status='Approved', from_date__year=today.year, status=True).aggregate(total_days=Sum('number_of_days'))['total_days']
 
@@ -83,14 +69,10 @@ def home(request):
             invite_email = request.POST.get('email')
             workspace_id = request.POST.get('workspace')
             workspace_obj = WorkSpace.objects.get(id=workspace_id)
-            print('------invite email-----', invite_email)
-            print('------invite email-----', workspace_id)
 
             try:
                 main_user_obj = User.objects.get(email=invite_email)
                 staff_obj = StaffUser.objects.get(email=invite_email)
-                print('----main user obj-----', main_user_obj)
-                print('----main user obj-----', staff_obj)
             except Exception as e:
                 # print('----exception error in invite----', e)
                 name = invite_email.split('@')[0]
@@ -150,7 +132,8 @@ def home(request):
         user_obj = ''
         employees = ''
         workspace = ''
-        days_in_current_month = ''
+        full_days_in_current_month = ''
+        half_days_in_current_month = ''
         bal_leaves = ''
         aproved_leaves = ''
         pending_leaves = ''
@@ -163,12 +146,20 @@ def home(request):
     except PageNotAnInteger:
         workspace = paginator.page(1)
     except EmptyPage:
-        workspace = paginator.page(paginator.num_pages)    
-    return render(request,'dashboard/home.html', {
-                        'obj': user_obj, 'employees':employees, 'workspace': workspace, 
-                        'len_work':len(workspace), 'days_in_current_month':len(days_in_current_month),
-                        'bal_leaves':bal_leaves, 'aproved_leaves':aproved_leaves, 'pending_leaves':pending_leaves, 'rejected_leaves':rejected_leaves, 
-    })
+        workspace = paginator.page(paginator.num_pages)  
+
+    data = {
+        'obj': user_obj, 'employees':employees, 
+        'workspace': workspace, 
+        'len_work':len(workspace), 
+        'full_days_in_current_month':len(full_days_in_current_month),
+        'half_days_in_current_month':len(half_days_in_current_month),
+        'bal_leaves':bal_leaves, 
+        'aproved_leaves':aproved_leaves, 
+        'pending_leaves':pending_leaves, 
+        'rejected_leaves':rejected_leaves, 
+    }
+    return render(request,'dashboard/home.html', data)
 
 
 @is_authenticated
@@ -207,8 +198,4 @@ def notification_detailed_view(request, id):
 @is_authenticated
 def user_notofications_view(request):
 
-    user_obj = StaffUser.objects.get(id=request.session.get('id'))
-    notified_objs = Notification.objects.filter(staff_mem=user_obj, status=True)
-    Notification.objects.filter(staff_mem=user_obj, status=True).update(open_status=True)
-    return render(request, 'dashboard/user_notifications.html', {'objs':notified_objs, 'user_obj':user_obj.name})
-
+    return render(request, 'dashboard/user_notifications.html')

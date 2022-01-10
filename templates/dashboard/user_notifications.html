@@ -3,14 +3,7 @@
 {% block content %}
 
 <div class="container-fluid">
-    {% for obj in objs %}
-        {{obj.staff_mem}}
-        <h4 class="{% if obj.open_status == False %}font-weight-bold{% else %}font-weight-italic{% endif %}">{{obj.title}}</h4>
-        
-        <p>{{obj.content}}</p>
 
-        <small>{{obj.created_at|date:'M d, Y'}}</small>
-    {% endfor %}
 </div>
 
 {% endblock %}

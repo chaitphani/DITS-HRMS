@@ -21,7 +21,6 @@ import datetime
 class TaskView(APIView):
 
     serializer_class = TaskSerializer
-
     @method_decorator(is_authenticated)
     def post(self, request):
         logged_in_mem = StaffUser.objects.get(id=request.session.get('id'))
@@ -58,7 +57,7 @@ class TaskView(APIView):
                     msg.attach_alternative(message, 'text/html')
                     msg.send(fail_silently=False)
                 
-                Notification.objects.create(staff_mem=staff_mem, title='Hey, you have a new task', content=serializer.data.get('title') + 'in ' + serializer.data.get('workspace') + 'with ' +serializer.data.get('task_status') + 'and ' + serializer.data.get('priority'))
+                Notification.objects.create(staff_mem=staff_mem, title='Hey, you have a new task', content=str(serializer.data.get('title')) + 'in ' + str(workspace_obj.name) + 'with ' + str(task_new_obj.get_task_status_display()) + 'and ' + str(task_new_obj.get_priority_display()))
                 messages.success(request, 'Task add success...!')
                 return redirect('/' + workspace_obj.slug) 
             else:
@@ -203,9 +202,8 @@ class AttendaceOutView(APIView):
 
         user_obj = StaffUser.objects.get(id=request.session.get('id'))
         today_date = datetime.date.today()
-        # checkout_time = request.data.get('out_time').split('T')[1]
-        out_time = datetime.datetime.strptime(request.data.get('out_time'), '%Y-%m-%dT%H:%M')
-        split_date = out_time.split(' ')[1].split(':')
+        out_date_time = datetime.datetime.strptime(request.data.get('out_time'), '%Y-%m-%dT%H:%M')
+        split_date = str(out_date_time).split(' ')[1].split(':')
         
         attendace_obj = Attendance.objects.filter(staff_user=user_obj, in_time__day=today_date.day, in_time__month=today_date.month, in_time__year=today_date.year, status=True)
 
@@ -213,11 +211,23 @@ class AttendaceOutView(APIView):
         if get_client_ip(request) in ip_list:
             if len(attendace_obj) > 0:
                 att_obj = attendace_obj.first()
-                # in_time = att_obj.in_time
-                # working_hours_cal = in_time - out_time
-                # print('---diff time--', working_hours_cal)
-                # print('----woring hours-----', working_hours_cal/3600)
+                in_date_time = att_obj.in_time
+                in_time = in_date_time.time()
+                out_time = out_date_time.time()
+                working_hours_cal = int(str(out_time).split(':')[0])-int(str(in_time).split(':')[0])
+                working_minutes_cal = int(str(out_time).split(':')[1])-int(str(in_time).split(':')[1])
+
                 att_obj.out_time = request.data.get('out_time')
+                if working_minutes_cal > 50:
+                    att_obj.hours_worked = working_hours_cal+1
+                    att_obj.minutes_worked = 0
+                else:
+                    att_obj.hours_worked = working_hours_cal
+                    att_obj.minutes_worked = working_minutes_cal
+                if att_obj.hours_worked >= 7:
+                    att_obj.day_type = 'Full-day'
+                elif att_obj.hours_worked >= 4 and att_obj.hours_worked >= 7:
+                    att_obj.day_type = 'Half-a-day'
                 att_obj.save()
                 messages.success(request, 'You are checked-out @ '+ str(split_date[0])+':'+str(split_date[1]))
             else:

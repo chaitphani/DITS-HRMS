@@ -138,4 +138,7 @@ dmypy.json
 # migrations
 *migrations/
 
+# media
+*media/
+
 notification_activity.txt
