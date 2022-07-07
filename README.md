@@ -2,10 +2,12 @@
 
 # SETUP of the Project
 
-python -m venv (env_name) -> creates virtualenv
+-- clone this repo and jump into the repo directory and start with below mentioned commands.
 
-venv/Scripts/activate -> to activate the vitualenv
+-- python -m venv (env_name) -> creates virtualenv
 
-pip install -r requirements.txt -> to install all the dependencies from requirements.txt
+-- venv/Scripts/activate -> to activate the vitualenv
 
-python manage.py runserver -> to run the local server at http://localhost:8000/
+-- pip install -r requirements.txt -> to install all the dependencies from requirements.txt
+
+-- python manage.py runserver -> to run the local server at http://localhost:8000/
