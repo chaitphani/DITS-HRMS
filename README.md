@@ -1,18 +1,11 @@
 # DITS-HRMS
 
-## python -m venv (env name) - creating virtualenv
+# SETUP of the Project
 
-## venv/Scripts/activate - activate the vitualenv
+## python -m venv (env_name) -> creates virtualenv
 
-## pip install Django
+## venv/Scripts/activate -> to activate the vitualenv
 
-## django-admin startproject (project name)
-    - settings.py
-    - urls.py
-    - wsgi.py
-## python manage.py startapp (app name)
-    - admin.py
-    - apps.py
-    - models.py
-    - test.py
-    - views.py
+## pip install -r requirements.txt -> to install all the dependencies from requirements.txt
+
+## python manage.py runserver -> to run the local server at http://localhost:8000/
