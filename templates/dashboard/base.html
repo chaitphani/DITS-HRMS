@@ -6,28 +6,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta name="description" content="">
-	<meta name="author" content="">
-	<title>DITS Management</title>
-
-	<!--favicon-->
-	<link rel="apple-touch-icon" sizes="57x57" href="/static/img/favicon/apple-icon-57x57.png">
-	<link rel="apple-touch-icon" sizes="60x60" href="/static/img/favicon/apple-icon-60x60.png">
-	<link rel="apple-touch-icon" sizes="72x72" href="/static/img/favicon/apple-icon-72x72.png">
-	<link rel="apple-touch-icon" sizes="76x76" href="/static/img/favicon/apple-icon-76x76.png">
-	<link rel="apple-touch-icon" sizes="114x114" href="/static/img/favicon/apple-icon-114x114.png">
-	<link rel="apple-touch-icon" sizes="120x120" href="/static/img/favicon/apple-icon-120x120.png">
-	<link rel="apple-touch-icon" sizes="144x144" href="/static/img/favicon/apple-icon-144x144.png">
-	<link rel="apple-touch-icon" sizes="152x152" href="/static/img/favicon/apple-icon-152x152.png">
-	<link rel="apple-touch-icon" sizes="180x180" href="/static/img/favicon/apple-icon-180x180.png">
-	<link rel="icon" type="image/png" sizes="192x192" href="/static/img/favicon/android-icon-192x192.png">
-	<link rel="icon" type="image/png" sizes="32x32" href="/static/img/favicon/favicon-32x32.png">
-	<link rel="icon" type="image/png" sizes="96x96" href="/static/img/favicon/favicon-96x96.png">
-	<link rel="icon" type="image/png" sizes="16x16" href="/static/img/favicon/favicon-16x16.png">
-	<link rel="manifest" href="/static/img/favicon/manifest.json">
-	<meta name="msapplication-TileColor" content="#ffffff">
-	<meta name="msapplication-TileImage" content="/static/img/favicon/ms-icon-144x144.png">
-	<meta name="theme-color" content="#000">
+	<title>HR Manager</title>
 
 	<!-- Custom fonts for this project-->
 	<link href="/static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -44,9 +23,9 @@
 
 	<!--  jquery data tables -->
 	<!-- Custom styles for this project-->
-	<link href="{% static 'css/dits_management_style.min.css' %}" rel="stylesheet">
+	<link href="{% static 'css/hr_manager_style.min.css' %}" rel="stylesheet">
 
-	<link rel="stylesheet" href="{%static 'css/style.css'%}">
+	<link rel="stylesheet" href="{% static 'css/style.css'%}">
 	<link rel="stylesheet" href="{% static 'css/base.css' %}">
 	
 	<style>
@@ -67,35 +46,7 @@
 			top: 6%;
 			left: 20%;
 			z-index: 100;
-		}
-		.dropdown-menu a:hover {
-			background-color: transparent
 		}	
-		.mx-1 ::-webkit-scrollbar {
-			width: 0px;
-		}	
-		#accordionSidebar{
-			width: 17rem!important;
-		}
-		.pagination li {
-			background-color: #007bff;
-			color: white;
-			padding: 4px 14px;
-			margin: 4px 2px;
-			cursor: pointer;
-			border-radius:3px;
-		}
-
-		.pagination li a {
-			color: white;
-		}
-
-		.pagination .active,
-		.pagination .disabled {
-			color: black;
-			background-color: #494d7c52;
-			cursor: auto;
-		}   			
 	</style>
 </head>
 
@@ -107,14 +58,14 @@
 	<!-- Page Wrapper -->
 	<div id="wrapper">
 		<!-- Sidebar -->
-		<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+		<ul class="navbar-nav bg-gradient-primaryy sidebar sidebar-dark accordion" id="accordionSidebar">
 			<!-- Sidebar - Brand -->
 
 			<a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
 				<div class="sidebar-brand-icon rotate-n-15">
-					<i class="fas fa-laugh-wink text-warning"></i>
+					<i class="fas fa-tasks text-warning"></i>
 				</div>
-				<div class="sidebar-brand-text mx-3"> DITS Management</div>
+				<div class="sidebar-brand-text mx-3"> HR Manager</div>
 			</a>
 			<hr class="sidebar-divider my-0 mb-3">
 
@@ -122,34 +73,50 @@
 			<div id="hideOnNotifications">
 				<!-- Divider -->
 				{% if request.session.is_admin == True %}
-	
-				<div class="sidebar-heading">
-					Workspace
-				</div>
-				<!-- Nav Item - workspace -->
-				<li class="nav-item active">
-					<a class="nav-link" href="#" data-toggle="modal" data-target="#createworkspace">
-						<i class="fas fa-fw fa-warehouse"></i>
-						<span>+ Workspace</span></a>
-				</li>
-				<div class="sidebar-heading pb-3">
-					All Workspaces
-				</div>
-				{% for work in workspaces %}
-				<li class="nav-item text-capitalize pb-0">
-					<span class="nav-link pb-1 pt-1">
-						<i class="fas fa-warehouse fa-fw"></i>
-						<!-- <img class="img-profile rounded-circle"
-									src="/static/img/undraw_profile.svg"> -->
-						<span>
-							<a href="/workspace/{{work.id}}/update"
-								class="{% if work.status == True %}text-white{% else %}text-secondary{% endif %}">
-								{{work.name}}
-							</a>
+					<div class="sidebar-heading">
+						Member
+					</div>
+					<li class="nav-item active">
+						<a class="nav-link" href="#" data-toggle="modal" data-target="#createmember">
+							<i class="fas fa-fw fa-warehouse"></i>
+							<span>+ Member</span></a>
+					</li>				
+					<div class="sidebar-heading">
+						Workspace
+					</div>
+					<!-- Nav Item - workspace -->
+					<li class="nav-item active">
+						<a class="nav-link" href="#" data-toggle="modal" data-target="#createworkspace">
+							<i class="fas fa-fw fa-warehouse"></i>
+							<span>+ Workspace</span></a>
+					</li>
+					<div class="sidebar-heading pb-3">
+						All Workspaces
+					</div>
+					{% for work in workspaces %}
+						<li class="nav-item text-capitalize pb-0">
+							<span class="nav-link pb-1 pt-1">
+								<i class="fas fa-warehouse fa-fw"></i>
+								<span>
+									<a href="/workspace/{{work.id}}/update"
+										class="{% if work.status == True %}text-white{% else %}text-secondary{% endif %}">
+										{{work.name}}
+									</a>
+								</span>
+							</span>
+						</li>
+					{% endfor %}
+					{% if len_workspace > 4 %}
+					<li class="nav-item text-capitalize pb-0">
+						<span class="nav-link">
+							<span class="text-center">
+								<a href="">
+									More..
+								</a>
+							</span>
 						</span>
-					</span>
-				</li>
-				{% endfor %}
+					</li>
+					{% endif %}
 				{% endif %}
 	
 				<div class="sidebar-heading sidebar-heading pb-3 mt-3">
@@ -160,10 +127,25 @@
 				<li class="nav-item text-capitalize pb-0">
 					<span class="nav-link pb-1 pt-1">
 						<img class="img-profile rounded-circle" src="/static/img/undraw_profile.svg">
-						<span>{{member.name}}</span>
+						{% if request.session.user_name == obj.name %}
+							<a href="" class="text-warning">{{member.name}}</a>
+						{% else %}
+							<span>{{member.name}}</span>
+						{% endif %}
 					</span>
 				</li>
 				{% endfor %}
+				{% if len_members > 4 %}
+				<li class="nav-item text-capitalize pb-0">
+					<span class="nav-link">
+						<span class="text-center">
+							<a href="">
+								More..
+							</a>
+						</span>
+					</span>
+				</li>
+				{% endif %}
 			</div>
 
 			<!-- with notifications -->
@@ -219,7 +201,7 @@
 			<!-- Main Content -->
 			<div id="content">
 				<!-- Topbar -->
-				<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+				<nav class="navbar navbar-expand navbar-light topbar mb-4 static-top shadow">
 					<!-- Sidebar Toggle (Topbar) -->
 					<button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
 						<i class="fa fa-bars"></i>
@@ -319,20 +301,22 @@
 					</ul>
 				</nav>
 				<!-- End of Topbar -->
-				{% block content %}
-				{% endblock %}
+				<div class="block_content_style">
+					{% block content %}
+					{% endblock %}
+				</div>
 			</div>
 		</div>
 	</div>
 
 	<!-- Footer -->
-	<footer class="bg-white" style="display:none">
+	<!-- <footer class="bg-white" style="display:none">
 		<div class="container-fluid">
 			<div class="copyright text-center">
-				<span>Copyright &copy; DITS Management 2022</span>
+				<span>Copyright &copy; 2022</span>
 			</div>
 		</div>
-	</footer>
+	</footer> -->
 
 	<!-- End of Footer -->
 
@@ -361,11 +345,37 @@
 		</div>
 	</div>
 
-	<!-------------------------------------The Modal to create workspace---------------------------------- -->
+	<!------------------------------------- The Modal to create Member ---------------------------------- -->
+	<div class="modal" id="createmember">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title">Create Member</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<!-- Modal body -->
+				<div class="modal-body">
+					<form method="POST" action="{% url 'signup' %}">
+						{% csrf_token %}
+						<label>User Name:*</label>
+						<input type="text" name="name" class="form-control" maxlength="120" required autofocus>
+						<label class="mt-2">Email:*</label>
+						<input type="text" name="email" class="form-control" maxlength="100" required>
+						<label class="mt-2">Password:*</label>
+						<input type="password" name="password" class="form-control" maxlength="100" required>
+						<br>
+						<input type="submit" class="btn btn-primary w-100" value="SIGN UP">
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!------------------------------------- The Modal to create workspace ---------------------------------- -->
 	<div class="modal" id="createworkspace">
 		<div class="modal-dialog">
 			<div class="modal-content">
-
 				<!-- Modal Header -->
 				<div class="modal-header">
 					<h4 class="modal-title">Create Workspace</h4>
@@ -378,9 +388,9 @@
 						{% csrf_token %}
 						<small>Workspace Name*</small>
 						<input type="text" placeholder="Enter your workspace name" name="name" class="form-control"
-							required>
+							required autofocus>
 						<small class="mt-2">Member*</small>
-						<select name="staff" id="" class="form-control" multiple>
+						<select name="staff" id="" class="form-control" multiple required>
 							{% for staff in all_staff %}
 							<option value="{{staff.id}}" class="text-capitalize">{{staff.name}}</option>
 							{% endfor %}
@@ -393,357 +403,6 @@
 			</div>
 		</div>
 	</div>
-
-	<!-------------------------------------The Modal to create New Task---------------------------------- -->
-	<div class="modal" id="createtask">
-		<div class="modal-dialog modal-lg">
-			<div class="modal-content">
-
-				<!-- Modal Header -->
-				<div class="modal-header">
-					<h4 class="modal-title">Create Task</h4>
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-				</div>
-
-				<!-- Modal body -->
-				<div class="modal-body">
-					<form action="{% url 'task-add' %}" method="POST">
-						{% csrf_token %}
-						<div class="row">
-							<div class="col-lg-12">
-								<small>Title*</small>
-								<input type="text" placeholder="Title" name="title" class="form-control" required><br>
-							</div>
-							<div class="col-lg-12">
-								<small>Assign To*</small>
-								<select name="assigned_to" id="" class="form-control">
-									<option value="">Please select</option>
-									{% for employee in employees %}
-									<option value="{{employee.id}}">{{employee.name}}</option>
-									{% endfor %}
-								</select>
-								<br>
-							</div>
-							<div class="col-md-6">
-								<small>Priority</small>
-								<select name="priority" id="" class="form-control">
-									<!-- <option value="">Please select</option> -->
-									<option value="3">Low</option>
-									<option value="2" selected>Medium</option>
-									<option value="1">High</option>
-									<option value="4">Critical</option>
-								</select>
-								<br>
-							</div>
-							<div class="col-md-6">
-								<small>Workspace</small>
-								<select name="workspace" id="" class="form-control">
-									<!-- <option value="">Please select</option> -->
-									{% for space in workspace %}
-									<option value="{{space.id}}" selected>{{space.name}}</option>
-									{% endfor %}
-								</select>
-								<br>
-							</div>
-							<div class="col-md-4">
-								<small>Status</small>
-								<select name="task_status" id="" class="form-control">
-									<option value="1" selected>Not Started</option>
-									<option value="2">In Progress</option>
-									<option value="3">In Review</option>
-									<option value="4">Completed</option>
-									<option value="5">Cancelled</option>
-								</select><br>
-							</div>
-
-							<div class="col-md-4">
-								<small>Start Date*</small>
-								<div class="input-group mb-3">
-									<div class="input-group-prepend">
-										<span class="input-group-text" id="calender_icon"><i class="fa fa-calendar"
-												aria-hidden="true"></i></span>
-									</div>
-									<input type="datetime-local" name="planned_start_date" class="form-control"
-										aria-label="date" aria-describedby="calender_icon" required>
-								</div>
-								<br>
-							</div>
-							<div class="col-md-4">
-								<small>End Date*</small>
-								<div class="input-group mb-3">
-									<div class="input-group-prepend">
-										<span class="input-group-text" id="calender_icon"><i class="fa fa-calendar"
-												aria-hidden="true"></i></span>
-									</div>
-									<input type="datetime-local" name="planned_end_date" class="form-control"
-										aria-label="date" aria-describedby="calender_icon" required>
-								</div>
-								<br>
-							</div>
-							<div class="col-md-12">
-								<small>Description</small>
-								<textarea name="description" placeholder="Type Something" cols="30" class="form-control"
-									rows="2"></textarea><br>
-							</div>
-						</div>
-						<input type="submit" class="btn btn-primary w-100" value="Add/Assign">
-					</form>
-				</div>
-				<!-- modal footer -->
-			</div>
-		</div>
-	</div>
-
-	<!-------------------------------------The Modal to create New Meeting---------------------------------- -->
-	<div class="modal" id="createmeeting">
-		<div class="modal-dialog modal-lg">
-			<div class="modal-content">
-
-				<!-- Modal Header -->
-				<div class="modal-header">
-					<h4 class="modal-title">Create Meeting</h4>
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-				</div>
-
-				<!-- Modal body -->
-				<div class="modal-body">
-					<div class="row">
-
-						<div class="col-lg-12">
-							<small>Meeting Title <i class="fa fa-info-circle" data-toggle="tooltip"
-									title="Give your Meeting a name. It's mandatory field."></i></small>
-							<input type="text" placeholder="Add Meeting Title" class="form-control"><br>
-						</div>
-
-
-						<div class="col-lg-6">
-							<small>Date <i class="fa fa-info-circle" data-toggle="tooltip"
-									title="Set your meeting date."></i></small>
-							<div class="input-group mb-3">
-								<div class="input-group-prepend">
-									<span class="input-group-text" id="calender_icon"><i class="fa fa-calendar"
-											aria-hidden="true"></i></span>
-								</div>
-								<input type="text" name="meetingdatetimes" class="form-control" aria-label="date"
-									aria-describedby="calender_icon">
-							</div>
-						</div>
-						<!-- <script>
-							$(function () {
-								$('input[name="meetingdatetimes"]').daterangepicker({
-									timePicker: true,
-									startDate: moment().startOf('hour'),
-									endDate: moment().startOf('hour').add(32, 'hour'),
-									locale: {
-										format: 'M/DD hh:mm A'
-									}
-								});
-							});
-						</script> -->
-						<div class="col-lg-6">
-							<small>Start Time</small>
-							<div class="input-group mb-3">
-								<div class="input-group-prepend">
-									<span class="input-group-text" id="am_pm">
-										<select name="" id="" style="background-color: transparent;border: none;">
-											<option value="AM">AM</option>
-											<option value="PM">PM</option>
-										</select>
-									</span>
-								</div>
-								<input type="time" class="form-control" aria-describedby="am_pm" id="appt" name="appt">
-							</div>
-						</div>
-						<div class="col-md-6">
-							<small>Task (Optional)</small>
-							<select name="" id="" class="form-control">
-								<option value="">0000001-demo</option>
-								<option value="">02022-test</option>
-							</select><br>
-						</div>
-
-						<div class="col-md-6">
-							<small>Duration (Hrs/Mins)</small>
-							<input type="time" class="form-control" aria-describedby="am_pm" id="appt" name="appt">
-						</div>
-						<div class="col-md-12">
-							<small>Location</small>
-							<select name="" id="" class="form-control">
-								<option value="">Add Location</option>
-
-							</select><br>
-						</div>
-
-						<div class="col-md-12">
-							<small>Participant (Optional)</small>
-							<select name="" id="" class="form-control">
-								<option value="Sandeep Yadav">Sandeep Yadav</option>
-								<option value="Neeta">Neeta</option>
-							</select><br>
-						</div>
-						<div class="col-md-12">
-							<small>Agenda (Optional) <i class="fa fa-info-circle" data-toggle="tooltip"
-									title="Set key agenda points for your meetings to share with your team members."></i></small>
-							<textarea name="" id="" placeholder="Type and press enter to add agenda" cols="30"
-								class="form-control" rows="2"></textarea><br>
-						</div>
-					</div>
-				</div>
-				<!-- modal footer -->
-				<div class="modal-footer">
-					<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-					<a class="btn btn-primary" href="#">Create Meeting</a>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<!-------------------------------------The Modal to create Issue---------------------------------- -->
-	<div class="modal" id="createissue">
-		<div class="modal-dialog modal-lg">
-			<div class="modal-content">
-				<!-- Modal Header -->
-				<div class="modal-header">
-					<h4 class="modal-title">Create Issue</h4>
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-				</div>
-				<!-- Modal body -->
-				<div class="modal-body">
-					<form action="{% url 'issue-add' %}" method="POST">
-						{% csrf_token %}
-						<div class="row">
-							<div class="col-lg-12">
-								<small>Issue Title*</small>
-								<input type="text" name="title" placeholder="Add Issue Title" class="form-control"
-									required><br>
-							</div>
-							<div class="col-lg-12">
-								<small>Assigned To*</small>
-								<select name="assigned_to" id="" class="form-control">
-									<option value="">Please select</option>
-									{% for employee in employees %}
-									<option value="{{employee.id}}">{{employee.name}}</option>
-									{% endfor %}
-								</select>
-								<br>
-							</div>
-							<div class="col-md-6">
-								<small>Issue Type</small>
-								<select name="issue_type" id="" class="form-control">
-									<option value="Bug">Bug</option>
-									<option value="Feature" selected>Feature</option>
-									<option value="Improvement">Improvement</option>
-								</select><br>
-							</div>
-							<div class="col-md-6">
-								<small>Priority</small>
-								<select name="priority" id="" class="form-control">
-									<option value="1">Critical</option>
-									<option value="2">High</option>
-									<option value="3" selected>Medium</option>
-									<option value="4">Low</option>
-								</select><br>
-							</div>
-							<div class="col-md-6">
-								<small>Workspace</small>
-								<select name="workspace" id="" class="form-control">
-									<!-- <option value="">Please select</option> -->
-									{% for space in workspace %}
-									<option value="{{space.id}}" selected>{{space.name}}</option>
-									{% endfor %}
-								</select>
-								<br>
-							</div>
-							<div class="col-md-6">
-								<small>Status</small>
-								<select name="issue_status" id="" class="form-control">
-									<option value="1" selected>Not Started</option>
-									<option value="2">In Progress</option>
-									<option value="3">In Review</option>
-									<option value="4">Completed</option>
-									<option value="5">Cancelled</option>
-								</select><br>
-							</div>
-							<div class="col-md-4">
-								<small>Start Date*</small>
-								<div class="input-group mb-3">
-									<div class="input-group-prepend">
-										<span class="input-group-text" id="calender_icon"><i class="fa fa-calendar"
-												aria-hidden="true"></i></span>
-									</div>
-									<input type="datetime-local" name="planned_start_date" class="form-control"
-										aria-label="date" aria-describedby="calender_icon" required>
-								</div>
-								<br>
-							</div>
-							<div class="col-md-4">
-								<small>End Date*</small>
-								<div class="input-group mb-3">
-									<div class="input-group-prepend">
-										<span class="input-group-text" id="calender_icon"><i class="fa fa-calendar"
-												aria-hidden="true"></i></span>
-									</div>
-									<input type="datetime-local" name="planned_end_date" class="form-control"
-										aria-label="date" aria-describedby="calender_icon" required>
-								</div>
-								<br>
-							</div>
-							<!-- <script>
-								$(function () {
-									$('input[name="issuedatetime"]').daterangepicker({
-										timePicker: true,
-										startDate: moment().startOf('hour'),
-										endDate: moment().startOf('hour').add(32, 'hour'),
-										locale: {
-											format: 'M/DD hh:mm A'
-										}
-									});
-								});
-							</script> -->
-							<div class="col-md-12">
-								<small>Description</small>
-								<textarea name="description" placeholder="Type Something" cols="30" class="form-control"
-									rows="2"></textarea>
-								<br>
-							</div>
-						</div>
-						<input type="submit" class="btn btn-primary w-100" value="Create Issue">
-					</form>
-				</div>
-				<!-- modal footer -->
-			</div>
-		</div>
-	</div>
-
-	<!------------------------------------modal popup to edit workspace name ------------------------------------->
-	<div class="modal" id="editworkspace">
-		<div class="modal-dialog">
-			<div class="modal-content">
-
-				<!-- Modal Header -->
-				<div class="modal-header">
-					<h4 class="modal-title">Edit Workspace</h4>
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-				</div>
-
-				<!-- Modal body -->
-				<div class="modal-body">
-					<small>Workspace Name</small>
-					<input type="text" class="form-control">
-					<br>
-					<small>Workspace URL</small>
-					<input type="text" class="form-control">
-					<br>
-					<button type="button" class="btn btn-default bg-gradient-success text-white pull-right">Save
-						Changes</button>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<!-------------------------------------The Modal to Update workspace---------------------------------- -->
-
-	<!-- end change prority status -->
 
 	<!------------------------script/style for header tab & panel data--------------------------------- -->
 	<script>
@@ -803,7 +462,7 @@
 
 	<script>
 		$(window).on('load', function () {
-			$('#loading').delay(1000).fadeOut();
+			$('#loading').delay(700).fadeOut();
 		})
 
 	</script>

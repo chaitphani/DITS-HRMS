@@ -1,4 +1,12 @@
 /* Style the tab */
+*{
+    font-family: 'Varela Round', sans-serif;
+    box-sizing: border-box
+}
+
+body{
+    background-color: rgb(242 254 255);
+}
 .tab {
     overflow: auto;
     background-color: #fff;
@@ -65,7 +73,7 @@
     position: absolute;
     text-align: center;
     width: 100%;
-    font-size:10px;
+    font-size: 10px;
     bottom: 0px;
     color: #aaa;
     padding: 5px;
@@ -76,8 +84,8 @@
     border-top: 1px solid #ccc;
     border-left: 1px solid #ccc;
     min-height: 300px;
-    position:relative;
-    background-color:whitesmoke;
+    position: relative;
+    background-color: whitesmoke;
 }
 
 #headtaskmanagertab {
@@ -93,7 +101,8 @@
 }
 
 #bodycontent {
-    min-height: 300px;padding: 0;
+    min-height: 300px;
+    padding: 0;
 }
 
 /* #searchbox {
@@ -101,72 +110,72 @@
     bottom: 5px;
     width: 100%;
 } */
+.static-top{
+    background-color: #bcf9ff;
+}
+.bg-gradient-primaryy{
+    background-color: #015961;
+}
+.bg-info-1 {
+    background-color: #849ceb;
+    color: #011f83;
+}
 
+.bg-success-1 {
+    background-color: #8deeb0;
+    color: green;
+}
 
-    .bg-info-1{
-        background-color: #849ceb;
-        color:#011f83;
-    }
-    .bg-success-1{
-        background-color: #8deeb0;
-        color: green;
-    }
-    .bg-secondary-1{
-        background-color: whitesmoke;
-    }
+.bg-secondary-1 {
+    background-color: whitesmoke;
+}
 
-.searchrow{
+.searchrow {
     position: absolute;
     bottom: 0px;
-    left:12px;
+    left: 12px;
     width: 100%;
-    background-color:#fff; 
-    padding:5px;
+    background-color: #fff;
+    padding: 5px;
     box-shadow: rgba(33, 35, 38, 0.1) 0px -10px 10px -10px;
 }
 
 /* CSS */
 .button-33 {
-  background-color: #8deeb0;
-  border-radius: 100px;
-  box-shadow: rgba(44, 187, 99, .2) 0 -25px 18px -14px inset,rgba(44, 187, 99, .15) 0 1px 2px,rgba(44, 187, 99, .15) 0 2px 4px,rgba(44, 187, 99, .15) 0 4px 8px,rgba(44, 187, 99, .15) 0 8px 16px,rgba(44, 187, 99, .15) 0 16px 32px;
-  color: green;
-  cursor: pointer;
-  display: inline-block;
-  font-family: CerebriSans-Regular,-apple-system,system-ui,Roboto,sans-serif;
-  padding: 5px 15px;
-  text-align: center;
-  text-decoration: none;
-  transition: all 250ms;
-  border: 0;
-  font-size: 16px;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
+    background-color: #015961;
+    border-radius: 10px;
+    /* box-shadow: rgb(1 89 97) 5px 1px 3px 0px; */
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    padding: 5px 15px;
+    text-align: center;
+    text-decoration: none;
+    transition: all 250ms;
+    border: 0;
+    font-size: 16px;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
 }
 
-.button-33:hover {
-  box-shadow: rgba(44,187,99,.35) 0 -25px 18px -14px inset,rgba(44,187,99,.25) 0 1px 2px,rgba(44,187,99,.25) 0 2px 4px,rgba(44,187,99,.25) 0 4px 8px,rgba(44,187,99,.25) 0 8px 16px,rgba(44,187,99,.25) 0 16px 32px;
-  transform: scale(1.05) rotate(-1deg);
+.button-33:hover{
+    background-color: #257d7b;
+    color: #fff;
 }
-
-
 
 
 /* to remove textbox focus border property */
-input:focus, select:focus, input.form-control:focus {
+input:focus,
+select:focus,
+input.form-control:focus {
 
-    outline:none !important;
+    outline: none !important;
     outline-width: 0 !important;
     box-shadow: none;
     -moz-box-shadow: none;
     -webkit-box-shadow: none;
 }
-
-
-
-
-
 
 .chatstrip {
     border: 1px solid #ccc;
@@ -176,9 +185,11 @@ input:focus, select:focus, input.form-control:focus {
     background-color: #fff;
 }
 
-.chatbox{padding:4px 15px 4px 15px;
-    box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px, rgba(9, 30, 66, 0.13) 0px 0px 1px 1px;   
-    border-radius:15px}
+.chatbox {
+    padding: 4px 15px 4px 15px;
+    box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px, rgba(9, 30, 66, 0.13) 0px 0px 1px 1px;
+    border-radius: 15px
+}
 
 .taskmanagertab {
     overflow: hidden;
@@ -186,6 +197,7 @@ input:focus, select:focus, input.form-control:focus {
     margin-bottom: 5px;
     border-bottom: 1px solid #ccc;
 }
+
 /* Style the buttons inside the taskmanagertab */
 .taskmanagertab button {
     background-color: inherit;
@@ -215,23 +227,22 @@ input:focus, select:focus, input.form-control:focus {
     padding: 6px 12px;
     border-top: none;
     height: 100%;
-    height:300px;
-    overflow-y:auto;
-    overflow-x:hidden;
+    height: 300px;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
-.issuemanagertabcontent{
+
+.issuemanagertabcontent {
     display: none;
     padding: 6px 12px;
     border-top: none;
     height: 100%;
-    height:300px;
-    overflow-y:auto;
-    overflow-x:hidden;
+    height: 300px;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
-* {
-    box-sizing: border-box
-}
+
 
 /* Style the tab */
 
@@ -277,3 +288,102 @@ background-color: #fff; */
     height: 100%;
     overflow-y: auto;
 }
+
+.dropdown-menu a:hover {
+    background-color: transparent
+}
+
+.mx-1 ::-webkit-scrollbar {
+    width: 0px;
+}
+
+#accordionSidebar {
+    width: 17rem !important;
+}
+
+.pagination li {
+    background-color: #007bff;
+    color: white;
+    padding: 4px 14px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.pagination li a {
+    color: white;
+}
+
+.pagination .active,
+.pagination .disabled {
+    color: black;
+    background-color: #494d7c52;
+    cursor: auto;
+}
+
+
+.block_content_style{
+    background-color: #d1ffff80;
+}
+
+th, td{
+    font-size: 12px;
+}
+thead>tr{
+    background-color: #91d7de;
+}
+tbody>tr{
+    background-color: #000;
+}
+
+.buttons-csv{
+    color: white!important;
+    background: #015961!important;
+    box-shadow: 3px 2px 3px 0px rgb(13 69 61);
+}
+.buttons-pdf{
+    color: white!important;
+    background: #015961!important;
+    box-shadow: 3px 2px 3px 0px rgb(13 69 61);
+}  
+
+.lesschar {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 150px;
+}
+.dataTables_length{
+    margin-top: 7px;
+}
+.dt-buttons{
+    margin-bottom: 10px;
+    margin-right: 7px;
+}
+
+.dropdown_style{
+    background-color: #e5fcfe;
+} 
+.dropdown_style > .dropdown-item:hover{
+    background-color: #e5fcfe;
+    color: #dda20a;
+}
+
+#loading {
+    position: fixed;
+    display: block;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    text-align: center;
+    background-color: rgb(255, 255, 255);
+    z-index: 99;
+}
+
+#loading-image {
+    position: absolute;
+    top: 6%;
+    left: 20%;
+    z-index: 100;
+}  

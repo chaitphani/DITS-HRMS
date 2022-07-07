@@ -21,12 +21,12 @@
 
         <div class="row p-0">
                 <div class="col-5 p-0">
-                        <a class="btn btn-outline-warning button-33 btn-sm ml-0" href="/{{object.workspace.slug}}">
+                        <a class="btn button-33 btn-sm ml-0" href="/{{object.workspace.slug}}">
                             <i class="fa fa-chevron-left" aria-hidden="true"></i>&nbsp;&nbsp;Back
                         </a>
                 </div>
                 <div class="col-7 p-0 text-right">
-                    <select name="task_status" id="task_status_{{object.id}}" class="btn btn-outline-warning button-33"
+                    <select name="task_status" id="task_status_{{object.id}}" class="btn button-33"
                         onchange="task_status_change({{object.id}})">
                         <option value="1" {% if object.task_status == '1' %}selected{% endif %}>Not Started</option>
                         <option value="2" {% if object.task_status == '2' %}selected{% endif %}>In Progress</option>
@@ -34,27 +34,12 @@
                         <option value="4" {% if object.task_status == '4' %}selected{% endif %}>Completed</option>
                         <option value="5" {% if object.task_status == '5' %}selected{% endif %}>Cancelled</option>
                     </select>
-
-                    <!-- <span class="dropdown" style="margin-top: 10px;">
-                        <a href="#" class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-plus-circle fa-lg" style="font-size: 32px;"></i>
-                        </a>
-                        <span class="dropdown-menu">
-                            <a class="dropdown-item" href="#">Andrew</a>
-                            <a class="dropdown-item" href="#">John</a>
-                            <a class="dropdown-item" href="#">Adam</a>
-                        </span>
-                    </span> -->
                 </div>
         </div>
         <div class="row mt-2 pt-2 pb-2 border-top">
             <span class="font-weight-bold text-info text-capitalize">Task - &nbsp;{{object.title}}</span>
         </div>
-       
-
         <div class="row p-0">
-
             <div class="col-lg-7 col-md-7 col-sm-12 bodycol7 pr-1 pt-2">
                 <form method="POST">
                     {% csrf_token %}

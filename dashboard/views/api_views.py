@@ -23,8 +23,10 @@ class TaskView(APIView):
     serializer_class = TaskSerializer
     @method_decorator(is_authenticated)
     def post(self, request):
+        
         logged_in_mem = StaffUser.objects.get(id=request.session.get('id'))
         serializer = self.serializer_class(data=request.data)
+
         if serializer.is_valid():
             if len(WorkSpace.objects.filter(status=True)) > 0:
                 serialize = serializer.save()
@@ -39,23 +41,6 @@ class TaskView(APIView):
                 if serializer.data['assigned_to'] != '' or serializer.data['assigned_to'] != None\
                         and serializer.data['priority'] != '' or serializer.data['priority'] != None:
                     end_date = serializer.data.get('planned_end_date').split('T')[0]
-
-                    from_mail = settings.EMAIL_HOST_USER
-                    to_email = staff_mem.email
-                    subject = 'A new task has been added for you..'
-
-                    # body = "New task assigned :: details as below: \n\n"\
-                    #         "Task: {} ".format(serializer.data['title'])+'\n'+\
-                    #         "Description: {} ".format(serializer.data['description'])+'\n'+\
-                    #         "Priority level: {} ".format(serializer.data['priority'])
-                    # send_mail('A New Task has been added to your dashboard...',body,from_mail,[to_email],fail_silently=False,)
-
-                    message = render_to_string('{0}/templates/mail_templates/task_assigned.html'.format(settings.BASE_DIR),{'name':staff_mem.name, 'workspace':workspace_obj.name, 'task':task_new_obj.title, 'status':task_new_obj.get_task_status_display(), 'priority':task_new_obj.get_priority_display(), 'end_date':end_date, 'url':settings.BASE_DOMAIN + '/' + workspace_obj.slug + '/' + str(task_new_obj.id) + '/task'})
-                    
-                    msg = EmailMultiAlternatives(subject, message, from_mail, [to_email])
-
-                    msg.attach_alternative(message, 'text/html')
-                    msg.send(fail_silently=False)
                 
                 Notification.objects.create(staff_mem=staff_mem, title='Hey, you have a new task', content=str(serializer.data.get('title')) + 'in ' + str(workspace_obj.name) + 'with ' + str(task_new_obj.get_task_status_display()) + 'and ' + str(task_new_obj.get_priority_display()))
                 messages.success(request, 'Task add success...!')
@@ -64,6 +49,7 @@ class TaskView(APIView):
                 messages.error(request, 'No workspace to assign task...!')
                 return redirect('home')
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 class WorkSpaceView(APIView):
 
@@ -84,13 +70,6 @@ class WorkSpaceView(APIView):
                 staff_mem = StaffUser.objects.get(id=mem)
                 workspace_mem_list_email.append(staff_mem.email)
                 Notification.objects.create(staff_mem=staff_mem, title='you were added in a new workspace', content='you were added in a workspace named - ' + serializer.data.get('name'))
-                
-            from_mail = settings.EMAIL_HOST_USER
-            subject = "You've been invited to the new Workspace..."
-            message = render_to_string('{0}/templates/mail_templates/join_team_invitation.html'.format(settings.BASE_DIR),{'url':settings.BASE_DOMAIN + '/' + slug})
-            msg = EmailMultiAlternatives(subject, message, from_mail, workspace_mem_list_email)
-            msg.attach_alternative(message, 'text/html')
-            msg.send(fail_silently=False)
 
             messages.success(request, 'Work space add success...')
             return redirect('home')
@@ -114,28 +93,6 @@ class IssueView(APIView):
 
                 staff_mem = StaffUser.objects.get(id=serializer.data['assigned_to'])
                 workspace_obj = WorkSpace.objects.get(id=serializer.data.get('workspace'))
-                issue_new_obj = Issue.objects.get(id=serializer.data.get('id'))                
-
-                if serializer.data['assigned_to'] != '' or serializer.data['assigned_to'] != None\
-                        and serializer.data['priority'] != '' or serializer.data['priority'] != None:
-
-                    end_date = serializer.data.get('planned_end_date').split('T')[0]
-
-                    from_mail = settings.EMAIL_HOST_USER
-                    to_email = staff_mem.email
-                    subject = 'A new issue raised for you...'
-
-                    # body = "New Issue raised for you :: details as below: \n\n"\
-                    #         "Task: {} ".format(serializer.data['title'])+'\n'+\
-                    #         "Description: {} ".format(serializer.data['description'])+'\n'+\
-                    #         "Priority level: {} ".format(serializer.data['priority'])
-                    # send_mail('A New issue has been added to your dashboard...',body,from_mail,[to_email], fail_silently=False,)       
-                    
-                    message = render_to_string('{0}/templates/mail_templates/issue_assigned.html'.format(settings.BASE_DIR),{'name':staff_mem.name, 'workspace':workspace_obj.name, 'task':issue_new_obj.title, 'status':issue_new_obj.get_issue_status_display(), 'priority':issue_new_obj.get_priority_display(), 'end_date':end_date, 'url':settings.BASE_DOMAIN + '/' + workspace_obj.slug + '/' + str(issue_new_obj.id) + '/issue'})
-                    msg = EmailMultiAlternatives(subject, message, from_mail, [to_email])
-
-                    msg.attach_alternative(message, 'text/html')
-                    msg.send(fail_silently=False)
 
                 Notification.objects.create(staff_mem=staff_mem, title='Hey, you have a new Issue', content=serializer.data.get('title') + 'in ' + serializer.data.get('workspace') + 'with ' +serializer.data.get('task_status') + 'and ' + serializer.data.get('priority'))
                 messages.success(request, 'Issue add success...')
@@ -235,6 +192,7 @@ class AttendaceOutView(APIView):
         else:
             messages.error(request, 'Wrong location, unable to check out..')
         return redirect('/attendance/')
+
 
 class NotificationGetView(APIView):
 

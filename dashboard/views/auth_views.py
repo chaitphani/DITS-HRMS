@@ -88,7 +88,7 @@ def signup(request):
                             "User Name : {} ".format(form_save.name)+'\n'+\
                             "Email: {} ".format(form_save.email)+'\n'+\
                             "Password: {} ".format(form_save.password)+'\n'+\
-                            "link: {} ".format('https://management.divsolution.com/login?name='+form_save.name+'&pwd='+form_save.password)
+                            "link: {} ".format(settings.BASE_DOMAIN+'/login?name='+form_save.name+'&pwd='+form_save.password)
 
                     send_mail(
                         'Welcome to DITS Task Management App',
@@ -120,8 +120,8 @@ def forget_password(request):
             request.session['otp'] = otp
             request.session.set_expiry(300)
             subject = 'OTP Requested for forgot password'
-            message = "We received a forgot password request from your account.\nMake sure not to share your OTP with anyone.\nOTP :{}.\nlink: {}. \n\n\nplease verify your account if it's not you".format(str(otp), 'https://management.divsolution.com/otp?otp='+str(otp))
-            from_email = 'info@divsolution.com'
+            message = "We received a forgot password request from your account.\nMake sure not to share your OTP with anyone.\nOTP :{}.\nlink: {}. \n\n\nplease verify your account if it's not you".format(str(otp), settings.BASE_DOMAIN+'/otp?otp='+str(otp))
+            from_email = settings.EMAIL_HOST_USER
 
             send_mail(subject, message, from_email,
                       [email], fail_silently=False)
@@ -153,9 +153,10 @@ def reset_password(request):
         user_obj = User.objects.get(email=request.session['email'])
         staff_obj = StaffUser.objects.get(email=request.session.get('email'))
     except:
+        pass
         # messages.error(request, 'Your session timed out....!')
-        response = '<script>alert("Your session times out...!");window.location.replace("https://management.divsolution.com/login")</script>'
-        return HttpResponse(response)
+        # response = '<script>alert("Your session times out...!");window.location.replace(settings.BASE_DOMAIN+"/login")</script>'
+        # return HttpResponse(response)
 
     if request.method == 'POST':
         email = user_obj.email
@@ -172,8 +173,9 @@ def reset_password(request):
             ) + "Your Password reset"
             
             message = 'Please find your account details below with credentials after password reset \nEmail :{}\nUser Name :{}\nPassword :{}\nLink: {}'.format(
-                email.lower(), request.session['username'], str(password), 'https://management.divsolution.com/login')
-            from_email = 'ditstaskmanager@gmail.com'
+                email.lower(), request.session['username'], str(password), settings.BASE_DOMAIN+'/login')
+            from_email = settings.EMAIL_HOST_USER
+            
             send_mail(
                 subject,
                 message,

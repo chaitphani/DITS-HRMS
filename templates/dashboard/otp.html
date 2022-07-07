@@ -4,17 +4,17 @@
 
 <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link rel="icon"
-        href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR97VqNzZARoJCFV07G6cX2mxq4WyVBSZ3E644ZGzQ_XYE8m7Bv" />
-    <title>OTP</title>
+    <title>HR Manager</title>
+    <link rel="stylesheet" href="{% static 'css/otp.css' %}">
 </head>
-<style>
+<!-- <style>
     body {
         font-family: sans-serif;
     }
@@ -145,13 +145,13 @@
         left: 20%;
         z-index: 100;
     }     
-</style>
+</style> -->
 
 <body class="bdy">
     <div id="loading">
         <img id="loading-image" src="https://i.pinimg.com/originals/ac/14/0a/ac140a627af854f14c7f653efd7d53ae.gif" alt="Loading..." />
     </div>	       
-    <div class="container-fluid">
+    <!-- <div class="container-fluid">
         <div class="container">
             <div class="row">
                 <div class="col-md-4 col-lg-4 offset-md-8 offset-lg-8">
@@ -179,13 +179,51 @@
                             {% endif %}
                             <form method="POST">
                                 {% csrf_token %} 
-                                <!-- <label class="text-success">OTP</label> -->
                                 <input type="text" class="form-control" name="otp" placeholder="OTP" value="{% if request.GET.otp %}{{request.GET.otp}}{% endif %}"/>
                                 <input type="submit" class="btn btn-warning btm-sm w-100 mt-3 font-weight-bold" value="SUBMIT">
                             </form>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div> -->
+
+    <div class="container mt-5">
+        <div class="screen">
+            <div class="screen__content">
+                {% if messages %}
+                    <ul class="messages list-unstyled" id="msg_display">
+                        {% for message in messages %}
+                            <li{% if message.tags %} class="{{ message.tags }} font-weight-bold p-3 rounded" {% endif %}>
+                                <button type="button" class="close mr-3 mb-2 text-danger font-weight-bold" onclick="dismissFunction()">&times;</button>
+                                {{ message }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+                <form method="post" class="login">
+                    {% csrf_token %}
+                    <h4 class="text-center header_text">Validate OTP</h2>
+                    <h6 class="text-center header_text">
+                        Your otp will expire in <b>5</b> minutes
+                    </h6>
+                    <div class="login__field">
+                        <i class="login__icon fa fa-key"></i>
+                            <input class="login__input" type="text" name="otp" placeholder="OTP" value="{% if request.GET.otp %}{{request.GET.otp}}{% endif %}" autofocus>
+                    </div>
+                    <button class="button login__submit">
+                        <span class="button__text">Request OTP</span>
+                        <i class="button__icon fa fa-arrow-right"></i>
+                    </button>
+                    <!-- <input class="submit btn btn-warning btn-sm w-100 mt-3 font-weight-bold rounded" type="submit" value=""> -->
+                </form>
+            </div>
+            <div class="screen__background">
+                <span class="screen__background__shape screen__background__shape4"></span>
+                <span class="screen__background__shape screen__background__shape3"></span>
+                <span class="screen__background__shape screen__background__shape2"></span>
+                <span class="screen__background__shape screen__background__shape1"></span>
             </div>
         </div>
     </div>

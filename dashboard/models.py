@@ -1,9 +1,6 @@
-import datetime
-from os import truncate
 from django.db import models
-from django.db.models.base import Model, ModelStateFieldsCacheDescriptor
 from django.contrib.auth.models import User
-from django.utils import tree
+
 
 priority_choices = (('1', 'High'),('2', 'Medium'),('3', 'Low'), ('4', 'Critical'), )
 task_status_choices = (('1', 'Not Started'),('2', 'In Progress'),('3', 'In Review'),('4', 'Completed'),('5', 'Blocked'),)

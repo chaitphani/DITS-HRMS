@@ -69,19 +69,13 @@ def task_detail_update_view(request, id, workspace_slug):
     prev_assigned_user = task_obj.assigned_to.name
 
     if request.method == 'POST':
-        # planned_start_date = request.POST.get('planned_start_date')
         actual_start_date = request.POST.get('actual_start_date')
-        # planned_end_date = request.POST.get('planned_end_date')
         actual_end_date = request.POST.get('actual_end_date')
         description = request.POST.get('description')
         assigned_to = request.POST.get('assigned_to')
         priority = request.POST.get('priority')
 
         staff_mem = StaffUser.objects.get(id=assigned_to)
-        # if planned_start_date != '':
-        #     task_obj.planned_start_date = datetime.strptime(planned_start_date, "%Y-%m-%dT%H:%M")
-        # if planned_end_date != '':
-        #     task_obj.planned_end_date = datetime.strptime(planned_end_date, "%Y-%m-%dT%H:%M")
         if actual_start_date != '':
             task_obj.actual_start_date = datetime.strptime(actual_start_date, "%Y-%m-%dT%H:%M")
         if actual_end_date != '':
@@ -93,16 +87,6 @@ def task_detail_update_view(request, id, workspace_slug):
         task_obj.save()
         
         Notification.objects.create(staff_mem=task_obj.assigned_to, title='There is an update with the task', content=str(task_obj.title) + ' task has been updated...')
-        if prev_assigned_user != staff_mem.name:
-            from_mail = settings.EMAIL_HOST_USER
-            to_mail = staff_mem.email
-            subject = 'A new task has been added for you..'
-
-            message = render_to_string('{0}/templates/mail_templates/task_assigned.html'.format(settings.BASE_DIR),{'name':staff_mem.name, 'workspace':task_obj.workspace.name, 'task':task_obj.title, 'status':task_obj.get_task_status_display(), 'priority':task_obj.get_priority_display(), 'end_date':task_obj.planned_end_date})
-            
-            msg = EmailMultiAlternatives(subject, message, from_mail, [to_mail])
-            msg.attach_alternative(message, 'text/html')
-            msg.send(fail_silently=False)
 
         messages.success(request, 'Task update success...')
         return redirect('/' + task_obj.workspace.slug + '/' + str(task_obj.id)+'/task')
@@ -124,15 +108,9 @@ def issue_detail_update_view(request, id, workspace_slug):
         assigned_to = request.POST.get('assigned_to')
         description = request.POST.get('description')
         actual_end_date = request.POST.get('actual_end_date')
-        # planned_end_date = request.POST.get('planned_end_date')
         actual_start_date = request.POST.get('actual_start_date')
-        # planned_start_date = request.POST.get('planned_start_date')
         staff_mem = StaffUser.objects.get(id=assigned_to)
         
-        # if planned_start_date != '':
-        #     issue_obj.planned_start_date = datetime.strptime(planned_start_date, "%Y-%m-%dT%H:%M")
-        # if planned_end_date != '':
-        #     issue_obj.planned_end_date = datetime.strptime(planned_end_date, "%Y-%m-%dT%H:%M")
         if actual_start_date != '':
             issue_obj.actual_start_date = datetime.strptime(actual_start_date, "%Y-%m-%dT%H:%M")
         if actual_end_date != '':
@@ -144,16 +122,6 @@ def issue_detail_update_view(request, id, workspace_slug):
         issue_obj.save()
 
         Notification.objects.create(staff_mem=issue_obj.assigned_to, title='There is an update with the task', content=issue_obj.name + ' issue has been updated...')
-
-        if prev_assigned_user != staff_mem.name:
-            from_mail = settings.EMAIL_HOST_USER
-            to_mail = staff_mem.email
-            subject = 'A new task has been added for you..'
-            message = render_to_string('{0}/templates/mail_templates/issue_assigned.html'.format(settings.BASE_DIR),{'name':staff_mem.name, 'workspace':issue_obj.workspace.name, 'task':issue_obj.title, 'status':issue_obj.get_issue_status_display(), 'priority':issue_obj.get_priority_display(), 'end_date':issue_obj.planned_end_date})
-            
-            msg = EmailMultiAlternatives(subject, message, from_mail, [to_mail])
-            msg.attach_alternative(message, 'text/html')
-            msg.send(fail_silently=False)
 
         messages.success(request, 'Issue update success...')
         return redirect('/' + issue_obj.workspace.slug + '/' + str(issue_obj.id) + '/issue')

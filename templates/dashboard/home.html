@@ -39,6 +39,7 @@
     .arrow{
         color: rgb(103, 215, 223);
     }
+
 </style>
 <script>
     $('[data-toggle="tooltip"]').hover(function(){
@@ -90,10 +91,14 @@
                     <div class="row" id="ul_id">
                         {% for space in workspace %}
                             <div class="wrapper">
-                                <a class="box" href="{% url 'workspace' space.slug %}">
+                                <a class="box box_style" href="{% url 'workspace' space.slug %}">
                                     <div class="box_insidediv">
                                         <div class="col-lg-12">
+                                            {% if space.name.split|wordcount > 1 %}
+                                            <span class="user_txticon text-capitalize">{{space.name.split|first|first}}{{space.name.split|last|first}}</span><br>
+                                            {% else %}
                                             <span class="user_txticon text-capitalize">{{space.name|first}}</span><br>
+                                            {% endif %}
                                             <p class="text-capitalize font-weight-bold p_text_call">{{space.name}}</p>
                                         </div>
                                         <div class="row">
@@ -179,7 +184,7 @@
                             <a class="box" href="{% url 'attendance_home'%}" style="height:250px">
                                 <div class="box_insidediv">
                                     <div class="col-lg-12">
-                                        <span class="user_txticon text-capitalize bg-primary"><i class="fa fa-calendar-plus-o"></i></span><br><br>
+                                        <span class="user_txticon text-capitalize"><i class="fa fa-calendar-plus-o"></i></span><br><br>
                                         <h5 class="text-capitalize font-weight-bold">Attendance</h5>
                                         <small class="font-weight-bold">This Month <br>
                                             Full-day:
@@ -207,7 +212,7 @@
                             <a class="box" href="{% url 'attendance_home'%}" style="height:250px">
                                 <div class="box_insidediv">
                                     <div class="col-lg-12">
-                                        <span class="user_txticon text-capitalize bg-primary"><i class="fa fa-leaf"></i></span><br><br>
+                                        <span class="user_txticon text-capitalize"><i class="fa fa-leaf"></i></span><br><br>
                                         <h5 class="text-capitalize font-weight-bold">Leave Balance</h5>
                                         <small><span class="text-success font-weight-bold">
                                             {% if bal_leaves %}{{bal_leaves|stringformat:"02d"}}{% else %}00{% endif %}</span> / <span class="text-dark font-weight-bold">24</span></small>
@@ -219,7 +224,7 @@
                             <a class="box" href="{% url 'attendance_home' %}" style="height:250px">
                                 <div class="box_insidediv">
                                     <div class="col-lg-12">
-                                    <span class="user_txticon text-capitalize bg-primary"><i class="fa fa-list-alt"></i></span><br><br>
+                                    <span class="user_txticon text-capitalize"><i class="fa fa-list-alt"></i></span><br><br>
                                         <h5 class="text-capitalize font-weight-bold">Leave Requests</h5>
                                     </div>
                                     <div class="row">
